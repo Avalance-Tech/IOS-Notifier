@@ -1,2 +1,0 @@
-added webhook to discord
-fixed it?
