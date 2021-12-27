@@ -11,7 +11,7 @@ import SwiftUI
 struct Emergency_NotifierApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomePage()
         }
     }
 }
