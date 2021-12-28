@@ -5,14 +5,17 @@
 //  Created by Adnan Odimah on 18/12/2021.
 //
 
+import SwiftUI
+
 struct MenuItem: Identifiable{
     var id = UUID()
     let text: String
 }
 
-struct News{
+struct News: Identifiable{
+    var id = UUID()
     let news: String
-    let date: Date
+    let date: String
 }
 
 struct MenuContents: View{
@@ -36,15 +39,16 @@ struct MenuContents: View{
                             .font(.system(size:22))
                             .bold()
                             .multilineTextAlignment(.leading)
-                        
+                            .foregroundColor(Color.white)
+                            .opacity(0.9)
                     }.padding(.leading, 20).padding(.top, 25)
                     Divider()
                 }
                 Spacer()
 
             VStack(alignment: .center, spacing: 5){
-                Image("Avala_logo").resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
-                Text("Emergency Notifier\nMade by Avalanche Tech").padding(.bottom, 20).opacity(0.8).multilineTextAlignment(.center)
+                Image("Avala_logo").resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)                            .foregroundColor(Color.white)
+                Text("Emergency Notifier\nMade by Avalanche Tech").padding(.bottom, 20).opacity(0.8).multilineTextAlignment(.center)                            .foregroundColor(Color.white)
             } .padding(.leading, 25)
             } .padding(.vertical, 50)
         }
@@ -60,6 +64,7 @@ struct SideMenu: View
     let width: CGFloat
     let menuOpened: Bool
     let toggleMenu: () -> Void
+    @State var show = false
     
     
     // Body
@@ -71,8 +76,9 @@ struct SideMenu: View
             
             GeometryReader{ _ in
                 EmptyView()
-            }   .background(Color.gray.opacity(0.15))
+            }   .background(Color.gray.opacity(0.90))
                 .opacity(self.menuOpened ? 1 : 0)
+                .animation(Animation.easeIn(duration:0.3).delay(0.2), value: menuOpened)
                 .onTapGesture { self.toggleMenu() }
             
             // Menu Content
@@ -81,11 +87,13 @@ struct SideMenu: View
                     .frame(width: width)
                     .offset(x: menuOpened ? 0 : -width)
                     .ignoresSafeArea()
+                    .animation(.default, value: menuOpened)
                 	
                 Spacer()
                 
             }
-        }.animation(Animation.easeIn(duration: 2).delay(0.4), value: true)
+        }//.animation(Animation.easeIn(duration: 0.5 ).delay(0.2), value: menuOpened)
+
     }
 }
 
@@ -98,8 +106,8 @@ struct HomePage: View
     @State var menuOpened = false
     var branch: String = "Al Ain"
     let recentNews = [
-    News(news: "Add a way to fetch news from the database", date: 2021-05-12),
-    News(news: "News 2", date: 06/12/2021)
+    News(news: "Add a way to fetch news from the database", date: "20/12/2021"),
+    News(news: "News 2", date: "06/12/2021")
     ]
     
     // Body
@@ -114,7 +122,7 @@ if !menuOpened
     VStack(alignment: .center, spacing: 100)
     {                           // Vstack - Big Vstack for the entire page
                 
-        HStack(alignment: .bottom, spacing: 100.0)
+        HStack(alignment: .center, spacing: 15.0) // 96 to center
                     {                                            // Top Hstack - Top horizontal stack for menu and title
                 
             Button
@@ -136,15 +144,15 @@ if !menuOpened
                     
             Text("Home")
                             .font(.largeTitle)
+                            .multilineTextAlignment(.center)
                 
                         Spacer()
                     
                     }                                            // Close top Hstack
-            
+
                                 .padding(.leading, 40)
                                 .padding(.top, 60)
-
-                        Spacer()
+        Divider().offset(y:-80)
 
         HStack
                     {
@@ -152,37 +160,42 @@ if !menuOpened
                 
                         Toggle("On Call", isOn: $on_call)
                             .padding(.horizontal, 100.0)
-                            .font(.title3)
+                            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
                 
                         Spacer()
-                    }
+                    }.offset(y:-120)
+
             
-                        Spacer()
-            
-        VStack
+        VStack(spacing: 10)
                     {                                              // VStack - Bottom recent news tab
                 
             Text("Recent News from " + branch)
-                                .font(.title2)
-                
-        ForEach(recentNews){item in
+                            .font(.title).underline()
                         
+    ForEach(recentNews){item in
                     
-            HStack
+        HStack(alignment: .center)
                         {                                          // Hstack - for news
-                        Spacer()
-                    
-                // add for statement which fetches recent news
                     
                             Text(String(item.news))
-                                .frame(width: 150, height: 50)
-                    
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 10.0)
+                              //  .frame(width: 150, height: 50)
+                                .font(.body)
+                                .font(.system(size: 4))
+                                .onTapGesture {
+                                    	
+                                }
+                            
+                            Spacer()
+                            
                             Text(String(item.date))
-                    
-                        Spacer()
+                                .font(.body)
+                                .font(.system(size: 5))
+                                .multilineTextAlignment(.trailing)
                         }                                          // Close HStack - for news
         }
-                    }                                              // Close VStack - news
+                    }.offset(y: -160)                                              // Close VStack - news
                         Spacer()
                                .edgesIgnoringSafeArea(.all)         // Close VStack}
         }                                                          // Close ZStack
