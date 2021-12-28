@@ -65,7 +65,7 @@ struct SideMenu: View
     let menuOpened: Bool
     let toggleMenu: () -> Void
     @State var show = false
-    
+    @Environment (\.colorScheme) var colorScheme
     
     // Body
     var body: some View
@@ -76,7 +76,7 @@ struct SideMenu: View
             
             GeometryReader{ _ in
                 EmptyView()
-            }   .background(Color.gray.opacity(0.90))
+            }   .background(colorScheme == .dark ? Color.black.opacity(0.95) : Color.gray.opacity(0.90))
                 .opacity(self.menuOpened ? 1 : 0)
                 .animation(Animation.easeIn(duration:0.3).delay(0.2), value: menuOpened)
                 .onTapGesture { self.toggleMenu() }
