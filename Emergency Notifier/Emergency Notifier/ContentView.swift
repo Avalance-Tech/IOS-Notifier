@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+// Utility Structures (for our use)
+
 struct MenuItem: Identifiable{
     var id = UUID()
     let text: String
@@ -18,9 +21,14 @@ struct News: Identifiable{
     let date: String
 }
 
+
+// Side Menu
+
+    // Contents
+
 struct MenuContents: View{
     
-    let items : [MenuItem] = [
+    let items : [MenuItem] = [  // Creates a list for the items in the side menu
         MenuItem(text: "Home"),
         MenuItem(text: "Settings"),
         MenuItem(text: "Notifications"),
@@ -31,24 +39,35 @@ struct MenuContents: View{
     var body: some View{
     
         ZStack{
-            Color(UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1))
-            VStack(alignment: .leading, spacing: 40) {
-                ForEach(items) {item in
+            Color(UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)) // Color of the side Menu #Grey
+            VStack(alignment: .leading, spacing: 40) { 
+                ForEach(items) {item in   // Loops through the items in the list
                     HStack{
-                        Text(item.text)
+                        Text(item.text)   // Creates a Text field for the item
                             .font(.system(size:22))
                             .bold()
                             .multilineTextAlignment(.leading)
                             .foregroundColor(Color.white)
                             .opacity(0.9)
                     }.padding(.leading, 20).padding(.top, 25)
-                    Divider()
+                    Divider()  // Adds a divider between them  (outside the HStack so it is horizontal)
                 }
-                Spacer()
+                Spacer()  // Moves it to the top 
 
             VStack(alignment: .center, spacing: 5){
-                Image("Avala_logo").resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)                            .foregroundColor(Color.white)
-                Text("Emergency Notifier\nMade by Avalanche Tech").padding(.bottom, 20).opacity(0.8).multilineTextAlignment(.center)                            .foregroundColor(Color.white)
+                Image("Avala_logo")  // Avalanche Logo in side Menu
+                    .resizable()
+                    .aspectRatio(contentMode: .fit) 
+                    .frame(width: 50, height: 50)                            
+                    .foregroundColor(Color.white)
+                
+                Text("Emergency Notifier\nMade by Avalanche Tech") // Text Field for the App title
+                    .padding(.bottom, 20)
+                    .opacity(0.8)
+                    .multilineTextAlignment(.center)                            
+                    .foregroundColor(Color.white)
+
+                
             } .padding(.leading, 25)
             } .padding(.vertical, 50)
         }
@@ -57,6 +76,7 @@ struct MenuContents: View{
     
 }
 
+    // Actual Side Menu
 
 struct SideMenu: View
 {
@@ -64,42 +84,47 @@ struct SideMenu: View
     let width: CGFloat
     let menuOpened: Bool
     let toggleMenu: () -> Void
-    @State var show = false
-    @Environment (\.colorScheme) var colorScheme
+
+    @Environment (\.colorScheme) var colorScheme // Checks its mode (dark / light)
     
     // Body
     var body: some View
     {
-        ZStack
+        ZStack 
         {
             // Dimmed Background
             
-            GeometryReader{ _ in
-                EmptyView()
-            }   .background(colorScheme == .dark ? Color.black.opacity(0.95) : Color.gray.opacity(0.90))
-                .opacity(self.menuOpened ? 1 : 0)
-                .animation(Animation.easeIn(duration:0.3).delay(0.2), value: menuOpened)
-                .onTapGesture { self.toggleMenu() }
+            GeometryReader{ _ in  // fills the rest of the screen with a geometric shape
+                EmptyView()  // makes it an empty view
+            }   
+                .background(colorScheme == .dark ? Color.black.opacity(0.95) : Color.gray.opacity(0.90))  // sets its background to black if its in dark mode and gray if it isnt
+                .opacity(self.menuOpened ? 1 : 0)  // makes it invisible when the menu is not closed (bool ? (when true):(when false) )
+                .animation(Animation.easeIn(duration:0.3).delay(0.2), value: menuOpened)  // Animation
+                .onTapGesture { self.toggleMenu() }  // makes the menu close when pressed on
             
             // Menu Content
             HStack{
                 MenuContents()
-                    .frame(width: width)
-                    .offset(x: menuOpened ? 0 : -width)
-                    .ignoresSafeArea()
-                    .animation(.default, value: menuOpened)
+                    .frame(width: width)  // sets its frame
+                    .offset(x: menuOpened ? 0 : -width) // makes it only take up a certain amount of the screen (/1.5)
+                    .ignoresSafeArea()   // ignores safe area (such as notch etc.)
+                    .animation(.default, value: menuOpened)  // makes it have the default animation
                 	
-                Spacer()
+                Spacer()  // spacer to ensure that they are moved to the top
                 
             }
-        }//.animation(Animation.easeIn(duration: 0.5 ).delay(0.2), value: menuOpened)
-
+        }
     }
 }
 
+// Settings Page
+
 struct SettingsPage: View{
 
+    // Properties
 
+
+    // Body
     var body: some View{
 
         Text("Hello")
@@ -110,71 +135,61 @@ struct SettingsPage: View{
 
 }
 
+
+// Main page
+
 struct HomePage: View
 {
 
-    @State var on_call: Bool
-    @State var menuOpened = false
-    var branch: String = "Al Ain"
-    let recentNews = [
+    @State var on_call: Bool  // requests an on call variable
+    @State var menuOpened = false 
+    var branch: String = "Al Ain"  // edit out = "Al Ain" when database is created 
+    let recentNews = [ 
     News(news: "Add a way to fetch news from the database", date: "20/12/2021"),
     News(news: "News 2", date: "06/12/2021")
-    ]
+    ]  // make it requested ( set up database code (make it a computable variable ))
     
-    // Body
-    var body: some View
-        {
 
-ZStack                                                           // Zstack
-        {
-if !menuOpened
-        {
+    // Body
+    var body: some View{
+
+    ZStack{
+    if !menuOpened{ // Only shows the view Components when the menu is not opened
     
-    VStack(alignment: .center, spacing: 100)
-    {                           // Vstack - Big Vstack for the entire page
+    VStack(alignment: .center, spacing: 100){                           // VStack - Big Vstack for the entire page
+        HStack(alignment: .center, spacing: 15.0){                                            // Top HStack - Top horizontal stack for menu and title
                 
-        HStack(alignment: .center, spacing: 15.0) // 96 to center
-                    {                                            // Top Hstack - Top horizontal stack for menu and title
-                
-            Button
-                        {
-            
-                    
-                    self.menuOpened.toggle()
-            
-                    
-                        }
-                label:
-                        {
-                            Image(systemName: "list.bullet")
-                                .resizable()
+            Button{ self.menuOpened.toggle() } // Creates a button that toggles the side menu
+                label:{
+                            Image(systemName: "list.bullet")  // Makes the button an image
+                                .resizable() 
                                 .frame(width: 20, height: 20)
                                 .scaledToFit()
-                    
                         }
                     
-            Text("Home")
+            Text("Home") // Page title
                             .font(.largeTitle)
                             .multilineTextAlignment(.center)
                 
-                        Spacer()
-                    
-                    }                                            // Close top Hstack
+            Spacer()    // adds space to the right 
+
+    }   // Close top Hstack (for title and menu button)
 
                                 .padding(.leading, 40)
                                 .padding(.top, 60)
         Divider().offset(y:-80)
 
-        HStack
-                    {
+        HStack{ // Adds a horizontal Stack for the On call toggle      
                         Spacer()
                 
-                        Toggle("On Call", isOn: $on_call)
+                        Toggle("On Call", isOn: $on_call)  // makes the oncall toggle
                             .padding(.horizontal, 100.0)
                             .font(.title2)
                 
-                        Spacer()
-                    }.offset(y:-120)
+                        Spacer()  // spacer used
+
+                    }
+                    .offset(y:-120)
 
             
         VStack(spacing: 10)
