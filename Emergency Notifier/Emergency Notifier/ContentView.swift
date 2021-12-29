@@ -97,7 +97,18 @@ struct SideMenu: View
     }
 }
 
+struct SettingsPage: View{
 
+
+    var body: some View{
+
+        Text("Hello")
+
+    }
+
+
+
+}
 
 struct HomePage: View
 {
@@ -160,7 +171,7 @@ if !menuOpened
                 
                         Toggle("On Call", isOn: $on_call)
                             .padding(.horizontal, 100.0)
-                            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+                            .font(.title2)
                 
                         Spacer()
                     }.offset(y:-120)
@@ -200,7 +211,9 @@ if !menuOpened
                                .edgesIgnoringSafeArea(.all)         // Close VStack}
         }                                                          // Close ZStack
         }                                                          // Close IF statement
+        if menuOpened{
             SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: menuOpened, toggleMenu: toggleMenu)
+        }
         }
     }                                                              // Close Body
     
