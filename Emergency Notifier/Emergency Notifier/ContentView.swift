@@ -21,6 +21,50 @@ struct News: Identifiable{
     let date: String
 }
 
+struct Employee{
+    let name: String
+    
+    var number: String
+    var status: Bool
+    var branch: String
+    
+    mutating func togglestatus(){ self.status.toggle() }
+    
+    func retname() -> String{
+        return self.name
+    }
+    func retnumber() -> String{
+        self.number
+    }
+    func retstatus() -> Bool{
+        return self.status
+    }
+    func retbranch() -> String{
+        self.branch
+    }
+}
+
+
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Side Menu
 
@@ -76,6 +120,13 @@ struct MenuContents: View{
     
 }
 
+
+
+
+
+
+
+
     // Actual Side Menu
 
 struct SideMenu: View
@@ -117,6 +168,11 @@ struct SideMenu: View
     }
 }
 
+
+
+
+
+
 // Settings Page
 
 struct SettingsPage: View{
@@ -136,14 +192,31 @@ struct SettingsPage: View{
 }
 
 
+
+
+
+
+
+
 // Main page
 
 struct HomePage: View
 {
-
-    @State var on_call: Bool  // requests an on call variable
+    //let employee: Employee
+    
+    /*
+    let name: String = employee.retname()
+    var number: String = employee.retnumber()
+    var branch: String = employee.retbranch()
+    */
+    var branch = "al ain"
+     
+    @State var on_call: Bool = true //employee.retstatus()  // requests an on call variable
+    
+    
     @State var menuOpened = false
-    var branch: String = "Al Ain"  // edit out = "Al Ain" when database is created
+
+    
     let recentNews = [ 
     News(news: "Add a way to fetch news from the database", date: "20/12/2021"),
     News(news: "News 2", date: "06/12/2021")
@@ -185,6 +258,7 @@ struct HomePage: View
                         Toggle("On Call", isOn: $on_call)  // makes the oncall toggle
                             .padding(.horizontal, 100.0)
                             .font(.title2)
+                            .background(on_call ? Color.green.opacity(0.2): Color.red.opacity(0.2))
                 
                         Spacer()  // spacer used to center on call toggle
 
@@ -255,7 +329,7 @@ PREVIEW
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
 
-        HomePage(on_call: false) // previews the home page
+        HomePage() // previews the home page
     
     }
 }
