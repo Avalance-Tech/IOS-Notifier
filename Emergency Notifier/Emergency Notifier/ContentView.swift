@@ -99,7 +99,7 @@ struct SideMenu: View
             }   
                 .background(colorScheme == .dark ? Color.black.opacity(0.95) : Color.gray.opacity(0.90))  // sets its background to black if its in dark mode and gray if it isnt
                 .opacity(self.menuOpened ? 1 : 0)  // makes it invisible when the menu is not closed (bool ? (when true):(when false) )
-                .animation(Animation.easeIn(duration:0.3).delay(0.2), value: menuOpened)  // Animation
+                .animation(.easeInOut(duration:0.3).delay(0.2), value: menuOpened)  // Animation
                 .onTapGesture { self.toggleMenu() }  // makes the menu close when pressed on
             
             // Menu Content
@@ -111,7 +111,7 @@ struct SideMenu: View
                     .animation(.default, value: menuOpened)  // makes it have the default animation
                 	
                 Spacer()  // spacer to ensure that they are moved to the top
-                
+                	
             }
         }
     }
@@ -142,8 +142,8 @@ struct HomePage: View
 {
 
     @State var on_call: Bool  // requests an on call variable
-    @State var menuOpened = false 
-    var branch: String = "Al Ain"  // edit out = "Al Ain" when database is created 
+    @State var menuOpened = false
+    var branch: String = "Al Ain"  // edit out = "Al Ain" when database is created
     let recentNews = [ 
     News(news: "Add a way to fetch news from the database", date: "20/12/2021"),
     News(news: "News 2", date: "06/12/2021")
@@ -186,67 +186,76 @@ struct HomePage: View
                             .padding(.horizontal, 100.0)
                             .font(.title2)
                 
-                        Spacer()  // spacer used
+                        Spacer()  // spacer used to center on call toggle
 
                     }
                     .offset(y:-120)
 
             
-        VStack(spacing: 10)
-                    {                                              // VStack - Bottom recent news tab
+        VStack(spacing: 10){  // VStack - Bottom / recent news section
                 
             Text("Recent News from " + branch)
                             .font(.title).underline()
                         
-    ForEach(recentNews){item in
+            ForEach(recentNews){item in  // loops through the recent news list 
+                HStack(alignment: .center){  // Hstack - for each news article in the following format (*news - *date)
                     
-        HStack(alignment: .center)
-                        {                                          // Hstack - for news
-                    
-                            Text(String(item.news))
+                            Text(String(item.news))  // *news
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 10.0)
-                              //  .frame(width: 150, height: 50)
-                                .font(.body)
-                                .font(.system(size: 4))
-                                .onTapGesture {
-                                    	
-                                }
+                                .font(.system(size: 10))
+                                .onTapGesture {}     // make it exapnd to a pop up when tapped
                             
-                            Spacer()
+                            Spacer()      
                             
-                            Text(String(item.date))
-                                .font(.body)
-                                .font(.system(size: 5))
+                            Text(String(item.date))  // *date
+                                .font(.system(size: 10))
                                 .multilineTextAlignment(.trailing)
-                        }                                          // Close HStack - for news
-        }
-                    }.offset(y: -160)                                              // Close VStack - news
-                        Spacer()
-                               .edgesIgnoringSafeArea(.all)         // Close VStack}
-        }                                                          // Close ZStack
-        }                                                          // Close IF statement
-        if menuOpened{
+
+                        }                                          // Close HStack - for each news article
+
+        }  // closes for loop
+
+                    }
+                    .offset(y: -160)                                              // Close VStack - news section
+         
+                        Spacer()  //moves it up from the buttom
+                    
+                               .edgesIgnoringSafeArea(.all)
+                            }         // Closes VStack for the entire page
+
+        }                                                          // Close IF statement for menu opened
+        
+    // if u add an if statement the animation no longer works
             SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: menuOpened, toggleMenu: toggleMenu)
-        }
-        }
+        }                                                          // Closes all the ZStack 
     }                                                              // Close Body
     
     // Methods
     
-    func toggleMenu()
-    
-   {
-       menuOpened.toggle()
-    
-   }
+    func toggleMenu(){menuOpened.toggle()} // makes toggleMenu a singular method (for sideMenu)
 
     
     
-}                                                                       //Close home Struct
+}                                                                       //Close home page Struct
+
+
+
+/*
+
+PREVIEW
+
+    OPTIONS:
+- HomePage
+- SideMenu
+- SettingsPage
+
+*/
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomePage(on_call: false)
+
+        HomePage(on_call: false) // previews the home page
+    
     }
 }
