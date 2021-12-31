@@ -10,6 +10,10 @@ import SwiftUI
 
 // Utility Structures (for our use)
 
+protocol branch{
+    
+}
+
 struct MenuItem: Identifiable{
     var id = UUID()
     let text: String
@@ -26,7 +30,16 @@ struct Employee{
     
     var number: String
     var status: Bool
-    var branch: String
+    var branch: Branch
+    var employeeType: String
+    
+    init(name: String, number: String, status: Bool, branch: Branch, employeeType: String){
+        self.name = name
+        self.number = number
+        self.status = status
+        self.branch = branch
+        self.employeeType = employeeType
+    }
     
     mutating func togglestatus(){ self.status.toggle() }
     
@@ -39,13 +52,128 @@ struct Employee{
     func retstatus() -> Bool{
         return self.status
     }
-    func retbranch() -> String{
+    func retbranch() -> Branch{
         self.branch
     }
 }
 
+struct Branch{
+    var employees: Array<Employee>
+    let name: String
+    var news: Array<News>
+    
+}
 
-//
+struct Emergency{
+    let details: String
+    let location: String
+    let urgency: Int // 1 - 5 scale
+    let time : String
+    
+    
+}
+
+// Not Done
+
+struct NotDone: View{
+
+    
+    var body: some View{
+        ZStack{
+    
+            Text("Coming Soon")
+    
+        }
+    }
+}
+
+
+
+// Leaders View
+
+struct LeaderMain: View{
+    
+// Properties
+    
+    //static var employee: Employee = Employee(name: "adnan", number: "07405074600", status: false, branch: "al ain", employeeType: "employee")
+    
+    let name: String = "adnan" //employee.name
+    var number: String = "012905" //employee.number
+    var branch: String = "al ain"   //employee.branch.name
+     
+    @State var on_call: Bool = false // employee.status  // requests an on call variable
+    
+    @State var menuOpened: Bool = false
+    
+// Leader Properties
+    
+    @State var emergencyDetails = " "
+    @State var emergencyLocation = " "
+    
+    
+    
+// Body
+    var body: some View{
+        ZStack{
+        
+            
+            VStack{ // VStack for the page's actual aspects
+                
+                
+            HStack(alignment: .center){
+                
+                // Top HStack - Top horizontal stack for menu and title
+                    
+                Button{ self.menuOpened.toggle() } // Creates a button that toggles the side menu
+                    label:{
+                                Image(systemName: "list.bullet")  // Makes the button an image
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .scaledToFit()
+                    }.padding(.horizontal, 20)
+
+                Text("Page Title")
+                    .padding(.horizontal,10)
+                    .font(.largeTitle)
+                        
+                        Spacer()
+                
+            }.padding(.vertical, 50)
+                    .padding(.leading, 35)
+            
+                
+                
+                VStack{ // Emergency information fields
+                    
+                    HStack(spacing: 10){
+                        Text("Emergency Details")
+                        
+                 //       TextField(<#T##titleKey: LocalizedStringKey##LocalizedStringKey#>, text: <#T##Binding<String>#>, prompt: <#T##Text?#>)
+                        
+                        }
+                    
+                    
+                    
+                }
+            
+        
+                
+                
+                
+            Spacer()
+                
+            } // Close Vstack for page's aspects
+    
+        
+        } // Close Zstack
+ 
+    
+    }// cloes Body
+    
+// Methods
+    
+    
+} // Close Leader Main
 
 
 
@@ -202,16 +330,13 @@ struct SettingsPage: View{
 
 struct HomePage: View
 {
-    //let employee: Employee
+    static var employee: Employee = Employee(name: "adnan", number: "07405074600", status: false, branch: Branch(employees: [], name: <#T##String#>, news: <#T##Array<News>#>), employeeType: "employee")
     
-    /*
-    let name: String = employee.retname()
-    var number: String = employee.retnumber()
-    var branch: String = employee.retbranch()
-    */
-    var branch = "al ain"
+    let name: String = "adnan" //employee.name
+    var number: String = "012905" //employee.number
+    var branch: String = "al ain"   //employee.branch.name
      
-    @State var on_call: Bool = true //employee.retstatus()  // requests an on call variable
+    @State var on_call: Bool = false // employee.status  // requests an on call variable
     
     
     @State var menuOpened = false
@@ -326,10 +451,37 @@ PREVIEW
 
 */
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
 
-        HomePage() // previews the home page
+/*
+ 
+ 
+ Branches available:
+ 1) um al quwain
+ 2) sharjah
+ 3) ajman
+ 4) ras al khaimah
+ 5) fujairah
+ 
+ 
+ */
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var employeetype = "employee"
     
+    
+    
+    static var previews: some View {
+        if String(self.employeetype).lowercased() == "leader"{
+            
+            LeaderMain()
+            
+        }
+        else if String(self.employeetype).lowercased() == "employee"{
+            
+        HomePage() // previews the home page
+            
+        }
     }
 }
+
