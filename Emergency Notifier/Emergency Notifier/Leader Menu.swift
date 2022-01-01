@@ -13,6 +13,7 @@ import SwiftUI
 struct LeaderMain: View{
     
 // Properties
+    @Environment (\.colorScheme) var colorScheme
     
     let employee: Employee
     
@@ -20,20 +21,22 @@ struct LeaderMain: View{
     
     @State var menuOpened: Bool = false
     
-// Leader Properties
+// Emergency Properties
     
     @State var emergencyDetails = ""
     @State var emergencyLocation = ""
+    @State var urgency = 1
     
     
 // Body
     var body: some View{
         ZStack{
-            
+            if !menuOpened{
             
             VStack{ // VStack for the page's actual aspects
                 
-                
+        
+                VStack{
             HStack(alignment: .center){
                 
                 // Top HStack - Top horizontal stack for menu and title
@@ -50,43 +53,120 @@ struct LeaderMain: View{
                     .padding(.horizontal,10)
                     .font(.largeTitle)
                         
+                
                         Spacer()
                 
-            }.padding(.vertical, 50)
-                    .padding(.leading, 35)
+                
+                
+            }.padding(.top, 50)
+            .padding(.leading, 35)
+            .padding(.bottom, 20)
+                    
+                    Divider() }.padding(.bottom, 20)
+                
             
+                HStack{
+                    Text("New Emergency").font(.system(size:25)).underline().padding(.horizontal, 20)
+                        Spacer()
+                }
+                
                 
                 
                 VStack{ // Emergency information fields
                     
+                    
+                    // Emergency Details
                     HStack(spacing: 10){
-                        Text("Emergency Details")
-                        
-                        TextField("Test", text: $emergencyDetails, prompt: Text("test")).border(.gray).frame(height: 40)
+                        Text("Details")
+                        TextField(" Emergency Details", text: $emergencyDetails)
+                            .background(Color.gray.opacity(0.1).cornerRadius(10))
                         
                     }
                     
-                    .onSubmit {
-                        print(emergencyDetails)
-                    }.padding(.horizontal, 30)
+                    //Emergency Location
+                    HStack(spacing: 10){
+                        Text("Location")
+                        TextField("Emergency Location", text: $emergencyLocation)
+                            .background(Color.gray.opacity(0.1).cornerRadius(10))
+                    }
                     
+                    HStack(spacing: 10){
+                        Stepper(value: $urgency, in: 1...5) {
+                        Text("Urgency:")
+                            Text(String(urgency))
+                    }
+                    }
                     
+                    // Submiyt Button
+                    HStack{
+                        Spacer()
+                        Button(action: {
+                            
+                            
+                            print(emergencyDetails)
+                            
+                            
+                            
+                        }, label:
+                                {
+                            Text("Submit")
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .foregroundColor(.black)
+                                .background(RoundedRectangle(cornerRadius: 5))
+                        
+                        
+                        }
+                        )
                     
                 }
+                
+                    Divider().padding(.vertical, 20)
+                    
+                }.padding(.all, 10)  // end of emergency information
                 
                 
                 
             Spacer()
                 
+                
             } // Close Vstack for page's aspects
     
+            }
+            
+            SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: menuOpened, toggleMenu: self.toggleMenu)
+                
+        } // Close Zstack
         
-        } // Close Zstack
- 
     
-    }// cloes Body
+    }// close Body
     
 // Methods
     
+    func toggleMenu(){
+        self.menuOpened.toggle()
+    }
+    
     
 } // Close Leader Main
+
+
+struct Leader_Menu_Previews: PreviewProvider {
+    static var employeetype = "employee"
+    
+    
+    
+    static var previews: some View {
+        if String(self.employeetype).lowercased() == "leader"{
+            
+            LeaderMain(employee: adnan)
+            
+        }
+        else if String(self.employeetype).lowercased() == "employee"{
+            
+            HomePage(employee: adnan).preferredColorScheme(.dark)// previews the home page
+            
+        }
+    }
+}
+

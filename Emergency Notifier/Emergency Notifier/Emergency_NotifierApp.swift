@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct Emergency_NotifierApp: App {
-    static var employeetype = "employee"
+    static var employeetype = adnan.employeeType
     
     var body: some Scene {
         WindowGroup {
@@ -25,7 +25,7 @@ struct Emergency_NotifierApp: App {
             }
             else if String(Emergency_NotifierApp.employeetype).lowercased() == "admin"{
                 
-                NotDone()
+                Admin_Menu()
                 // Admin Page
                 
             }

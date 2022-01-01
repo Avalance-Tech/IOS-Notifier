@@ -39,7 +39,6 @@ struct MenuContents: View{
     }
     // Body
     var body: some View{
-    
         ZStack{
             Color(UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)) // Color of the side Menu #Grey
             VStack(alignment: .leading, spacing: 40) {
