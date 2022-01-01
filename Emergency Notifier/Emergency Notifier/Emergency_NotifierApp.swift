@@ -15,12 +15,12 @@ struct Emergency_NotifierApp: App {
         WindowGroup {
             if String(Emergency_NotifierApp.employeetype).lowercased() == "leader"{
                 
-                LeaderMain()
+                LeaderMain(employee: adnan)
                 
             }
             else if String(Emergency_NotifierApp.employeetype).lowercased() == "employee"{
                 
-                HomePage() // previews the home page
+                HomePage(employee: adnan) // previews the home page
                 
             }
             else if String(Emergency_NotifierApp.employeetype).lowercased() == "admin"{
