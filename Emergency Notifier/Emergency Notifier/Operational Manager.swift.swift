@@ -1,5 +1,5 @@
 //
-//  Main Page.swift
+//  Operational Manager.swift.swift
 //  Emergency Notifier
 //
 //  Created by Adnan Odimah on 02/01/2022.
@@ -7,16 +7,7 @@
 
 import SwiftUI
 
-// FOR TEAM HEAD
-
-
-
-
-
-// Home page for team head
-
-struct Home_TeamHead: View{
-    
+struct Home_OperationalManager: View{
     @State var menuOpened: Bool
     let toggleMenu: () -> Void
     
@@ -63,7 +54,7 @@ struct Home_TeamHead: View{
             print("Hhello")
             
         }, label:{
-            Text("Assign Team Head")
+            Text("Assign Operational Manager")
                 .underline()
                 .padding(.vertical, 15)
                 .padding(.horizontal, 10)
@@ -109,53 +100,40 @@ struct Home_TeamHead: View{
 }
 
 
-// MAIN PAGE
 
+struct Main_OperationalManager: View {
+    @State var menuOpened: Bool = false
 
-struct MainPage_TeamHead: View {
-    // Properties
-    
-    @State var menuOpened = false
-    
-    
-    // body
-    
     var body: some View {
+    
         ZStack{
+            if !menuOpened{
+                
+                NavigationView{
+                    
+                    Home_OperationalManager(menuOpened: self.menuOpened, toggleMenu: self.toggleMenu).navigationTitle("Home")
+                    
+                }
+                
+                
+            }
             
-        if !menuOpened{
-        
-        
-        NavigationView{
+            SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
             
-            Home_TeamHead(menuOpened:self.menuOpened, toggleMenu: self.toggleMenu ).navigationTitle("Home")
-        
-        } // close navi
-
-            } // close if
-            
+        }
     
-        
-    SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
-    
-        } // close zstack
-    } // close body
-    
-    
-    
-    // Methods
-    
-    func toggleMenu() -> Void{
-        self.menuOpened.toggle()
     }
     
-    	}
+    
+    func toggleMenu(){
+        
+        self.menuOpened.toggle()
+    
+    }
+}
 
-
-
-
-struct Main_Page_Previews: PreviewProvider {
+struct Operational_Manager_swift_Previews: PreviewProvider {
     static var previews: some View {
-        MainPage_TeamHead()
+        Main_OperationalManager()
     }
 }

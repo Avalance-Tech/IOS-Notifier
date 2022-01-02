@@ -13,32 +13,9 @@ struct Emergency_NotifierApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if String(Emergency_NotifierApp.employeetype).lowercased() == "leader"{
-                
-                LeaderMain(employee: adnan)
-                
-            }
-            else if String(Emergency_NotifierApp.employeetype).lowercased() == "employee"{
-                
-                HomePage(employee: adnan) // previews the home page
-                
-            }
-            else if String(Emergency_NotifierApp.employeetype).lowercased() == "admin"{
-                
-                Admin_Menu()
-                // Admin Page
-                
-            }
-            else if String(Emergency_NotifierApp.employeetype) == "team head"{
-                MainPage_TeamHead()
-            }
-
-             else{
-                
-                NotDone()
-                //login page
-
-            }
+        
+            Main_OperationalManager()
+            
         }
     }
 }

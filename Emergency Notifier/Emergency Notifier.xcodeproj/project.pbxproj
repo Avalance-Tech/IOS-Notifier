@@ -21,6 +21,8 @@
 		842CFFDE276E497A0003950E /* Emergency_NotifierUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFDD276E497A0003950E /* Emergency_NotifierUITests.swift */; };
 		842CFFE0276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */; };
 		843E5C112782064500E674E2 /* Main Page Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5C102782064500E674E2 /* Main Page Team Head.swift */; };
+		845D7E322782116B007DAE87 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845D7E312782116B007DAE87 /* MapKit.framework */; };
+		845D7E3427821CF5007DAE87 /* Operational Manager.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,9 @@
 		842CFFDD276E497A0003950E /* Emergency_NotifierUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierUITests.swift; sourceTree = "<group>"; };
 		842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		843E5C102782064500E674E2 /* Main Page Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main Page Team Head.swift"; sourceTree = "<group>"; };
+		845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Emergency-Notifier-Info.plist"; sourceTree = SOURCE_ROOT; };
+		845D7E312782116B007DAE87 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845D7E322782116B007DAE87 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +98,7 @@
 				842CFFD2276E497A0003950E /* Emergency NotifierTests */,
 				842CFFDC276E497A0003950E /* Emergency NotifierUITests */,
 				842CFFC0276E49790003950E /* Products */,
+				845D7E302782116B007DAE87 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +115,7 @@
 		842CFFC1276E49790003950E /* Emergency Notifier */ = {
 			isa = PBXGroup;
 			children = (
+				845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */,
 				8425D77C2780CBAF00B86C57 /* Admin Menu.swift */,
 				842CFFC4276E49790003950E /* ContentView.swift */,
 				8425D77E2781C91500B86C57 /* Create Emergency.swift */,
@@ -119,6 +127,7 @@
 				842CFFC6276E497A0003950E /* Assets.xcassets */,
 				842CFFC8276E497A0003950E /* Preview Content */,
 				843E5C102782064500E674E2 /* Main Page Team Head.swift */,
+				845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */,
 			);
 			path = "Emergency Notifier";
 			sourceTree = "<group>";
@@ -146,6 +155,14 @@
 				842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */,
 			);
 			path = "Emergency NotifierUITests";
+			sourceTree = "<group>";
+		};
+		845D7E302782116B007DAE87 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				845D7E312782116B007DAE87 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845D7E3427821CF5007DAE87 /* Operational Manager.swift.swift in Sources */,
 				842CFFC5276E49790003950E /* ContentView.swift in Sources */,
 				842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */,
 				841BE16F2780624E00A1BC56 /* Settings Page.swift in Sources */,
@@ -450,6 +468,7 @@
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Emergency-Notifier-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -479,6 +498,7 @@
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Emergency-Notifier-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
