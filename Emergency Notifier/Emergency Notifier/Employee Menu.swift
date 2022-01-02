@@ -145,3 +145,4 @@ struct HomePage: View
     
     
 }                                                                       //Close home page Struct
+
