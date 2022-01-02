@@ -14,28 +14,12 @@ struct MenuContents: View{
     
     @State var employee: Employee
     
-    var items: [MenuItem]{
-    
-        if (employee.employeeType == "employee"){
-    let i = [// Creates a list for the items in the side menu
+    var items: [MenuItem] = [// Creates a list for the items in the side menu
         MenuItem(text: "Home"),
         MenuItem(text: "Settings"),
         MenuItem(text: "Help / Support")
     ]
-    
-            return i
-    }
 
-    else if (employee.employeeType == "leader"){
-        let i = [
-            MenuItem(text: "Home"),
-            MenuItem(text: "Settings"),
-            MenuItem(text: "Contact / Support")
-        ]
-        return i
-    }
-        return []
-    }
     // Body
     var body: some View{
         ZStack{

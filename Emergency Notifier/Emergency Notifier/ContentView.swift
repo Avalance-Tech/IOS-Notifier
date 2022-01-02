@@ -35,7 +35,7 @@ var fujairah = Branch(employees: [], name: "Fujairah", emergencies: [])
 var rak = Branch(employees: [], name: "Ras Al-Khaimah", emergencies: [])
 var uaq = Branch(employees: [], name: "Umm Al Quwain", emergencies: [])
 
-let adnan : Employee = Employee(name: "adnan", number: "07405074600", status: false, branch: branches[1], employeeType: "leader")
+let adnan : Employee = Employee(name: "adnan", number: "07405074600", status: false, branch: branches[1], employeeType: "team head")
 
 let branches : [Branch] = [
     sharjah, ajman, fujairah, rak, uaq

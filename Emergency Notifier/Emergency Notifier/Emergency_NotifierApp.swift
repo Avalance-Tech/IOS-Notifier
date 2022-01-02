@@ -29,6 +29,9 @@ struct Emergency_NotifierApp: App {
                 // Admin Page
                 
             }
+            else if String(Emergency_NotifierApp.employeetype) == "team head"{
+                MainPage_TeamHead()
+            }
 
              else{
                 

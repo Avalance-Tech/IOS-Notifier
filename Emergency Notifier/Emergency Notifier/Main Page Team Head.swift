@@ -143,7 +143,7 @@ struct MainPage_TeamHead: View {
         self.menuOpened.toggle()
     }
     
-    }
+    	}
 
 
 
