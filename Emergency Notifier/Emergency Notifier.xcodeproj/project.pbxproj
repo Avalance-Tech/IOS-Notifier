@@ -12,6 +12,8 @@
 		841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16C27805D9100A1BC56 /* Side Menu.swift */; };
 		841BE16F2780624E00A1BC56 /* Settings Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16E2780624E00A1BC56 /* Settings Page.swift */; };
 		8425D77D2780CBAF00B86C57 /* Admin Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D77C2780CBAF00B86C57 /* Admin Menu.swift */; };
+		8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D77E2781C91500B86C57 /* Create Emergency.swift */; };
+		8425D7812781CA3400B86C57 /* Main Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D7802781CA3400B86C57 /* Main Page.swift */; };
 		842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */; };
 		842CFFC5276E49790003950E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFC4276E49790003950E /* ContentView.swift */; };
 		842CFFC7276E497A0003950E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842CFFC6276E497A0003950E /* Assets.xcassets */; };
@@ -44,6 +46,8 @@
 		841BE16C27805D9100A1BC56 /* Side Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Side Menu.swift"; sourceTree = "<group>"; };
 		841BE16E2780624E00A1BC56 /* Settings Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings Page.swift"; sourceTree = "<group>"; };
 		8425D77C2780CBAF00B86C57 /* Admin Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Admin Menu.swift"; sourceTree = "<group>"; };
+		8425D77E2781C91500B86C57 /* Create Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create Emergency.swift"; sourceTree = "<group>"; };
+		8425D7802781CA3400B86C57 /* Main Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Main Page.swift"; sourceTree = "<group>"; };
 		842CFFBF276E49790003950E /* Emergency Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Emergency Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierApp.swift; sourceTree = "<group>"; };
 		842CFFC4276E49790003950E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,15 +108,17 @@
 		842CFFC1276E49790003950E /* Emergency Notifier */ = {
 			isa = PBXGroup;
 			children = (
-				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
+				8425D77C2780CBAF00B86C57 /* Admin Menu.swift */,
 				842CFFC4276E49790003950E /* ContentView.swift */,
+				8425D77E2781C91500B86C57 /* Create Emergency.swift */,
+				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
 				841BE16A27804CB900A1BC56 /* Employee Menu.swift */,
 				841BE16827804C9400A1BC56 /* Leader Menu.swift */,
+				841BE16E2780624E00A1BC56 /* Settings Page.swift */,
+				841BE16C27805D9100A1BC56 /* Side Menu.swift */,
 				842CFFC6276E497A0003950E /* Assets.xcassets */,
 				842CFFC8276E497A0003950E /* Preview Content */,
-				841BE16C27805D9100A1BC56 /* Side Menu.swift */,
-				841BE16E2780624E00A1BC56 /* Settings Page.swift */,
-				8425D77C2780CBAF00B86C57 /* Admin Menu.swift */,
+				8425D7802781CA3400B86C57 /* Main Page.swift */,
 			);
 			path = "Emergency Notifier";
 			sourceTree = "<group>";
@@ -276,6 +282,8 @@
 				842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */,
 				841BE16F2780624E00A1BC56 /* Settings Page.swift in Sources */,
 				841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */,
+				8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */,
+				8425D7812781CA3400B86C57 /* Main Page.swift in Sources */,
 				841BE16927804C9400A1BC56 /* Leader Menu.swift in Sources */,
 				8425D77D2780CBAF00B86C57 /* Admin Menu.swift in Sources */,
 				841BE16B27804CB900A1BC56 /* Employee Menu.swift in Sources */,

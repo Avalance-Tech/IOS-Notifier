@@ -30,7 +30,6 @@ struct MenuContents: View{
         let i = [
             MenuItem(text: "Home"),
             MenuItem(text: "Settings"),
-            MenuItem(text: "Recent Emergencies"),
             MenuItem(text: "Contact / Support")
         ]
         return i

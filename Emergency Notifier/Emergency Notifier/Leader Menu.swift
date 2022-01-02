@@ -152,7 +152,7 @@ struct LeaderMain: View{
 
 
 struct Leader_Menu_Previews: PreviewProvider {
-    static var employeetype = "employee"
+    static var employeetype = "leader"
     
     
     
