@@ -25,19 +25,19 @@ struct Home_Firefighter: View {
             
             
             // Create Emergency button
-        Button( action: {
-        
-        print("Hhello")
-            
-        }, label:{
-        Text("Report an emergency")
-            .underline()
-            .padding(.vertical, 15)
-            .padding(.horizontal, 10)
-            .foregroundColor(Color.blue)
-            .font(.system(size: 20, weight: .bold, design: .rounded))
-            
-        })
+            Button( action: {
+                
+                print("Hhello")
+                
+            }, label:{
+                Text("Report an emergency")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                
+            })
             
             
             // Recent Emergencies
@@ -50,30 +50,30 @@ struct Home_Firefighter: View {
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
                     .font(.system(size: 20, weight: .bold, design: .rounded))
-
+                
             })
-
+            
             
             // Settings
             
-        Button(action: {
-            self.toggleMenu()
-            self.menuOpened.toggle()
-            
-        },label: {
-            Image(systemName: "list.bullet")
-                .font(.system(size: 30, weight: .bold, design: .rounded))
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-            
-        })
+            Button(action: {
+                self.toggleMenu()
+                self.menuOpened.toggle()
+                
+            },label: {
+                Image(systemName: "list.bullet")
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                
+            })
             
             Spacer()
             Spacer()
         }
         
     }
-    }
+}
 
 struct Main_Page_Firefighter: View {
     @State var menuOpened = false

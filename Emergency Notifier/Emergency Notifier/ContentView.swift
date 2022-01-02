@@ -128,22 +128,4 @@ PREVIEW
  */
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var employeetype = "team head"
-    
-    
-    
-    static var previews: some View {
-        if String(self.employeetype).lowercased() == "team head"{
-            
-            LeaderMain(employee: adnan)
-            
-        }
-        else if String(self.employeetype).lowercased() == "employee"{
-            
-            HomePage(employee: adnan).preferredColorScheme(.dark)// previews the home page
-            
-        }
-    }
-}
 

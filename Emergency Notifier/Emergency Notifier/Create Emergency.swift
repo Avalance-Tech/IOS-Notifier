@@ -10,10 +10,7 @@ import SwiftUI
 struct Create_Emergency: View {
     var body: some View {
         
-        NavigationView{
-        
-            
-        }
+        Text("Emergency")
         
         
     }

@@ -151,22 +151,4 @@ struct LeaderMain: View{
 } // Close Leader Main
 
 
-struct Leader_Menu_Previews: PreviewProvider {
-    static var employeetype = "leader"
-    
-    
-    
-    static var previews: some View {
-        if String(self.employeetype).lowercased() == "leader"{
-            
-            LeaderMain(employee: adnan)
-            
-        }
-        else if String(self.employeetype).lowercased() == "employee"{
-            
-            HomePage(employee: adnan).preferredColorScheme(.dark)// previews the home page
-            
-        }
-    }
-}
 

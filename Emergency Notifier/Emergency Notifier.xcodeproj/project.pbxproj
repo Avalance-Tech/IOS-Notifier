@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		841BE16927804C9400A1BC56 /* Leader Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16827804C9400A1BC56 /* Leader Menu.swift */; };
-		841BE16B27804CB900A1BC56 /* Employee Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16A27804CB900A1BC56 /* Employee Menu.swift */; };
 		841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16C27805D9100A1BC56 /* Side Menu.swift */; };
 		841BE16F2780624E00A1BC56 /* Settings Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16E2780624E00A1BC56 /* Settings Page.swift */; };
 		8425D77D2780CBAF00B86C57 /* Admin Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D77C2780CBAF00B86C57 /* Admin Menu.swift */; };
@@ -21,12 +20,9 @@
 		842CFFDE276E497A0003950E /* Emergency_NotifierUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFDD276E497A0003950E /* Emergency_NotifierUITests.swift */; };
 		842CFFE0276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */; };
 		843E5C112782064500E674E2 /* Main Page Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5C102782064500E674E2 /* Main Page Team Head.swift */; };
-<<<<<<< HEAD
 		845D7E322782116B007DAE87 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845D7E312782116B007DAE87 /* MapKit.framework */; };
 		845D7E3427821CF5007DAE87 /* Operational Manager.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */; };
-=======
 		DE872118278217E600B0C76C /* Main Page Firefighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE872117278217E600B0C76C /* Main Page Firefighter.swift */; };
->>>>>>> 44e527b785f7d7bdb8d854818c6673d055924ddf
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		841BE16827804C9400A1BC56 /* Leader Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Leader Menu.swift"; sourceTree = "<group>"; };
-		841BE16A27804CB900A1BC56 /* Employee Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Employee Menu.swift"; sourceTree = "<group>"; };
 		841BE16C27805D9100A1BC56 /* Side Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Side Menu.swift"; sourceTree = "<group>"; };
 		841BE16E2780624E00A1BC56 /* Settings Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings Page.swift"; sourceTree = "<group>"; };
 		8425D77C2780CBAF00B86C57 /* Admin Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Admin Menu.swift"; sourceTree = "<group>"; };
@@ -64,13 +59,10 @@
 		842CFFDD276E497A0003950E /* Emergency_NotifierUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierUITests.swift; sourceTree = "<group>"; };
 		842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		843E5C102782064500E674E2 /* Main Page Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main Page Team Head.swift"; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Emergency-Notifier-Info.plist"; sourceTree = SOURCE_ROOT; };
 		845D7E312782116B007DAE87 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift.swift"; sourceTree = "<group>"; };
-=======
 		DE872117278217E600B0C76C /* Main Page Firefighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Main Page Firefighter.swift"; sourceTree = "<group>"; };
->>>>>>> 44e527b785f7d7bdb8d854818c6673d055924ddf
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +121,6 @@
 				842CFFC4276E49790003950E /* ContentView.swift */,
 				8425D77E2781C91500B86C57 /* Create Emergency.swift */,
 				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
-				841BE16A27804CB900A1BC56 /* Employee Menu.swift */,
 				841BE16827804C9400A1BC56 /* Leader Menu.swift */,
 				841BE16E2780624E00A1BC56 /* Settings Page.swift */,
 				841BE16C27805D9100A1BC56 /* Side Menu.swift */,
@@ -314,7 +305,6 @@
 				8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */,
 				841BE16927804C9400A1BC56 /* Leader Menu.swift in Sources */,
 				8425D77D2780CBAF00B86C57 /* Admin Menu.swift in Sources */,
-				841BE16B27804CB900A1BC56 /* Employee Menu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +466,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Emergency Notifier/Preview Content\"";
-				DEVELOPMENT_TEAM = 4VNY33VKL8;
+				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Emergency-Notifier-Info.plist";
@@ -490,7 +480,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Ayman.Emergency-Notifier";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Adnan.Emergency-Notifier";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -508,7 +498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Emergency Notifier/Preview Content\"";
-				DEVELOPMENT_TEAM = 4VNY33VKL8;
+				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Emergency-Notifier-Info.plist";
@@ -522,7 +512,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Ayman.Emergency-Notifier";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Adnan.Emergency-Notifier";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -17,6 +17,7 @@ import SwiftUI
 
 struct Home_TeamHead: View{
     
+    
     @State var menuOpened: Bool
     let toggleMenu: () -> Void
     
@@ -27,50 +28,51 @@ struct Home_TeamHead: View{
             
             Spacer()
             // Create Emergency button
-        Button( action: {
-        
-        print("Hhello")
-            
-        }, label:{
-        Text("Report an emergency")
-            .underline()
-            .padding(.vertical, 15)
-            .padding(.horizontal, 10)
-            .foregroundColor(Color.blue)
-            .font(.system(size: 20, design: .rounded))
-            
-        })
+                
+            NavigationLink {
+                
+                Create_Emergency()
+                
+                }label:{
+                Text("Report an emergency")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+                
+            }
             
             // Create account Button
-        Button( action: {
-            
-        print("Hhello")
-    
-        }, label:{
-        Text("Create/edit/delete an account")
-        
-            .underline()
-            .padding(.vertical, 15)
-            .padding(.horizontal, 10)
-            .foregroundColor(Color.blue)
-            .font(.system(size: 20, design: .rounded))
-        
-    })
+            Button( action: {
+                
+                print("Hhello")
+                
+            }, label:{
+                Text("Create/edit/delete an account")
+                
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+                
+            })
             
             // Assign Acting Team Head button
-        Button( action: {
+            Button( action: {
+                
+                print("Hhello")
+                
+            }, label:{
+                Text("Assign Team Head")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+            })
             
-            print("Hhello")
-            
-        }, label:{
-            Text("Assign Team Head")
-                .underline()
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-                .foregroundColor(Color.blue)
-                .font(.system(size: 20, design: .rounded))
-        })
- 
             
             // Recent Emergencies
             
@@ -84,23 +86,23 @@ struct Home_TeamHead: View{
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
                     .font(.system(size: 20, design: .rounded))
-
+                
             })
-
+            
             
             // Side Menu
             
-        Button(action: {
-            self.toggleMenu()
-            self.menuOpened.toggle()
-            
-        },label: {
-            Image(systemName: "list.bullet")
-                .font(.system(size: 30, design: .rounded))
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-            
-        })
+            Button(action: {
+                self.toggleMenu()
+                self.menuOpened.toggle()
+                
+            },label: {
+                Image(systemName: "list.bullet")
+                    .font(.system(size: 30, design: .rounded))
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                
+            })
             
             Spacer()
             Spacer()
@@ -123,21 +125,21 @@ struct MainPage_TeamHead: View {
     var body: some View {
         ZStack{
             
-        if !menuOpened{
-        
-        
-        NavigationView{
-            
-            Home_TeamHead(menuOpened:self.menuOpened, toggleMenu: self.toggleMenu ).navigationTitle("Home")
-        
-        } // close navi
-
+            if !menuOpened{
+                
+                
+                NavigationView{
+                    
+                    Home_TeamHead(menuOpened:self.menuOpened, toggleMenu: self.toggleMenu ).navigationTitle("Home")
+                    
+                } // close navi
+                
             } // close if
             
-    
-        
-    SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
-    
+            
+            
+            SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
+            
         } // close zstack
     } // close body
     
@@ -149,7 +151,7 @@ struct MainPage_TeamHead: View {
         self.menuOpened.toggle()
     }
     
-    	}
+}
 
 
 
