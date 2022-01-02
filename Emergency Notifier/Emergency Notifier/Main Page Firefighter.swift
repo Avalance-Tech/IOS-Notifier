@@ -15,14 +15,15 @@ struct Home_Firefighter: View {
     
     
     var body: some View {
-        VStack{
+        VStack(alignment: .center, spacing: 25 ){
             
             Toggle(isOn: $onCall) {
-                Text("On Call").background(onCall ? Color.green : Color.red)
-            }
+                Text("On Call").background(onCall ? Color.green : Color.red).padding(.top, 50)
+                
+                
+            } .padding(.top, 50)
             
             
-            Spacer()
             // Create Emergency button
         Button( action: {
         
