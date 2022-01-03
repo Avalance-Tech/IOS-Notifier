@@ -47,7 +47,7 @@ struct MenuItem: Identifiable{
     let text: String
 }
 
-struct Employee{
+struct Employee: Identifiable{
     let id = UUID()
     
     var password: String = "password"  // Encrypt later
@@ -59,7 +59,7 @@ struct Employee{
 
     var branch: Branch
     
-    var employeeType: String // validate that its either leader or employee
+    var employeeType: String
     
     
 }

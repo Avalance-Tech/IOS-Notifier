@@ -117,15 +117,15 @@
 			children = (
 				845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */,
 				8425D77C2780CBAF00B86C57 /* Admin Menu.swift */,
-				DE872117278217E600B0C76C /* Main Page Firefighter.swift */,
 				842CFFC4276E49790003950E /* ContentView.swift */,
 				8425D77E2781C91500B86C57 /* Create Emergency.swift */,
-				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
 				841BE16827804C9400A1BC56 /* Leader Menu.swift */,
+				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
 				841BE16E2780624E00A1BC56 /* Settings Page.swift */,
 				841BE16C27805D9100A1BC56 /* Side Menu.swift */,
 				842CFFC6276E497A0003950E /* Assets.xcassets */,
 				842CFFC8276E497A0003950E /* Preview Content */,
+				DE872117278217E600B0C76C /* Main Page Firefighter.swift */,
 				843E5C102782064500E674E2 /* Main Page Team Head.swift */,
 				845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */,
 			);

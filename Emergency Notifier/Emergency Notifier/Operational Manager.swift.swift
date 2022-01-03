@@ -18,19 +18,20 @@ struct Home_OperationalManager: View{
             
             Spacer()
             // Create Emergency button
-        Button( action: {
-        
-        print("Hhello")
             
-        }, label:{
-        Text("Report an emergency")
-            .underline()
-            .padding(.vertical, 15)
-            .padding(.horizontal, 10)
-            .foregroundColor(Color.blue)
-            .font(.system(size: 20, design: .rounded))
+            NavigationLink {
+                
+                Create_Emergency()
+                
+                }label:{
+                Text("Report an emergency")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+                }
             
-        })
             
             // Create account Button
         Button( action: {
