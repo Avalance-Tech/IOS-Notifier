@@ -18,13 +18,11 @@ import SwiftUI
 struct Home_TeamHead: View{
     
     
-    @State var menuOpened: Bool
-    let toggleMenu: () -> Void
     
     var body: some View{
         
         VStack{
-            
+            TopMenu
             
             Spacer()
             // Create Emergency button
@@ -88,24 +86,11 @@ struct Home_TeamHead: View{
                     .font(.system(size: 20, design: .rounded))
                 
             })
-            
-            
-            // Side Menu
-            
-            Button(action: {
-                self.toggleMenu()
-                self.menuOpened.toggle()
-                
-            },label: {
-                Image(systemName: "list.bullet")
-                    .font(.system(size: 30, design: .rounded))
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                
-            })
+        
             
             Spacer()
             Spacer()
+            BottomMenu
         }
     }
 }
@@ -124,21 +109,14 @@ struct MainPage_TeamHead: View {
     
     var body: some View {
         ZStack{
-            
-            if !menuOpened{
                 
                 
                 NavigationView{
                     
-                    Home_TeamHead(menuOpened:self.menuOpened, toggleMenu: self.toggleMenu ).navigationTitle("Home")
+                    Home_TeamHead().navigationTitle("Home")
                     
                 } // close navi
                 
-            } // close if
-            
-            
-            
-            SideMenu(employee: adnan, currentPage: "Home", width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
             
         } // close zstack
     } // close body

@@ -9,13 +9,18 @@ import SwiftUI
 
 struct Home_Firefighter: View {
     
-    @State var menuOpened: Bool
-    let toggleMenu: () -> Void
+    
     @State var onCall = false
     
     
     var body: some View {
+        
+
+        
         VStack(alignment: .center, spacing: 25 ){
+            
+            TopMenu
+            
             
             Toggle(isOn: $onCall) {
                 Text("On Call").background(onCall ? Color.green : Color.red).padding(.top, 50)
@@ -52,24 +57,11 @@ struct Home_Firefighter: View {
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                 
             })
-            
-            
-            // Settings
-            
-            Button(action: {
-                self.toggleMenu()
-                self.menuOpened.toggle()
-                
-            },label: {
-                Image(systemName: "list.bullet")
-                    .font(.system(size: 30, weight: .bold, design: .rounded))
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                
-            })
-            
+        
             Spacer()
             Spacer()
+            
+            BottomMenu
         }
         
     }
@@ -83,21 +75,15 @@ struct Main_Page_Firefighter: View {
     
     var body: some View {
         ZStack{
-            
-        if !menuOpened{
+
         
         
         NavigationView{
             
-            Home_Firefighter(menuOpened:self.menuOpened, toggleMenu: self.toggleMenu ).navigationTitle("Home")
+            Home_Firefighter().navigationTitle("Home")
         
         } // close navi
-
-            } // Close if
             
-    
-        
-            SideMenu(employee: adnan, currentPage: "Home", width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
     
         } // close zstack
     } // close body
@@ -106,9 +92,6 @@ struct Main_Page_Firefighter: View {
     
     // Methods
     
-    func toggleMenu() -> Void{
-        self.menuOpened.toggle()
-    }
 }
 
 

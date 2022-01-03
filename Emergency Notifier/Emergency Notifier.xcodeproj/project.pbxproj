@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16C27805D9100A1BC56 /* Side Menu.swift */; };
 		8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D77E2781C91500B86C57 /* Create Emergency.swift */; };
 		842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */; };
 		842CFFC5276E49790003950E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFC4276E49790003950E /* ContentView.swift */; };
@@ -39,7 +38,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		841BE16C27805D9100A1BC56 /* Side Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Side Menu.swift"; sourceTree = "<group>"; };
 		8425D77E2781C91500B86C57 /* Create Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create Emergency.swift"; sourceTree = "<group>"; };
 		842CFFBF276E49790003950E /* Emergency Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Emergency Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierApp.swift; sourceTree = "<group>"; };
@@ -107,14 +105,13 @@
 		842CFFC1276E49790003950E /* Emergency Notifier */ = {
 			isa = PBXGroup;
 			children = (
-				84AE94F92783661900F4900B /* Assets.xcassets */,
-				845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */,
 				84AE94EE2783573100F4900B /* Operational Manager.swift */,
 				84AE94F12783576F00F4900B /* Team Head.swift */,
 				84AE94F02783576F00F4900B /* Firefighter.swift */,
-				842CFFC4276E49790003950E /* ContentView.swift */,
+				84AE94F92783661900F4900B /* Assets.xcassets */,
 				8425D77E2781C91500B86C57 /* Create Emergency.swift */,
-				841BE16C27805D9100A1BC56 /* Side Menu.swift */,
+				845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */,
+				842CFFC4276E49790003950E /* ContentView.swift */,
 				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
 			);
 			path = "Emergency Notifier";
@@ -279,7 +276,6 @@
 				842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */,
 				84AE94F32783576F00F4900B /* Team Head.swift in Sources */,
 				84AE94F22783576F00F4900B /* Firefighter.swift in Sources */,
-				841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */,
 				8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
