@@ -138,7 +138,7 @@ struct MainPage_TeamHead: View {
             
             
             
-            SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
+            SideMenu(employee: adnan, currentPage: "Home", width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
             
         } // close zstack
     } // close body

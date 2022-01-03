@@ -8,12 +8,50 @@
 import SwiftUI
 
 struct Home_OperationalManager: View{
-    @State var menuOpened: Bool
-    let toggleMenu: () -> Void
     
     var body: some View{
         
         VStack{
+            
+            HStack(spacing:12){Spacer()
+                
+                // Settings
+                NavigationLink {
+                    
+                    	
+                    
+                } label: {
+                    Image(systemName: "gear")
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                }
+
+                
+                // help
+                NavigationLink{
+                    
+                    
+                
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                        
+                }
+                
+                // profile
+                NavigationLink {
+                    
+                    
+                    
+                } label: {
+                    Image(systemName: "person.crop.circle" )
+                        .resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                }
+
+                
+            }.padding(.trailing, 20)
             
             
             Spacer()
@@ -80,22 +118,15 @@ struct Home_OperationalManager: View{
             })
 
             
-            // Side Menu
-            
-        Button(action: {
-            self.toggleMenu()
-            self.menuOpened.toggle()
-            
-        },label: {
-            Image(systemName: "list.bullet")
-                .font(.system(size: 30, design: .rounded))
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-            
-        })
-            
             Spacer()
-            Spacer()
+
+            Image("Avala_logo")
+                .resizable()
+                .frame(width: 40, height: 40, alignment: .bottom)
+
+            Text("Made by \n Avalanche Tech")
+                .font(.system(size: 15, weight: .light, design: .rounded))
+                .multilineTextAlignment(.center)
         }
     }
 }
@@ -103,38 +134,25 @@ struct Home_OperationalManager: View{
 
 
 struct Main_OperationalManager: View {
-    @State var menuOpened: Bool = false
 
     var body: some View {
     
         ZStack{
-            if !menuOpened{
                 
                 NavigationView{
                     
-                    Home_OperationalManager(menuOpened: self.menuOpened, toggleMenu: self.toggleMenu).navigationTitle("Home")
+                    Home_OperationalManager()
+                        .navigationTitle("Home")
                     
-                }
-                
-                
-            }
-            
-            SideMenu(width: UIScreen.main.bounds.width/1.5, menuOpened: self.menuOpened, toggleMenu: self.toggleMenu)
-            
         }
     
     }
     
-    
-    func toggleMenu(){
-        
-        self.menuOpened.toggle()
-    
-    }
+  }
 }
-
 struct Operational_Manager_swift_Previews: PreviewProvider {
     static var previews: some View {
         Main_OperationalManager()
+            .preferredColorScheme(.dark)
     }
 }

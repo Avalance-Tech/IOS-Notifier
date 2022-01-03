@@ -12,7 +12,8 @@ import SwiftUI
 
 struct MenuContents: View{
     
-    @State var employee: Employee
+    let currentPage: String
+    let employee: Employee
     
     var items: [MenuItem] = [// Creates a list for the items in the side menu
         MenuItem(text: "Home"),
@@ -24,17 +25,40 @@ struct MenuContents: View{
     var body: some View{
         ZStack{
             Color(UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)) // Color of the side Menu #Grey
-            VStack(alignment: .leading, spacing: 40) {
+            VStack(alignment: .leading, spacing: 30) {
+                
+                Text("Logged in as \(employee.name)")
+                    .underline()
+                    .padding(.all,-20)
+                    .offset(x: 35, y: 20)
+                    .foregroundColor(Color.white.opacity(0.8))
+                
+                
+                
                 ForEach(items) {item in   // Loops through the items in the list
                     HStack{
-                        Text(item.text)   // Creates a Text field for the item
-                            .font(.system(size:22))
-                            .bold()
-                            .multilineTextAlignment(.leading)
-                            .foregroundColor(Color.white)
-                            .opacity(0.9)
+                        
+                        Button {
+                            
+                            print("switch to \(item.text)")
+                            
+                        } label: {
+                            Text(item.text)   // Creates a Text field for the item
+                                .font(.system(size:22))
+                                .bold()
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(Color.white)
+                                .opacity(0.9)
+                                .disabled(item.text == self.currentPage ? true : false)
+                                
+                        }
+
+
+                        
+                        
                     }.padding(.leading, 20).padding(.top, 25)
-                    Divider()  // Adds a divider between them  (outside the HStack so it is horizontal)
+                    Divider().foregroundColor(.green)
+                        .font(.system(size: 20, weight: .bold))// Adds a divider between them  (outside the HStack so it is horizontal)
                 }
                 Spacer()  // Moves it to the top
 
@@ -73,6 +97,8 @@ struct MenuContents: View{
 struct SideMenu: View
 {
     // Properties
+    let employee: Employee
+    let currentPage: String
     let width: CGFloat
     let menuOpened: Bool
     let toggleMenu: () -> Void
@@ -96,7 +122,7 @@ struct SideMenu: View
             
             // Menu Content
             HStack{
-                MenuContents(employee: adnan)
+                MenuContents(currentPage: currentPage, employee: employee)
                     .frame(width: width)  // sets its frame
                     .offset(x: menuOpened ? 0 : -width) // makes it only take up a certain amount of the screen (/1.5)
                     .ignoresSafeArea()   // ignores safe area (such as notch etc.)
@@ -106,5 +132,16 @@ struct SideMenu: View
                     
             }
         }
+    }
+}
+
+struct sidemenu_Previews: PreviewProvider {
+    
+    static var previews: some View {
+    
+        SideMenu(employee: adnan, currentPage: "Home", width: UIScreen.main.bounds.width/1.5, menuOpened: true) {
+            print("test")
+        }
+    
     }
 }

@@ -14,7 +14,7 @@ struct Emergency_NotifierApp: App {
     var body: some Scene {
         WindowGroup {
         
-            Main_Page_Firefighter()
+           Main_OperationalManager()
             
         }
     }

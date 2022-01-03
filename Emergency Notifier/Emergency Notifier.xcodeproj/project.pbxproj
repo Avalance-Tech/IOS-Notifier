@@ -7,22 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		841BE16927804C9400A1BC56 /* Leader Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16827804C9400A1BC56 /* Leader Menu.swift */; };
 		841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16C27805D9100A1BC56 /* Side Menu.swift */; };
-		841BE16F2780624E00A1BC56 /* Settings Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BE16E2780624E00A1BC56 /* Settings Page.swift */; };
-		8425D77D2780CBAF00B86C57 /* Admin Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D77C2780CBAF00B86C57 /* Admin Menu.swift */; };
 		8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8425D77E2781C91500B86C57 /* Create Emergency.swift */; };
 		842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */; };
 		842CFFC5276E49790003950E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFC4276E49790003950E /* ContentView.swift */; };
-		842CFFC7276E497A0003950E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842CFFC6276E497A0003950E /* Assets.xcassets */; };
-		842CFFCA276E497A0003950E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842CFFC9276E497A0003950E /* Preview Assets.xcassets */; };
 		842CFFD4276E497A0003950E /* Emergency_NotifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFD3276E497A0003950E /* Emergency_NotifierTests.swift */; };
 		842CFFDE276E497A0003950E /* Emergency_NotifierUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFDD276E497A0003950E /* Emergency_NotifierUITests.swift */; };
 		842CFFE0276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */; };
-		843E5C112782064500E674E2 /* Main Page Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843E5C102782064500E674E2 /* Main Page Team Head.swift */; };
 		845D7E322782116B007DAE87 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845D7E312782116B007DAE87 /* MapKit.framework */; };
-		845D7E3427821CF5007DAE87 /* Operational Manager.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */; };
-		DE872118278217E600B0C76C /* Main Page Firefighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE872117278217E600B0C76C /* Main Page Firefighter.swift */; };
+		84AE94EF2783573100F4900B /* Operational Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AE94EE2783573100F4900B /* Operational Manager.swift */; };
+		84AE94F22783576F00F4900B /* Firefighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AE94F02783576F00F4900B /* Firefighter.swift */; };
+		84AE94F32783576F00F4900B /* Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AE94F12783576F00F4900B /* Team Head.swift */; };
+		84AE94FB2783661900F4900B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84AE94F92783661900F4900B /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,26 +39,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		841BE16827804C9400A1BC56 /* Leader Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Leader Menu.swift"; sourceTree = "<group>"; };
 		841BE16C27805D9100A1BC56 /* Side Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Side Menu.swift"; sourceTree = "<group>"; };
-		841BE16E2780624E00A1BC56 /* Settings Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings Page.swift"; sourceTree = "<group>"; };
-		8425D77C2780CBAF00B86C57 /* Admin Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Admin Menu.swift"; sourceTree = "<group>"; };
 		8425D77E2781C91500B86C57 /* Create Emergency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Create Emergency.swift"; sourceTree = "<group>"; };
 		842CFFBF276E49790003950E /* Emergency Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Emergency Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierApp.swift; sourceTree = "<group>"; };
 		842CFFC4276E49790003950E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		842CFFC6276E497A0003950E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		842CFFC9276E497A0003950E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		842CFFCF276E497A0003950E /* Emergency NotifierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Emergency NotifierTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CFFD3276E497A0003950E /* Emergency_NotifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierTests.swift; sourceTree = "<group>"; };
 		842CFFD9276E497A0003950E /* Emergency NotifierUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Emergency NotifierUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		842CFFDD276E497A0003950E /* Emergency_NotifierUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierUITests.swift; sourceTree = "<group>"; };
 		842CFFDF276E497A0003950E /* Emergency_NotifierUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		843E5C102782064500E674E2 /* Main Page Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main Page Team Head.swift"; sourceTree = "<group>"; };
 		845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Emergency-Notifier-Info.plist"; sourceTree = SOURCE_ROOT; };
 		845D7E312782116B007DAE87 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift.swift"; sourceTree = "<group>"; };
-		DE872117278217E600B0C76C /* Main Page Firefighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Main Page Firefighter.swift"; sourceTree = "<group>"; };
+		84AE94EE2783573100F4900B /* Operational Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift"; sourceTree = "<group>"; };
+		84AE94F02783576F00F4900B /* Firefighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firefighter.swift; sourceTree = "<group>"; };
+		84AE94F12783576F00F4900B /* Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Team Head.swift"; sourceTree = "<group>"; };
+		84AE94F92783661900F4900B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,29 +107,17 @@
 		842CFFC1276E49790003950E /* Emergency Notifier */ = {
 			isa = PBXGroup;
 			children = (
+				84AE94F92783661900F4900B /* Assets.xcassets */,
 				845D7E2F2782116B007DAE87 /* Emergency-Notifier-Info.plist */,
-				8425D77C2780CBAF00B86C57 /* Admin Menu.swift */,
+				84AE94EE2783573100F4900B /* Operational Manager.swift */,
+				84AE94F12783576F00F4900B /* Team Head.swift */,
+				84AE94F02783576F00F4900B /* Firefighter.swift */,
 				842CFFC4276E49790003950E /* ContentView.swift */,
 				8425D77E2781C91500B86C57 /* Create Emergency.swift */,
-				841BE16827804C9400A1BC56 /* Leader Menu.swift */,
-				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
-				841BE16E2780624E00A1BC56 /* Settings Page.swift */,
 				841BE16C27805D9100A1BC56 /* Side Menu.swift */,
-				842CFFC6276E497A0003950E /* Assets.xcassets */,
-				842CFFC8276E497A0003950E /* Preview Content */,
-				DE872117278217E600B0C76C /* Main Page Firefighter.swift */,
-				843E5C102782064500E674E2 /* Main Page Team Head.swift */,
-				845D7E3327821CF5007DAE87 /* Operational Manager.swift.swift */,
+				842CFFC2276E49790003950E /* Emergency_NotifierApp.swift */,
 			);
 			path = "Emergency Notifier";
-			sourceTree = "<group>";
-		};
-		842CFFC8276E497A0003950E /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				842CFFC9276E497A0003950E /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		842CFFD2276E497A0003950E /* Emergency NotifierTests */ = {
@@ -269,8 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				842CFFCA276E497A0003950E /* Preview Assets.xcassets in Resources */,
-				842CFFC7276E497A0003950E /* Assets.xcassets in Resources */,
+				84AE94FB2783661900F4900B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,16 +274,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				845D7E3427821CF5007DAE87 /* Operational Manager.swift.swift in Sources */,
+				84AE94EF2783573100F4900B /* Operational Manager.swift in Sources */,
 				842CFFC5276E49790003950E /* ContentView.swift in Sources */,
-				DE872118278217E600B0C76C /* Main Page Firefighter.swift in Sources */,
 				842CFFC3276E49790003950E /* Emergency_NotifierApp.swift in Sources */,
-				841BE16F2780624E00A1BC56 /* Settings Page.swift in Sources */,
-				843E5C112782064500E674E2 /* Main Page Team Head.swift in Sources */,
+				84AE94F32783576F00F4900B /* Team Head.swift in Sources */,
+				84AE94F22783576F00F4900B /* Firefighter.swift in Sources */,
 				841BE16D27805D9100A1BC56 /* Side Menu.swift in Sources */,
 				8425D77F2781C91500B86C57 /* Create Emergency.swift in Sources */,
-				841BE16927804C9400A1BC56 /* Leader Menu.swift in Sources */,
-				8425D77D2780CBAF00B86C57 /* Admin Menu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,7 +441,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Emergency Notifier/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -497,7 +473,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Emergency Notifier/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
