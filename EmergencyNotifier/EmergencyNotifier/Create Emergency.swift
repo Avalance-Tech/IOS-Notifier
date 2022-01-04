@@ -24,22 +24,34 @@ struct showSelected: View{
     
     var body: some View{
         
-        HStack(spacing: 10){
+        HStack(spacing: 7){
+            
+            Text(employee.employeeID)
+                .frame(width: 45, height: 30, alignment: .leading)
+                .padding(.leading, 3)
+            
+            Divider()
             
             Text(String(employee.name).capitalized(with: .current))
-                .frame(width:130, height: 30, alignment: .leading)
-                .padding(.leading, 20)
+                .frame(width:140, height: 30, alignment: .leading)
             
             
             Image(employee.status ? "checkmark.circle.fill" : "circle.slash")
-                .frame(width:15, height: 30, alignment: .leading)
+                .frame(width:23, height: 30, alignment: .leading)
             
-            Text(employee.branch.name)
-                .frame(width:130, height: 30, alignment: .leading)
+            Divider()
+            
+            Text(branchInitial(branch: employee.branch.name))
+                .frame(width:40, height: 30, alignment: .leading)
 
-            Text(typeinitial(emptype: employee.employeeType)).font(.system(size: 15,weight: .light))
-                .frame(width: 40, height: 30)
-     
+            Divider()
+            
+            Text(typeInitial(emptype: employee.employeeType))
+                .font(.system(size: 15,weight: .light))
+                .frame(width: 32, height: 30)
+            
+            Divider()
+            
             if self.isSelected{
             Image(systemName:"checkmark")
                 .foregroundColor(Color.blue)
@@ -47,20 +59,41 @@ struct showSelected: View{
             }else{
                 Text("").frame(width: 20, height: 30)
             }
-            Spacer()
-        }.onTapGesture {
+            
+        
+        }
+        .onTapGesture {
             if self.isSelected{
                 self.selectedItems.remove(self.employee.id)
             } else{
                 self.selectedItems.insert(self.employee.id)
             }
-        }.border(Color.gray.opacity(self.isSelected ? 1 : 0))
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 70, alignment: .leading)
+            .border(Color.gray.opacity(self.isSelected ? 1 : 0.3))
             .shadow(color: Color.black.opacity(self.isSelected ? 0.4 : 0), radius: 2, x: 2, y: 2)
+        
     }
     
+    func branchInitial(branch: String)  -> String{
+        
+        if branch == "Ras Al-Khaimah"{
+            return "RAK"
+        }  else if branch == "Umm Al Quwain"{
+            return "UAQ"
+        } else if branch == "Sharjah"{
+            return "SHJ"
+        } else if branch == "Ajman"{
+            return "AJM"
+        } else if branch == "Fujairah"{
+            return "FUJ"
+        }
+        
+        return "Error"
+        
+    }
     
-    
-    func typeinitial(emptype: String) -> String{
+    func typeInitial(emptype: String) -> String{
         
         if emptype == "Team Head"{
                 return "T.H."
@@ -92,8 +125,8 @@ struct showSelected: View{
 struct Create_Emergency: View {
     
    // @State var employee: Employee
-    
-    
+   
+   
     let shownEmployees: Array<Employee> = [
     adnan,
     talal,
@@ -169,6 +202,7 @@ struct Create_Emergency: View {
                 }
             }
 
+        Divider()
         
         // Submit Button
         HStack{
@@ -187,8 +221,8 @@ struct Create_Emergency: View {
             }, label:
                     {
                 Text("Submit")
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
                     .foregroundColor(.black)
                     .background(RoundedRectangle(cornerRadius: 5))
             
@@ -197,7 +231,7 @@ struct Create_Emergency: View {
             )
 
 
-        }
+        }.padding(.all, 5)
         }
     }
 
@@ -210,6 +244,7 @@ struct Create_Emergency: View {
 struct Create_Emergency_Previews: PreviewProvider {
     static var previews: some View {
         Create_Emergency()
+            .previewDevice("iPhone SE (2nd generation)")
     }
 }
 

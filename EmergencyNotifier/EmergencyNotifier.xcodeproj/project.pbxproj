@@ -18,6 +18,8 @@
 		84D6EA492784690B0063CD9C /* Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA482784690B0063CD9C /* Team Head.swift */; };
 		84D6EA4C278469170063CD9C /* Firefighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4A278469170063CD9C /* Firefighter.swift */; };
 		84D6EA4D278469170063CD9C /* Operational Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4B278469170063CD9C /* Operational Manager.swift */; };
+		84D6EA4F27846F010063CD9C /* Accounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4E27846F010063CD9C /* Accounts.swift */; };
+		84D6EA51278470F60063CD9C /* Front End Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA50278470F60063CD9C /* Front End Presets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		84D6EA482784690B0063CD9C /* Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Team Head.swift"; sourceTree = "<group>"; };
 		84D6EA4A278469170063CD9C /* Firefighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firefighter.swift; sourceTree = "<group>"; };
 		84D6EA4B278469170063CD9C /* Operational Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift"; sourceTree = "<group>"; };
+		84D6EA4E27846F010063CD9C /* Accounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accounts.swift; sourceTree = "<group>"; };
+		84D6EA50278470F60063CD9C /* Front End Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Front End Presets.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,9 +108,9 @@
 		84D6EA09278466580063CD9C /* EmergencyNotifier */ = {
 			isa = PBXGroup;
 			children = (
+				84D6EA342784667B0063CD9C /* Main Pages */,
 				84D6EA44278467B80063CD9C /* BackEnd */,
 				84D6EA43278467AF0063CD9C /* Side Pages */,
-				84D6EA342784667B0063CD9C /* Main Pages */,
 				84D6EA10278466590063CD9C /* Preview Content */,
 			);
 			path = EmergencyNotifier;
@@ -151,6 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				84D6EA36278466AB0063CD9C /* Create Emergency.swift */,
+				84D6EA4E27846F010063CD9C /* Accounts.swift */,
+				84D6EA50278470F60063CD9C /* Front End Presets.swift */,
 			);
 			name = "Side Pages";
 			sourceTree = "<group>";
@@ -293,6 +299,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D6EA51278470F60063CD9C /* Front End Presets.swift in Sources */,
+				84D6EA4F27846F010063CD9C /* Accounts.swift in Sources */,
 				84D6EA422784670D0063CD9C /* Structs.swift in Sources */,
 				84D6EA3C278466AB0063CD9C /* Create Emergency.swift in Sources */,
 				84D6EA4C278469170063CD9C /* Firefighter.swift in Sources */,

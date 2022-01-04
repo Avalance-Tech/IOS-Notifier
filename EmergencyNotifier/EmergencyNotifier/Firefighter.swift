@@ -17,16 +17,24 @@ struct Home_Firefighter: View {
         
 
         
-        VStack(alignment: .center, spacing: 25 ){
+        VStack(spacing: 25 ){
             
             TopMenu
             
             
-            Toggle(isOn: $onCall) {
-                Text("On Call").background(onCall ? Color.green : Color.red).padding(.top, 50)
+            HStack{
                 
+                Spacer()
                 
-            } .padding(.top, 50)
+                Toggle(isOn: $onCall) {
+                Text("On Call")
+                    
+                }
+                
+                Spacer()
+                
+            }.padding([.top, .horizontal], 50)
+            
             
             
             // Create Emergency button
@@ -40,7 +48,7 @@ struct Home_Firefighter: View {
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
                     .foregroundColor(Color.blue)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.system(size: 20, design: .rounded))
                 
             })
             
@@ -54,7 +62,7 @@ struct Home_Firefighter: View {
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.system(size: 20, design: .rounded))
                 
             })
         

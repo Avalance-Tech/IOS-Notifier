@@ -46,13 +46,13 @@ var uaq = Branch(employees: [], name: "Umm Al Quwain", emergencies: [])
 
 
 
-let adnan : Employee = Employee(name: "adnan Odimah", number: "07405074600", status: false, branch: ajman, employeeType: "Operational Manager")
+let adnan : Employee = Employee(employeeID: "9999", name: "adnan Odimah", number: "07405074600", status: false, branch: ajman, employeeType: "Operational Manager")
 
-let ayman = Employee(name: "ayman", number: "0578432058", status: true, branch: rak, employeeType: "Fire Fighter")
+let ayman = Employee(employeeID:"102", name: "ayman", number: "0578432058", status: true, branch: rak, employeeType: "Fire Fighter")
 
-let talal = Employee(name:"talal", number: "07520752", status: false, branch: uaq, employeeType: "Team Head")
+let talal = Employee(employeeID: "230", name:"talal", number: "07520752", status: false, branch: uaq, employeeType: "Team Head")
 
-let wassim = Employee(name: "wassim", number: "08540853085", status: true, branch: sharjah, employeeType: "Supervisor")
+let wassim = Employee(employeeID: "302", name: "wassim", number: "08540853085", status: true, branch: sharjah, employeeType: "Supervisor")
 
 
 
@@ -66,6 +66,8 @@ let wassim = Employee(name: "wassim", number: "08540853085", status: true, branc
 
 struct Employee: Identifiable{
     let id = UUID()
+    
+    let employeeID: String
     
     var password: String = "password"  // Encrypt later
     
