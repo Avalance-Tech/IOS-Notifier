@@ -39,6 +39,8 @@ var fujairah = Branch(employees: [], name: "Fujairah", emergencies: [])
 var rak = Branch(employees: [], name: "Ras Al-Khaimah", emergencies: [])
 var uaq = Branch(employees: [], name: "Umm Al Quwain", emergencies: [])
 
+var branches = [sharjah, ajman, fujairah, rak, uaq]
+
 
 
 

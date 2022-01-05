@@ -139,6 +139,7 @@ struct Create_Emergency: View {
     
     @State var emergencyDetails: String = ""
     @State var emergencyLocation: String = ""
+    @State var meetingPoint: String = ""
     @State var emergencyUrgency = 1
     @State var emergencyDate: Date = Date()
     
@@ -175,6 +176,16 @@ struct Create_Emergency: View {
                     .background(Color.gray.opacity(0.1).cornerRadius(10))
             }
             .padding(.horizontal, 10)
+            
+            
+            //Meeting point Location
+            HStack(spacing: 10){
+                Text("Meeting Location")
+                TextField("Meeting Point Location", text: $meetingPoint)
+                    .background(Color.gray.opacity(0.1).cornerRadius(10))
+            }
+            .padding(.horizontal, 10)
+            
             
             HStack(spacing: 10){
                 Stepper(value: $emergencyUrgency, in: 1...5) {

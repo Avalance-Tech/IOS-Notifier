@@ -71,14 +71,44 @@ struct CreateAccount: View{
             .padding(.horizontal, 10)
             
             
-            Picker("Employee Type", selection: $newType) {
-                Text("Select Type").tag(0)
-                Text("Team Head").tag(1)
-                Text("hello 3").tag(2)
+            
+            // New Type
+            Menu(newType == "" ? "Select Type":newType) {
+                
+                Button {
+                    newType = "Team Head"
+                } label: {
+                    Text("Team Head")
+                }
+                
+                Button {
+                    newType = "Deputy Team Head"
+                } label: {
+                    Text("Deputy Team Head")
+                }
+                
+                Button {
+                    newType = "Supervisor"
+                } label: {
+                    Text("Supervisor")
+                }
+                
+                Button {
+                    newType = "Assistant Supervisor"
+                } label: {
+                    Text("Assistant Supervisor")
+                }
+                
+                
+                Button {
+                    newType = "Fire Fighter"
+                } label: {
+                    Text("Fire Fighter")
+                }
             }
             
 
-            
+            // New branch
             Menu(newBranch.name == "none" ? "Select Branch": newBranch.name) {
                 
                 Button {
@@ -138,7 +168,7 @@ struct CreateAccount: View{
                     
                     
                     }
-                    )//.disabled(check ? false : true)
+                    ).disabled(check ? false : true)
 
             }
             
