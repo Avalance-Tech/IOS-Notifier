@@ -30,7 +30,49 @@ import SwiftUI
  
  */
 
+func branchInitial(branch: String)  -> String{
+    
+    if branch == "Ras Al-Khaimah"{
+        return "RAK"
+    }  else if branch == "Umm Al Quwain"{
+        return "UAQ"
+    } else if branch == "Sharjah"{
+        return "SHJ"
+    } else if branch == "Ajman"{
+        return "AJM"
+    } else if branch == "Fujairah"{
+        return "FUJ"
+    }
+    
+    return "Error"
+    
+}
 
+func typeInitial(emptype: String) -> String{
+    
+    if emptype == "Team Head"{
+            return "T.H."
+    }
+    else if emptype == "Fire Fighter"{
+        return "F.F."
+    }
+    else if emptype == "Supervisor"{
+        return "S.V."
+    }
+    else if emptype == "Operational Manager"{
+        return "O.M."
+    }
+    else if emptype == "Deputy Team Head"{
+        return "D.T.H"
+    }
+    else if emptype == "Assistant Supervisor"{
+        return "A.S."
+    }
+    else{
+        return "Error"
+    }
+    
+}
 
 
 var sharjah = Branch(employees: [], name: "Sharjah", emergencies: [])
@@ -42,7 +84,7 @@ var uaq = Branch(employees: [], name: "Umm Al Quwain", emergencies: [])
 var branches = [sharjah, ajman, fujairah, rak, uaq]
 
 
-
+var employee = adnan
 
 
 
@@ -58,7 +100,19 @@ let wassim = Employee(employeeID: "302", name: "wassim", number: "08540853085", 
 
 
 
-
+/*
+ 
+ REQUESTS
+ 
+    for each emergency have 3 lists ( 1 for amount of people called ) (1 for amount of people who have responded) (1 for amount of people who have arrived)
+    direct chain of command goes 1 up and 1 down
+ 
+    
+ 
+ 
+ 
+ 
+ */
 
 
 

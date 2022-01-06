@@ -75,65 +75,22 @@ struct showSelected: View{
         
     }
     
-    func branchInitial(branch: String)  -> String{
-        
-        if branch == "Ras Al-Khaimah"{
-            return "RAK"
-        }  else if branch == "Umm Al Quwain"{
-            return "UAQ"
-        } else if branch == "Sharjah"{
-            return "SHJ"
-        } else if branch == "Ajman"{
-            return "AJM"
-        } else if branch == "Fujairah"{
-            return "FUJ"
-        }
-        
-        return "Error"
-        
-    }
-    
-    func typeInitial(emptype: String) -> String{
-        
-        if emptype == "Team Head"{
-                return "T.H."
-        }
-        else if emptype == "Fire Fighter"{
-            return "F.F."
-        }
-        else if emptype == "Supervisor"{
-            return "S.V."
-        }
-        else if emptype == "Operational Manager"{
-            return "O.M."
-        }
-        else if emptype == "Deputy Team Head"{
-            return "D.T.H"
-        }
-        else if emptype == "Assistant Supervisor"{
-            return "A.S."
-        }
-        else{
-            return "Error"
-        }
-        
-    }
+
     
 }
 
 
 struct Create_Emergency: View {
     
-   // @State var employee: Employee
-   
-   
-    let shownEmployees: Array<Employee> = [
-    adnan,
-    talal,
-    ayman,
-    wassim
-    ]
+    // Sort / filter employees shown
+    var allEmployeesShown: Array<Employee>{
+        let i: [Employee] = [adnan,ayman,wassim,talal]
+        return i
+    }
     
+    var shownEmployees: [Employee]{
+        return self.allEmployeesShown
+    }
     
     // Emergency Properties
     

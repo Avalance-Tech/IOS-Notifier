@@ -192,7 +192,85 @@ struct CreateAccount: View{
     
 }
 
+struct EditAccount: View{
+    var editedEmployee: Employee
+    
+    var body: some View{
+        
+        Text(editedEmployee.name)
+        
+    }
+    
+    
+}
 
+struct EditAccountMain: View{
+    
+    var shownEmployees: [Employee]{
+        let i = [adnan, wassim, talal, ayman]
+        
+        return i
+    }
+    
+    var body: some View{
+        
+        VStack{
+        
+            Text("Edit an account").font(.title)
+            Divider()
+            
+            ScrollView{
+        
+            ForEach(shownEmployees){ employee in
+                HStack(spacing: 2){
+                    
+                    Text(String(employee.name).capitalized(with: .current))
+                        .frame(width: 135, height: 40, alignment: .leading)
+                    
+                    Divider()
+                    
+                    Text(typeInitial(emptype: employee.employeeType))
+                        .frame(width: 38, height: 40, alignment: .center)
+                    
+                    Divider()
+                    
+                    Text(employee.employeeID)
+                        .frame(width: 46, height: 40, alignment: .center)
+                    
+                    Divider()
+                    
+                    Text(branchInitial(branch: employee.branch.name))
+                        .frame(width: 39, height: 40, alignment: .center)
+                    
+                    Spacer()
+                    
+                NavigationLink {
+                    EditAccount(editedEmployee: employee)
+                } label: {
+                    Text("Edit")
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.blue)
+                        .background(RoundedRectangle(cornerRadius: 10))
+                        
+                }
+
+                
+                }.padding(.horizontal, 5)
+              
+                Divider().padding(.all, 0)
+                
+            }
+                    
+            
+            
+            }
+        }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
+            .padding(.vertical, 10)
+        
+    }
+    
+}
 
 struct MainAccountsMenu: View {
     
@@ -214,7 +292,7 @@ struct MainAccountsMenu: View {
 
         NavigationLink {
             
-            
+            EditAccountMain()
             
         } label: {
             Text("Edit an Account")
@@ -269,6 +347,6 @@ struct AccountsMain: View{
 
 struct Accounts_Previews: PreviewProvider {
     static var previews: some View {
-        CreateAccount()
+        EditAccountMain()
     }
 }
