@@ -193,12 +193,120 @@ struct CreateAccount: View{
 }
 
 struct EditAccount: View{
-    var editedEmployee: Employee
+    @State var editedEmployee: Employee
+    
+    /// new
+    
+    @State var newName: String = ""
+    @State var newBranch: Branch = Branch(employees: [], name: "none", emergencies: [])
+    @State var newType: String = ""
+    
+    
     
     var body: some View{
+        VStack{
+            
+            HStack{
+                Text("Name:")
+                    .padding(.horizontal, 8)
+                    
+                
+                TextField("Name", text: $editedEmployee.name)
+                    .border(Color.gray.opacity(0.8))
+                    .padding(.horizontal, 8)
+            }
+     
+            HStack{
+                // New Type
+                Menu(newType == "" ? "Select Type":newType) {
+                    
+                    Button {
+                        newType = "Team Head"
+                    } label: {
+                        Text("Team Head")
+                    }
+                    
+                    Button {
+                        newType = "Deputy Team Head"
+                    } label: {
+                        Text("Deputy Team Head")
+                    }
+                    
+                    Button {
+                        newType = "Supervisor"
+                    } label: {
+                        Text("Supervisor")
+                    }
+                    
+                    Button {
+                        newType = "Assistant Supervisor"
+                    } label: {
+                        Text("Assistant Supervisor")
+                    }
+                    
+                    
+                    Button {
+                        newType = "Fire Fighter"
+                    } label: {
+                        Text("Fire Fighter")
+                    }
+                }
+                
+            }
+            HStack{
+                
+
+                // New branch
+                Menu(newBranch.name == "none" ? "Select Branch": newBranch.name) {
+                    
+                    Button {
+                        newBranch = ajman
+                    } label: {
+                        Text("Ajman")
+                    }
+                    
+                    Button {
+                        newBranch = sharjah
+                    } label: {
+                        Text("Sharjah")
+                    }
+                    
+                    Button {
+                        newBranch = rak
+                    } label: {
+                        Text("Ras Al Khaimah")
+                    }
+                    
+                    Button {
+                        newBranch = uaq
+                    } label: {
+                        Text("Umm Al-Quwain")
+                    }
+                    
+                    
+                    Button {
+                        newBranch = fujairah
+                    } label: {
+                        Text("Fujairah")
+                    }
+                }
+            }
+            
+        Button {
+            
+            self.editedEmployee.name = newName
+            self.editedEmployee.branch = newBranch
+            self.editedEmployee.employeeType = newType
         
-        Text(editedEmployee.name)
-        
+        } label: {
+            Text("change name \(self.editedEmployee.name)")
+        }
+        .foregroundColor(Color.white)
+        .padding(.all, 10)
+        .background(RoundedRectangle(cornerRadius: 10))
+
+            
+        }
     }
     
     
@@ -250,7 +358,7 @@ struct EditAccountMain: View{
                     Text("Edit")
                         .padding(.horizontal, 10)
                         .padding(.vertical, 10)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.white)
                         .background(RoundedRectangle(cornerRadius: 10))
                         
                 }
@@ -347,6 +455,6 @@ struct AccountsMain: View{
 
 struct Accounts_Previews: PreviewProvider {
     static var previews: some View {
-        EditAccountMain()
+        EditAccount(editedEmployee: adnan)
     }
 }

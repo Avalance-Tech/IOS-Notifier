@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84B0DBFE278818E600D9ED41 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B0DBFD278818E600D9ED41 /* AuthenticationServices.framework */; };
 		84D6EA0B278466580063CD9C /* EmergencyNotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA0A278466580063CD9C /* EmergencyNotifierApp.swift */; };
 		84D6EA0F278466590063CD9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D6EA0E278466590063CD9C /* Assets.xcassets */; };
 		84D6EA12278466590063CD9C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D6EA11278466590063CD9C /* Preview Assets.xcassets */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84B0DBFB278818BF00D9ED41 /* EmergencyNotifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmergencyNotifier.entitlements; sourceTree = "<group>"; };
+		84B0DBFD278818E600D9ED41 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		84D6EA07278466580063CD9C /* EmergencyNotifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmergencyNotifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D6EA0A278466580063CD9C /* EmergencyNotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyNotifierApp.swift; sourceTree = "<group>"; };
 		84D6EA0E278466590063CD9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B0DBFE278818E600D9ED41 /* AuthenticationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84B0DBFC278818E600D9ED41 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84B0DBFD278818E600D9ED41 /* AuthenticationServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		84D6E9FE278466580063CD9C = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +104,7 @@
 				84D6EA1A278466590063CD9C /* EmergencyNotifierTests */,
 				84D6EA242784665A0063CD9C /* EmergencyNotifierUITests */,
 				84D6EA08278466580063CD9C /* Products */,
+				84B0DBFC278818E600D9ED41 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +121,7 @@
 		84D6EA09278466580063CD9C /* EmergencyNotifier */ = {
 			isa = PBXGroup;
 			children = (
+				84B0DBFB278818BF00D9ED41 /* EmergencyNotifier.entitlements */,
 				84D6EA342784667B0063CD9C /* Main Pages */,
 				84D6EA44278467B80063CD9C /* BackEnd */,
 				84D6EA43278467AF0063CD9C /* Side Pages */,
@@ -464,6 +478,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EmergencyNotifier/EmergencyNotifier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EmergencyNotifier/Preview Content\"";
@@ -494,6 +509,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EmergencyNotifier/EmergencyNotifier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EmergencyNotifier/Preview Content\"";

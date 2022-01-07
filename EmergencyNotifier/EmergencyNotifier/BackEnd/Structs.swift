@@ -148,6 +148,7 @@ struct Employee: Identifiable{
 
 
 struct Branch{
+
     let id = UUID()
     
     var employees: Array<Employee>
