@@ -244,6 +244,7 @@ struct Create_Emergency: View {
 struct Create_Emergency_Previews: PreviewProvider {
     static var previews: some View {
         Create_Emergency()
+            .preferredColorScheme(.dark)
             .previewDevice("iPhone SE (2nd generation)")
     }
 }
