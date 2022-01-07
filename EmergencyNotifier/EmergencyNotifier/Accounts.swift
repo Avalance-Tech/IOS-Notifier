@@ -7,6 +7,73 @@
 
 import SwiftUI
 
+struct showSelectedDelete: View{
+    
+    let employee: Employee
+    
+    @Binding var selectedItems: Set<UUID>
+    
+    var isSelected: Bool{
+        selectedItems.contains(employee.id)
+    }
+    
+    
+    var body: some View{
+        
+        HStack(spacing: 7){
+            
+            Text(employee.employeeID)
+                .frame(width: 45, height: 30, alignment: .leading)
+                .padding(.leading, 3)
+            
+            Divider()
+            
+            Text(String(employee.name).capitalized(with: .current))
+                .frame(width:140, height: 30, alignment: .leading)
+            
+            
+            Image(employee.status ? "checkmark.circle.fill" : "circle.slash")
+                .frame(width:23, height: 30, alignment: .leading)
+            
+            Divider()
+            
+            Text(branchInitial(branch: employee.branch.name))
+                .frame(width:40, height: 30, alignment: .leading)
+            
+            Divider()
+            
+            Text(typeInitial(emptype: employee.employeeType))
+                .font(.system(size: 15,weight: .light))
+                .frame(width: 32, height: 30)
+            
+            Divider()
+            
+            if self.isSelected{
+                Image(systemName:"checkmark")
+                    .foregroundColor(Color.blue)
+                    .frame(width: 20, height: 30)
+            }else{
+                Text("").frame(width: 20, height: 30)
+            }
+            
+            
+        }
+        .onTapGesture {
+            if self.isSelected{
+                self.selectedItems.remove(self.employee.id)
+            } else{
+                self.selectedItems.insert(self.employee.id)
+            }
+        }
+        .frame(width: UIScreen.main.bounds.width, height: 70, alignment: .leading)
+        .border(Color.gray.opacity(self.isSelected ? 1 : 0.3))
+        .shadow(color: Color.black.opacity(self.isSelected ? 0.4 : 0), radius: 2, x: 2, y: 2)
+        
+    }
+    
+}
+
+
 struct CreateAccount: View{
     
     var check: Bool{
@@ -29,7 +96,7 @@ struct CreateAccount: View{
         
         return true
     }
-
+    
     
     // New account Properties
     
@@ -107,7 +174,7 @@ struct CreateAccount: View{
                 }
             }
             
-
+            
             // New branch
             Menu(newBranch.name == "none" ? "Select Branch": newBranch.name) {
                 
@@ -146,30 +213,30 @@ struct CreateAccount: View{
             Divider()
             
             //Submit
-                HStack{
-                    Spacer()
-                    
-                    Button(action: {
-                        
-                        
-                        print(newNumber)
-                        print(newID)
-                        print(newBranch.name)
-                        print(newName)
-                        print(newType)
-                        
-                    }, label:
-                            {
-                        Text("Create Accountt")
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .foregroundColor(.black)
-                            .background(RoundedRectangle(cornerRadius: 5))
+            HStack{
+                Spacer()
+                
+                Button(action: {
                     
                     
-                    }
-                    ).disabled(check ? false : true)
-
+                    print(newNumber)
+                    print(newID)
+                    print(newBranch.name)
+                    print(newName)
+                    print(newType)
+                    
+                }, label:
+                        {
+                    Text("Create Accountt")
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.black)
+                        .background(RoundedRectangle(cornerRadius: 5))
+                    
+                    
+                }
+                ).disabled(check ? false : true)
+                
             }
             
             
@@ -179,7 +246,7 @@ struct CreateAccount: View{
     
     func createAccount(accountName: String, accountType: String, accountID: String, accountNumber: String) -> Void
     {
-    
+        
         
         self.newBranch.employees.append(Employee(employeeID: accountID, name: accountName, number: accountNumber, status: false, branch: newBranch, employeeType: accountType))
         
@@ -209,13 +276,13 @@ struct EditAccount: View{
             HStack{
                 Text("Name:")
                     .padding(.horizontal, 8)
-                    
+                
                 
                 TextField("Name", text: $editedEmployee.name)
                     .border(Color.gray.opacity(0.8))
                     .padding(.horizontal, 8)
             }
-     
+            
             HStack{
                 // New Type
                 Menu(newType == "" ? "Select Type":newType) {
@@ -255,7 +322,7 @@ struct EditAccount: View{
             }
             HStack{
                 
-
+                
                 // New branch
                 Menu(newBranch.name == "none" ? "Select Branch": newBranch.name) {
                     
@@ -292,19 +359,19 @@ struct EditAccount: View{
                 }
             }
             
-        Button {
+            Button {
+                
+                self.editedEmployee.name = newName
+                self.editedEmployee.branch = newBranch
+                self.editedEmployee.employeeType = newType
+                
+            } label: {
+                Text("change name \(self.editedEmployee.name)")
+            }
+            .foregroundColor(Color.white)
+            .padding(.all, 10)
+            .background(RoundedRectangle(cornerRadius: 10))
             
-            self.editedEmployee.name = newName
-            self.editedEmployee.branch = newBranch
-            self.editedEmployee.employeeType = newType
-        
-        } label: {
-            Text("change name \(self.editedEmployee.name)")
-        }
-        .foregroundColor(Color.white)
-        .padding(.all, 10)
-        .background(RoundedRectangle(cornerRadius: 10))
-
             
         }
     }
@@ -323,55 +390,55 @@ struct EditAccountMain: View{
     var body: some View{
         
         VStack{
-        
+            
             Text("Edit an account").font(.title)
             Divider()
             
             ScrollView{
-        
-            ForEach(shownEmployees){ employee in
-                HStack(spacing: 2){
-                    
-                    Text(String(employee.name).capitalized(with: .current))
-                        .frame(width: 135, height: 40, alignment: .leading)
-                    
-                    Divider()
-                    
-                    Text(typeInitial(emptype: employee.employeeType))
-                        .frame(width: 38, height: 40, alignment: .center)
-                    
-                    Divider()
-                    
-                    Text(employee.employeeID)
-                        .frame(width: 46, height: 40, alignment: .center)
-                    
-                    Divider()
-                    
-                    Text(branchInitial(branch: employee.branch.name))
-                        .frame(width: 39, height: 40, alignment: .center)
-                    
-                    Spacer()
-                    
-                NavigationLink {
-                    EditAccount(editedEmployee: employee)
-                } label: {
-                    Text("Edit")
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.white)
-                        .background(RoundedRectangle(cornerRadius: 10))
+                
+                ForEach(shownEmployees){ employee in
+                    HStack(spacing: 2){
                         
-                }
-
-                
-                }.padding(.horizontal, 5)
-              
-                Divider().padding(.all, 0)
-                
-            }
+                        Text(String(employee.name).capitalized(with: .current))
+                            .frame(width: 135, height: 40, alignment: .leading)
+                        
+                        Divider()
+                        
+                        Text(typeInitial(emptype: employee.employeeType))
+                            .frame(width: 38, height: 40, alignment: .center)
+                        
+                        Divider()
+                        
+                        Text(employee.employeeID)
+                            .frame(width: 46, height: 40, alignment: .center)
+                        
+                        Divider()
+                        
+                        Text(branchInitial(branch: employee.branch.name))
+                            .frame(width: 39, height: 40, alignment: .center)
+                        
+                        Spacer()
+                        
+                        NavigationLink {
+                            EditAccount(editedEmployee: employee)
+                        } label: {
+                            Text("Edit")
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 10)
+                                .foregroundColor(.white)
+                                .background(RoundedRectangle(cornerRadius: 10))
+                            
+                        }
+                        
+                        
+                    }.padding(.horizontal, 5)
                     
-            
-            
+                    Divider().padding(.all, 0)
+                    
+                }
+                
+                
+                
             }
         }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
             .padding(.vertical, 10)
@@ -380,56 +447,126 @@ struct EditAccountMain: View{
     
 }
 
+struct DeleteAccounts: View{
+    
+    @State private var showingPopUp = false
+    
+    var allEmployees: Array<Employee>{
+        
+        let i: [Employee] = [adnan, ayman, wassim, talal]
+        return i
+        
+    }
+    
+    var shownEmployees: [Employee]{
+        return self.allEmployees
+    }
+    
+    @State var selectedEmployeesID = Set<UUID>()
+    var selectedEmployees: [Employee]{
+        
+        var employees: [Employee] = []
+        for employee in shownEmployees{
+            if selectedEmployeesID.contains(employee.id){
+                employees.append(employee)
+            }
+        }
+        return employees
+    }
+    
+    var body: some View{
+        VStack{
+            HStack(spacing:10){
+                Text("Delete Accounts").font(.title).padding(.leading, UIScreen.main.bounds.width/3)
+                    .multilineTextAlignment(.center)
+                Spacer()
+                Text("\(selectedEmployees.count) \n selected").font(.system(size: 13, weight: .bold, design: .rounded))
+                    .multilineTextAlignment(.center)
+            }.padding(.trailing, 5)
+            Divider()
+            
+            Spacer()
+            
+            ScrollView{
+                ForEach(shownEmployees){employee in
+                    
+                    showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
+                    
+                }
+                
+            }
+            
+            Divider()
+            
+            Button("Delete \(selectedEmployees.count)"){
+                showingPopUp = true
+            }
+            .padding([.top, .horizontal], 10)
+            .padding(.bottom, 8)
+            .foregroundColor(.black)
+            .background(RoundedRectangle(cornerRadius: 5))
+            .popover(isPresented: $showingPopUp) {
+                VStack{
+                    Text("test")
+                }
+            }
+
+
+            
+        }
+    }
+}
+
 struct MainAccountsMenu: View {
     
     var body: some View {
         
         VStack{
-        NavigationLink {
+            NavigationLink {
+                
+                CreateAccount()
+                
+            } label: {
+                Text("Create a new Account")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+            }
             
-            CreateAccount()
+            NavigationLink {
+                
+                EditAccountMain()
+                
+            } label: {
+                Text("Edit an Account")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+            }
             
-        } label: {
-            Text("Create a new Account")
-                .underline()
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-                .foregroundColor(Color.blue)
-                .font(.system(size: 20, design: .rounded))
-        }
-
-        NavigationLink {
+            NavigationLink {
+                
+                DeleteAccounts()
+                
+            } label: {
+                Text("Delete accounts")
+                    .underline()
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
+                    .font(.system(size: 20, design: .rounded))
+            }
             
-            EditAccountMain()
-            
-        } label: {
-            Text("Edit an Account")
-                .underline()
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-                .foregroundColor(Color.blue)
-                .font(.system(size: 20, design: .rounded))
-        }
-        
-        NavigationLink {
-            
-            
-            
-        } label: {
-            Text("Delete accounts")
-                .underline()
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-                .foregroundColor(Color.blue)
-                .font(.system(size: 20, design: .rounded))
-        }
-        
-             Spacer()
+            Spacer()
             
             BottomMenu
             
         }.padding(.top, 90)
-            
+        
     }
     
     
@@ -455,6 +592,6 @@ struct AccountsMain: View{
 
 struct Accounts_Previews: PreviewProvider {
     static var previews: some View {
-        EditAccount(editedEmployee: adnan)
+        DeleteAccounts()
     }
 }

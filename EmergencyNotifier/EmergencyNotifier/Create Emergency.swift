@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct showSelected: View{
+struct showSelectedEmergency: View{
     
     let employee: Employee
     
@@ -165,7 +165,7 @@ struct Create_Emergency: View {
             ScrollView{
                 ForEach(shownEmployees) {Employee in
                     
-                showSelected(employee: Employee, selectedItems: $selectedEmployeesID)
+                showSelectedEmergency(employee: Employee, selectedItems: $selectedEmployeesID)
                 
                 }
             }
@@ -215,5 +215,6 @@ struct Create_Emergency_Previews: PreviewProvider {
             .previewDevice("iPhone SE (2nd generation)")
     }
 }
+
 
 
