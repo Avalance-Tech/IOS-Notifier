@@ -107,7 +107,7 @@ struct MainPage_OperationalManager: View {
                         .navigationTitle("Emergency Link")
                     
                     
-                }.opacity(0.9)
+                }
                 
             
         }
@@ -117,8 +117,8 @@ struct MainPage_OperationalManager: View {
 struct Operational_Manager_swift_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Main_OperationalManager()
-            Main_OperationalManager()
+            MainPage_OperationalManager()
+            MainPage_OperationalManager()
                 .previewDevice("iPhone 12")
         }
     }

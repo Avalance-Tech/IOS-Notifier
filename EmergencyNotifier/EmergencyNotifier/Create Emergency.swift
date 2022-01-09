@@ -84,8 +84,36 @@ struct Create_Emergency: View {
     
     // Sort / filter employees shown
     var allEmployeesShown: Array<Employee>{
-        let i: [Employee] = [adnan,ayman,wassim,talal]
-        return i
+        
+        var list: Array<Employee> = []
+        
+        if loggedin.employeeType == "Operational Managerr"{
+            for branch in branches{
+                list.append(contentsOf: branch.employees)
+                
+            }
+        }
+        else if loggedin.employeeType == "Team Head"{
+            
+            print(loggedin.branch.employees)
+            
+            list.append(contentsOf: loggedin.branch.employees)
+            
+            list.append(operationalManager)
+            
+            
+        }
+        else if loggedin.employeeType == "Supervisor"{
+            for employee in  loggedin.branch.employees{
+                if ["Assistant Supervisor", "FireFighter", "Team Head"].contains(employee.employeeType){
+                    
+                    list.append(employee)
+                    
+                }
+            }
+        }
+    
+        return list
     }
     
     var shownEmployees: [Employee]{

@@ -1,21 +1,13 @@
 //
-//  Main Page.swift
-//  Emergency Notifier
+//  Supervisor.swift
+//  EmergencyNotifier
 //
-//  Created by Adnan Odimah on 02/01/2022.
+//  Created by Adnan Odimah on 09/01/2022.
 //
 
 import SwiftUI
 
-// FOR TEAM HEAD
-
-
-
-
-
-// Home page for team head
-
-struct Main_TeamHead: View{
+struct Main_Supervisor: View{
     
     
     
@@ -42,11 +34,11 @@ struct Main_TeamHead: View{
             }
             
             // Create account Button
-            NavigationLink{
-            
-                MainAccountsMenu()
+            Button( action: {
                 
-            }label:{
+                print("Hhello")
+                
+            }, label:{
                 Text("Create/edit/delete an account")
                 
                     .underline()
@@ -55,8 +47,7 @@ struct Main_TeamHead: View{
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
                 
-            }
-            
+            })
             
             // Assign Acting Team Head button
             Button( action: {
@@ -64,7 +55,7 @@ struct Main_TeamHead: View{
                 print("Hhello")
                 
             }, label:{
-                Text("Assign Team Head")
+                Text("Assign Supervisor")
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
@@ -100,9 +91,10 @@ struct Main_TeamHead: View{
 // MAIN PAGE
 
 
-struct MainPage_TeamHead: View {
+struct MainPage_Supervisor: View {
     // Properties
 
+    
     
     // body
     
@@ -112,7 +104,7 @@ struct MainPage_TeamHead: View {
                 
                 NavigationView{
                     
-                    Main_TeamHead().navigationTitle("Emergency Link")
+                    Main_Supervisor().navigationTitle("Emergency Link")
                     
                 } // close navi
                 
@@ -124,15 +116,13 @@ struct MainPage_TeamHead: View {
     
     // Methods
     
-
-    
 }
 
 
 
 
-struct MainPreview_TeamHead: PreviewProvider {
+struct Main_Page_Previews: PreviewProvider {
     static var previews: some View {
-        MainPage_TeamHead()
+        MainPage_Supervisor()
     }
 }
