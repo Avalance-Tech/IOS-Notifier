@@ -1,17 +1,4 @@
-//
-//  ContentView.swift
-//  Emergency Notifier
-//
-//  Created by Adnan Odimah on 18/12/2021.
-//
-
 import SwiftUI
-
-// Utility Structures (for our use)
-
-// Dummy branch with admins and have that ignored when calling emergency
-
-
 
 /// WITH DATABSE
 
