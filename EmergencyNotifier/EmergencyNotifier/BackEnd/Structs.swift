@@ -172,10 +172,12 @@ struct Emergency: Identifiable{  // to be logged later
     var id = UUID()
     var details: String
     var location: String
+    var meetingPoint: String
     var urgency: Int // 1 - 5 scale
     let time : String
     var employeesCalled: Array<Employee>
     var branch: Branch // = Employee.branch
+
     
     var checkedIn: Dictionary<UIImage, Employee>
     

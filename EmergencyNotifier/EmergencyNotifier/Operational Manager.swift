@@ -10,7 +10,7 @@ import SwiftUI
 
 
 
-struct Home_OperationalManager: View{
+struct Main_OperationalManager: View{
     
     var body: some View{
         
@@ -96,14 +96,14 @@ struct Home_OperationalManager: View{
 
 
 
-struct Main_OperationalManager: View {
+struct MainPage_OperationalManager: View {
     
     var body: some View {
 
             VStack{
                 NavigationView{
                     
-                    Home_OperationalManager()
+                    Main_OperationalManager()
                         .navigationTitle("Emergency Link")
                     
                     

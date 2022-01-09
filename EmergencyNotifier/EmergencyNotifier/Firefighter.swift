@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Home_Firefighter: View {
+struct Main_FireFighter: View {
     
     
     @State var onCall = false
@@ -38,11 +38,11 @@ struct Home_Firefighter: View {
             
             
             // Create Emergency button
-            Button( action: {
+            NavigationLink(destination: {
                 
-                print("Hhello")
                 
-            }, label:{
+                
+            }, label: {
                 Text("Report an emergency")
                     .underline()
                     .padding(.vertical, 15)
@@ -55,8 +55,10 @@ struct Home_Firefighter: View {
             
             // Recent Emergencies
             
-            Button(action:{
-                print("test")
+            NavigationLink(destination:{
+                
+    
+            
             },label: {
                 Text("Previous emergencies")
                     .underline()
@@ -75,7 +77,7 @@ struct Home_Firefighter: View {
     }
 }
 
-struct Main_Page_Firefighter: View {
+struct MainPage_FireFighter: View {
     @State var menuOpened = false
     
     
@@ -88,7 +90,7 @@ struct Main_Page_Firefighter: View {
         
         NavigationView{
             
-            Home_Firefighter().navigationTitle("Home")
+            Main_FireFighter().navigationTitle("Emergency Link")
         
         } // close navi
             
@@ -105,6 +107,6 @@ struct Main_Page_Firefighter: View {
 
 struct Main_Page_Firefighter_Previews: PreviewProvider {
     static var previews: some View {
-        Main_Page_Firefighter()
+        MainPage_FireFighter()
     }
 }

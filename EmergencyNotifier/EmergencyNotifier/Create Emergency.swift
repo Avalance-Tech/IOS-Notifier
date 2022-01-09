@@ -181,6 +181,7 @@ struct Create_Emergency: View {
                 print(emergencyDetails)
                 print(emergencyDate)
                 print(emergencyLocation)
+                print(meetingPoint)
                 print(emergencyUrgency)
                 
                 print(shownEmployees)

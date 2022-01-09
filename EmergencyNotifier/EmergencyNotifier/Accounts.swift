@@ -29,7 +29,7 @@ struct showSelectedDelete: View{
             Divider()
             
             Text(String(employee.name).capitalized(with: .current))
-                .frame(width:140, height: 30, alignment: .leading)
+                .frame(width:150, height: 30, alignment: .leading)
             
             
             Image(employee.status ? "checkmark.circle.fill" : "circle.slash")
@@ -500,15 +500,75 @@ struct DeleteAccounts: View{
             
             Button("Delete \(selectedEmployees.count)"){
                 showingPopUp = true
-            }
+            }.disabled(selectedEmployees.count > 0 ? false : true)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 8)
-            .foregroundColor(.black)
-            .background(RoundedRectangle(cornerRadius: 5))
             .popover(isPresented: $showingPopUp) {
-                VStack{
-                    Text("test")
-                }
+                VStack(alignment: .center){
+                    
+                    
+                    Spacer()
+                    
+                    
+                    Text("Are you sure you would like to delete the \(selectedEmployees.count) account(s)?  This includes:").font(.system(size: 20, weight: .bold))
+                    ScrollView { ForEach(selectedEmployees){employee in
+                        
+                        HStack{
+                            Text(employee.employeeID)
+                                .frame(width: 45, height: 30, alignment: .leading)
+                                .padding(.leading, 3)
+                            
+                            Divider()
+                            
+                            Text(String(employee.name).capitalized(with: .current))
+                                .frame(width:180, height: 30, alignment: .leading)
+                            
+                            
+                            Divider()
+                            
+                            Text(branchInitial(branch: employee.branch.name))
+                                .frame(width:40, height: 30, alignment: .leading)
+                            
+                            Divider()
+                            
+                            Text(typeInitial(emptype: employee.employeeType))
+                                .font(.system(size: 15,weight: .light))
+                                .frame(width: 32, height: 30)
+                            
+                        }
+                        Divider()
+                    }
+    
+                    }.border(Color.gray.opacity(0.6))
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/3)
+                    
+
+                    
+                    HStack(spacing: 30){
+                        Button {
+                            // delete accounts
+                        } label: {
+                            Text("Yes")
+                                .padding(.all, 8)
+                                .foregroundColor(Color.red)
+                                .border(Color.blue.opacity(0.8))
+                        }
+
+                        
+                        Button{
+                            self.selectedEmployeesID.removeAll()
+                            showingPopUp = false
+                        }
+                    label: {
+                        Text("No")
+                    
+                        .padding(.all, 8)
+                        .foregroundColor(Color.green)
+                        .border(Color.blue.opacity(0.8))
+                    }
+                    }
+                    Spacer()
+                }.padding(.vertical, 30)
             }
 
 

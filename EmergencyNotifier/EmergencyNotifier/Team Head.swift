@@ -15,7 +15,7 @@ import SwiftUI
 
 // Home page for team head
 
-struct Home_TeamHead: View{
+struct Main_TeamHead: View{
     
     
     
@@ -113,7 +113,7 @@ struct MainPage_TeamHead: View {
                 
                 NavigationView{
                     
-                    Home_TeamHead().navigationTitle("Home")
+                    Main_TeamHead().navigationTitle("Emergency Link")
                     
                 } // close navi
                 
