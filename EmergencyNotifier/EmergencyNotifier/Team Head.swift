@@ -16,8 +16,8 @@ import SwiftUI
 // Home page for team head
 
 struct Main_TeamHead: View{
-    
-    
+    @State var showingAssignPopUp = false
+    @State var reason = ""
     
     var body: some View{
         
@@ -59,9 +59,9 @@ struct Main_TeamHead: View{
             
             
             // Assign Acting Team Head button
-            Button( action: {
+            Button(action: {
                 
-                print("Hhello")
+                showingAssignPopUp = true
                 
             }, label:{
                 Text("Assign Team Head")
@@ -70,7 +70,41 @@ struct Main_TeamHead: View{
                     .padding(.horizontal, 10)
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
-            })
+            }).popover(isPresented: $showingAssignPopUp) {
+                VStack{
+                    Spacer()
+                    
+                    Text("Are you sure you would like to assign \(deputyTeamHead.name) as the Acting Team Head")
+                    TextField("Reason", text: $reason)
+                    HStack(spacing: 30){
+                        Button {
+
+                            // set acting team head
+                            
+                        } label: {
+                            Text("Yes")
+                                .padding(.all, 8)
+                                .foregroundColor(Color.red)
+                                .border(Color.blue.opacity(0.8))
+                        }
+
+                        
+                        Button{
+                            showingAssignPopUp = false
+                        }
+                    label: {
+                        Text("No")
+                    
+                        .padding(.all, 8)
+                        .foregroundColor(Color.green)
+                        .border(Color.blue.opacity(0.8))
+                    }
+                    }
+                    Spacer()
+                    
+                    
+                }
+            }
             
             
             // Recent Emergencies

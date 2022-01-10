@@ -56,7 +56,7 @@ struct Main_OperationalManager: View{
             }
             
             // Assign Acting Team Head button
-            Button( action: {
+            Button(action: {
                 
                 showingAssignPopUp = true
                 
@@ -68,39 +68,7 @@ struct Main_OperationalManager: View{
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
             }).popover(isPresented: $showingAssignPopUp) {
-                VStack{
-                    Spacer()
-                    
-                    Text("Are you sure you would like to assign \(deputyTeamHead.name) as the Acting Team Head")
-                    TextField("Reason", text: $reason)
-                    HStack(spacing: 30){
-                        Button {
-
-                            // set acting team head
-                            
-                        } label: {
-                            Text("Yes")
-                                .padding(.all, 8)
-                                .foregroundColor(Color.red)
-                                .border(Color.blue.opacity(0.8))
-                        }
-
-                        
-                        Button{
-                            showingAssignPopUp = false
-                        }
-                    label: {
-                        Text("No")
-                    
-                        .padding(.all, 8)
-                        .foregroundColor(Color.green)
-                        .border(Color.blue.opacity(0.8))
-                    }
-                    }
-                    Spacer()
-                    
-                    
-                }
+                    // add a selection from a list of team heads
             }
             
             
