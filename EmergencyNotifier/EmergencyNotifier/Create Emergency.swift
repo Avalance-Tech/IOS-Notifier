@@ -85,6 +85,8 @@ struct Create_Emergency: View {
     // Sort / filter employees shown
     var allEmployeesShown: Array<Employee>{
         
+        return [adnan, talal, wassim, ayman]
+        
         var list: Array<Employee> = []
         
         if loggedin.employeeType == "Operational Managerr"{

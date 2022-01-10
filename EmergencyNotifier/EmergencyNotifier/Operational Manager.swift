@@ -12,6 +12,9 @@ import SwiftUI
 
 struct Main_OperationalManager: View{
     
+    @State var showingAssignPopUp = false
+    @State var reason = ""
+    
     var body: some View{
         
         VStack{
@@ -38,7 +41,7 @@ struct Main_OperationalManager: View{
             
             // Create account Button
             NavigationLink{
-            
+                
                 MainAccountsMenu()
                 
             }label:{
@@ -55,7 +58,7 @@ struct Main_OperationalManager: View{
             // Assign Acting Team Head button
             Button( action: {
                 
-                print("Hhello")
+                showingAssignPopUp = true
                 
             }, label:{
                 Text("Assign Operational Manager")
@@ -64,7 +67,41 @@ struct Main_OperationalManager: View{
                     .padding(.horizontal, 10)
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
-            })
+            }).popover(isPresented: $showingAssignPopUp) {
+                VStack{
+                    Spacer()
+                    
+                    Text("Are you sure you would like to assign \(deputyTeamHead.name) as the Acting Team Head")
+                    TextField("Reason", text: $reason)
+                    HStack(spacing: 30){
+                        Button {
+
+                            // set acting team head
+                            
+                        } label: {
+                            Text("Yes")
+                                .padding(.all, 8)
+                                .foregroundColor(Color.red)
+                                .border(Color.blue.opacity(0.8))
+                        }
+
+                        
+                        Button{
+                            showingAssignPopUp = false
+                        }
+                    label: {
+                        Text("No")
+                    
+                        .padding(.all, 8)
+                        .foregroundColor(Color.green)
+                        .border(Color.blue.opacity(0.8))
+                    }
+                    }
+                    Spacer()
+                    
+                    
+                }
+            }
             
             
             // Recent Emergencies
@@ -81,13 +118,13 @@ struct Main_OperationalManager: View{
                     .font(.system(size: 20, design: .rounded))
                 
             })
-        
+            
             
             
             Spacer()
-        
+            
             BottomMenu
-
+            
         }
     }
 }
@@ -99,17 +136,15 @@ struct Main_OperationalManager: View{
 struct MainPage_OperationalManager: View {
     
     var body: some View {
-
-            VStack{
-                NavigationView{
-                    
-                    Main_OperationalManager()
-                        .navigationTitle("Emergency Link")
-                    
-                    
-                }
+        
+        VStack{
+            NavigationView{
                 
-            
+                Main_OperationalManager()
+                    .navigationTitle("Emergency Link")
+                
+                
+            }
         }
     }
 }

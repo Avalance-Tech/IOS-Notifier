@@ -22,6 +22,7 @@
 		84D6EA4F27846F010063CD9C /* Accounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4E27846F010063CD9C /* Accounts.swift */; };
 		84D6EA51278470F60063CD9C /* Front End Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA50278470F60063CD9C /* Front End Presets.swift */; };
 		84EC4B75278B18A1005A7C93 /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC4B74278B18A1005A7C93 /* Supervisor.swift */; };
+		84F6F8B7278C321A00A51838 /* Assign Acting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F6F8B6278C321A00A51838 /* Assign Acting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		84D6EA4E27846F010063CD9C /* Accounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accounts.swift; sourceTree = "<group>"; };
 		84D6EA50278470F60063CD9C /* Front End Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Front End Presets.swift"; sourceTree = "<group>"; };
 		84EC4B74278B18A1005A7C93 /* Supervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
+		84F6F8B6278C321A00A51838 /* Assign Acting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assign Acting.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				84D6EA36278466AB0063CD9C /* Create Emergency.swift */,
 				84D6EA4E27846F010063CD9C /* Accounts.swift */,
 				84D6EA50278470F60063CD9C /* Front End Presets.swift */,
+				84F6F8B6278C321A00A51838 /* Assign Acting.swift */,
 			);
 			name = "Side Pages";
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				84D6EA492784690B0063CD9C /* Team Head.swift in Sources */,
 				84D6EA4D278469170063CD9C /* Operational Manager.swift in Sources */,
 				84D6EA0B278466580063CD9C /* EmergencyNotifierApp.swift in Sources */,
+				84F6F8B7278C321A00A51838 /* Assign Acting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

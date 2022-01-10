@@ -145,8 +145,15 @@ struct Branch{
 }
 
 
+var deputyTeamHead: Employee {
+    for employee in loggedin.branch.employees{
+                if employee.employeeType == "Deputy Team Head"{
+                        return employee
 
-
+        }
+    }
+    return loggedin
+}
 
 
 
