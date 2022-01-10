@@ -82,7 +82,9 @@ struct Main_Supervisor: View{
             
             Spacer()
             Spacer()
+            
             BottomMenu
+        
         }
     }
 }

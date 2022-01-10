@@ -69,6 +69,8 @@ struct Main_OperationalManager: View{
                     .font(.system(size: 20, design: .rounded))
             }).popover(isPresented: $showingAssignPopUp) {
                     // add a selection from a list of team heads
+                
+                
             }
             
             
