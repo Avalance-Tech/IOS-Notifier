@@ -75,19 +75,20 @@ struct Main_OperationalManager: View{
             
             
             // Recent Emergencies
-            
-            Button(action:{
+            NavigationLink{
                 
-                print("test")
+                Recent_Emergencies()
                 
-            },label: {
-                Text("Previous emergencies")
+            }label:{
+                Text("Recent Emergencies")
+                
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
                 
-            })
+            }
             
             
             

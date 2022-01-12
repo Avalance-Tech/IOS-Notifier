@@ -172,7 +172,7 @@ struct Emergency: Identifiable{  // to be logged later
     var employeesCalled: Array<Employee>
     var branch: Branch // = Employee.branch
 
-    
+    var replied: Dictionary<Bool, Array<Employee>>
     var checkedIn: Dictionary<UIImage, Employee>
     
 }
