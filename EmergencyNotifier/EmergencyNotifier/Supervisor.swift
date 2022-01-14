@@ -34,11 +34,11 @@ struct Main_Supervisor: View{
             }
             
             // Create account Button
-            Button( action: {
+            NavigationLink{
+            
+                MainAccountsMenu()
                 
-                print("Hhello")
-                
-            }, label:{
+            }label:{
                 Text("Create/edit/delete an account")
                 
                     .underline()
@@ -47,12 +47,12 @@ struct Main_Supervisor: View{
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
                 
-            })
+            }
             
             // Assign Acting Team Head button
             Button( action: {
                 
-                print("Hhello")
+                print("Hello")
                 
             }, label:{
                 Text("Assign Supervisor")
@@ -66,21 +66,22 @@ struct Main_Supervisor: View{
             
             // Recent Emergencies
             
-            Button(action:{
+            NavigationLink{
                 
-                print("test")
+                Recent_Emergencies()
                 
-            },label: {
-                Text("Previous emergencies")
+            }label:{
+                Text("Recent Emergencies")
+                
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
                 
-            })
+            }
         
             
-            Spacer()
             Spacer()
             
             BottomMenu

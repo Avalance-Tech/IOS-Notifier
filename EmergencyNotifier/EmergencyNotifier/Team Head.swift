@@ -124,7 +124,6 @@ struct Main_TeamHead: View{
         
             
             Spacer()
-            Spacer()
             BottomMenu
         }
     }

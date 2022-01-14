@@ -20,7 +20,7 @@ struct Main_FireFighter: View {
         VStack(spacing: 25 ){
             
             TopMenu
-            
+            Spacer()
             
             HStack{
                 
@@ -68,9 +68,7 @@ struct Main_FireFighter: View {
                 
             })
         
-            Spacer()
-            Spacer()
-            
+Spacer()
             BottomMenu
         }
         

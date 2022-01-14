@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct WhenClickedEmployee: View{
     
     var employee: Employee
@@ -95,12 +94,76 @@ struct WhenClicked: View{
     
 }
 
-
+struct GalleryWithEmergencies: View{
+    
+    var emergencies: [Emergency]
+    @State var showingEmergency = false
+    
+    var body: some View{
+        
+        VStack{
+            
+            ScrollView{
+            ForEach(emergencies){ emergency in
+                
+                ZStack{
+                    Image("").frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
+                    HStack{
+                        Spacer()
+                        Text(emergency.details)
+                            .foregroundColor(Color.black.opacity(1))
+                            .background(Color.gray.opacity(0.3))
+                        Spacer()
+                    }
+                }.onTapGesture {
+                    showingEmergency = true
+                }
+                .popover(isPresented: $showingEmergency, content: {
+                    
+                    VStack{
+                        
+                        HStack{
+                            Text("Meeting Point:\(emergency.meetingPoint)")
+                            
+                            Text("Location: \(emergency.location)")
+                            
+                            Text("Time: \(emergency.time)")
+                            
+                            
+                        }
+                        
+                        HStack{
+                            Text(emergency.details)
+                        //    Text(emergency.urgency)
+                        }
+                        
+                        Divider()
+                        
+      /*                  ForEach(emergency.checkedIn){image in
+                            
+                           // Image(image)
+                            
+                            
+                        }
+        */
+                        
+                    
+                    
+                    }
+                })
+                .padding(.vertical, 20)
+                    .padding(.horizontal, 10)
+            }
+            }
+            
+        }
+        
+    }
+}
 
 struct ListWithEmergencies: View{
     
     var emergencies: Array<Emergency>
-    @State var showEmergencyDetails = false
     
     
     var body: some View{
@@ -178,11 +241,38 @@ struct ListWithEmergencies: View{
 struct Recent_Emergencies: View {
     
     
-    var body: some View {
-        ListWithEmergencies(emergencies: [Emergency(details: "test1", location: "Test2", meetingPoint: "Test3", urgency: 3, time: "time", employeesCalled: [adnan, wassim, ayman], branch: ajman, replied: [true: [ayman, wassim], false: [adnan]], checkedIn: Dictionary())])
-        
-    }
+    @State var search = ""
+    @State var viewType = "list"
     
+    var body: some View {
+        VStack{
+            HStack{
+            
+                TextField("Search", text: $search).padding(.leading, 15)
+                
+                Spacer()
+                
+                Button(action: {
+                    viewType = "photo"
+                }, label: {
+                    Image(systemName: "photo")
+                }).disabled(viewType == "photo" ? true : false)
+                
+                Button(action: {
+                    viewType = "list"
+                }, label: {
+                    Image(systemName: "list.bullet")
+                }).padding(.trailing, 10)
+                    .disabled(viewType == "list" ? true : false)
+        }
+            if viewType == "list"{
+        ListWithEmergencies(emergencies: [Emergency(details: "test1", location: "Test2", meetingPoint: "Test3", urgency: 3, time: "time", employeesCalled: [adnan, wassim, ayman], branch: ajman, replied: [true: [ayman, wassim], false: [adnan]], checkedIn: Dictionary())])
+            }
+            else if viewType == "photo"{
+                GalleryWithEmergencies(emergencies: [Emergency(details: "test1", location: "Test2", meetingPoint: "Test3", urgency: 3, time: "time", employeesCalled: [adnan, wassim, ayman], branch: ajman, replied: [true: [ayman, wassim], false: [adnan]], checkedIn: Dictionary())])
+                    }
+            }
+     }
 }
 
 struct Recent_Emergencies_Previews: PreviewProvider {
