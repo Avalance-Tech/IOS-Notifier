@@ -23,7 +23,11 @@ var BottomMenu: some View{
 }
 
 
-var TopMenu: some View {
+struct TopMenu: View {
+    
+    @Binding var loggedin: Employee
+    
+    var body: some View{
     HStack(spacing:12){
         
         Link(destination: URL(string: "https://www.emiratesfire.ae")!, label:{
@@ -64,17 +68,45 @@ var TopMenu: some View {
         }
         
         // profile
-        NavigationLink {
-            
-            
-            
-        } label: {
+        Button {
+            loggedin = notLoggedIn
+        }
+        label: {
             Image(systemName: "person.crop.circle" )
                 .resizable()
                 .frame(width: 30, height: 30, alignment: .center)
                 .font(.system(size: 10, weight: .light, design: .rounded))
+
         }
         
         
     }.padding(.trailing, 20)
+        
+    }
 }
+
+
+struct Search_Preset: View{
+
+    @Binding var search: String
+    
+    var body: some View{
+        
+        Image(systemName: "magnifyingglass")
+            .resizable()
+            .frame(width: 20, height: 20, alignment: .center)
+            .padding(.leading, 10)
+            .offset(x: 12)
+        Divider().frame(width: 1, height: 20, alignment: .center)
+            .offset(x: 8)
+        TextField("Search", text: $search)
+            .frame(width: 160 ,height: 30)
+            .padding(.horizontal, 40)
+            .background(Color.gray.opacity(0.3))
+            .cornerRadius(10).offset(x:-30)
+        
+    }
+}
+
+
+

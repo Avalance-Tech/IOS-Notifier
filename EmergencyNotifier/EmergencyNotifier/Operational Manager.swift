@@ -12,6 +12,8 @@ import SwiftUI
 
 struct Main_OperationalManager: View{
     
+    @Binding var loggedin: Employee
+    
     @State var showingAssignPopUp = false
     @State var reason = ""
     
@@ -19,7 +21,7 @@ struct Main_OperationalManager: View{
         
         VStack{
             
-            TopMenu
+            TopMenu(loggedin: $loggedin)
             
             
             Spacer()
@@ -106,12 +108,14 @@ struct Main_OperationalManager: View{
 
 struct MainPage_OperationalManager: View {
     
+    @Binding var loggedin: Employee
+    
     var body: some View {
         
         VStack{
             NavigationView{
                 
-                Main_OperationalManager()
+                Main_OperationalManager(loggedin: $loggedin)
                     .navigationTitle("Emergency Link")
                 
                 
@@ -120,6 +124,7 @@ struct MainPage_OperationalManager: View {
     }
 }
 
+/*
 struct Operational_Manager_swift_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -129,3 +134,4 @@ struct Operational_Manager_swift_Previews: PreviewProvider {
         }
     }
 }
+*/

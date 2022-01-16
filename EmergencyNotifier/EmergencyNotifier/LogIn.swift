@@ -7,41 +7,142 @@
 
 import SwiftUI
 
-struct LogIn_Main: View {
+struct dummyDataBase{
     
-    @State var phoneNumber = ""
+    var allEmployees: [Employee]
+    var allBranches: [Branch]
+
+}
+
+
+let x = dummyDataBase(allEmployees: [adnan, talal, ayman, wassim], allBranches: [ajman, rak, uaq, fujairah, sharjah])
+
+
+
+struct Main_LogIn: View{
+    
+    @Binding var loggedin: Employee
+    
+    @State var id = ""
     
     @State var password = ""
     
+    @State var failed = false
+    @State var loggingIn = false
+    
     var body: some View {
+        ZStack{
+            VStack{
+            
+            Text("Log In").font(.largeTitle).fontWeight(.bold)
+                .padding(.all, 20)
+            
+            TextField("Employee ID ", text: $id)
+                .padding()
+                .background(Color(red: 239/255, green: 243/255, blue:244/255))
+                .cornerRadius(10)
+                .padding(.bottom, 20)
+            
+            
+        SecureField("Password", text: $password)
+                .padding()
+                .background(Color(red: 239/255, green: 243/255, blue:244/255))
+                .cornerRadius(10)
+                .padding(.bottom, 20)
         
-        VStack{
-            TextField(" Phone Number", text: $phoneNumber)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .border(Color.gray.opacity(0.6))
-        SecureField(" Password", text: $password)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .border(Color.gray.opacity(0.6))
-        
+                if(failed && !loggingIn){
+                    if !loggingIn{
+                    Text("Incorrect Login. Please try again.").foregroundColor(Color.red)
+                    }}
+                
+                
+                
             Button {
                 //log in
+                
+                for employee in x.allEmployees{
+                
+                    print(employee.employeeID)
+                    print(employee.password)
+                    
+                    if employee.employeeID == Int(id){
+
+                        if employee.password == password{
+                            
+                            loggedin = employee
+                            loggingIn = true
+                            
+                        }
+                        
+                    }
+                
+                }
+                if loggedin == notLoggedIn{
+                    failed = true
+                }
+                
+                print(password)
+                print(id)
+                print(loggedin.name)
+                print(loggedin)
+                
             } label: {
-                Text("Log In").padding(.all, 10)
+                Text("Log In").padding(.all, 20)
+                    .padding(.horizontal, 20)
                     .foregroundColor(Color.white)
-                    .background(RoundedRectangle(cornerRadius: 10))
+                    .background(Color.blue.opacity(0.99))
+                    .cornerRadius(10)
+                    
+            }
+
+            
+            NavigationLink {
+
+                
+
+            } label: {
+                Text("Forgot Password?").underline()
             }
 
                         
-        }.padding(.all, 20)
+        }.padding()
+            if loggingIn{
+                Text("Success! Logging In")
+                    .padding()
+                    .padding()
+                    .background(Color(red: 140/255, green: 150/255, blue: 160/255, opacity: 0.8))
+                    .foregroundColor(Color.white)
+                    .cornerRadius(20)
+                    .font(.title)
+                
+            }
+        }
     }
     
     
 }
 
-struct LogIn_Previews: PreviewProvider {
-    static var previews: some View {
-        LogIn_Main()
+
+struct LogIn_Main: View {
+    
+    @Binding var loggedin: Employee
+    
+    
+    var body: some View{
+        NavigationView{
+        Main_LogIn(loggedin: $loggedin).navigationBarHidden(true)
+    }
     }
 }
+
+/*
+struct LogIn_Previews: PreviewProvider {
+    static var previews: some View {
+        
+
+           LogIn_Main(loggedin: )
+        
+    
+    }
+}
+*/

@@ -71,19 +71,25 @@ var uaq = Branch(employees: [], name: "Umm Al Quwain", emergencies: [])
 var branches = [sharjah, ajman, fujairah, rak, uaq]
 
 
-var loggedin = talal
-var operationalManager = adnan
-	
 
 
 
-let adnan : Employee = Employee(employeeID: "9999", name: "adnan Odimah", number: "07405074600", status: false, branch: ajman, employeeType: "Operational Manager")
 
-let ayman = Employee(employeeID:"102", name: "ayman", number: "0578432058", status: true, branch: ajman, employeeType: "Fire Fighter")
+let adnan : Employee = Employee(employeeID: 9999, name: "adnan Odimah", number: "07405074600", status: false, branch: ajman, employeeType: "Operational Manager")
 
-let talal = Employee(employeeID: "230", name:"talal", number: "07520752", status: false, branch: ajman, employeeType: "Team Head")
+let ayman = Employee(employeeID:102, name: "ayman", number: "0578432058", status: true, branch: ajman, employeeType: "Fire Fighter")
 
-let wassim = Employee(employeeID: "302", name: "wassim", number: "08540853085", status: true, branch: ajman, employeeType: "Supervisor")
+let talal = Employee(employeeID: 230, name:"talal", number: "07520752", status: false, branch: ajman, employeeType: "Team Head")
+
+let wassim = Employee(employeeID: 302, name: "wassim", number: "08540853085", status: true, branch: ajman, employeeType: "Supervisor")
+
+
+
+
+let notLoggedIn = Employee(employeeID: 0, name: "", number: "", status: false, branch: otherBranch, employeeType: "")
+
+let otherBranch = Branch(employees: [], name: "", emergencies:[])
+
 
 
 
@@ -107,10 +113,17 @@ let wassim = Employee(employeeID: "302", name: "wassim", number: "08540853085", 
 
 
 
-struct Employee: Identifiable{
+
+
+
+
+
+
+
+struct Employee: Identifiable, Equatable{
     let id = UUID()
     
-    let employeeID: String
+    let employeeID: Int
     
     var password: String = "password"  // Encrypt later
     
@@ -122,12 +135,13 @@ struct Employee: Identifiable{
     var branch: Branch
     
     var employeeType: String
+    
+    static func == (lhs: Employee, rhs: Employee) -> Bool{
+        
+        return lhs.id == rhs.id
+        
+    }
 }
-
-
-
-
-
 
 
 
@@ -143,19 +157,6 @@ struct Branch{
     var emergencies: Array<Emergency>
     
 }
-
-
-var deputyTeamHead: Employee {
-    for employee in loggedin.branch.employees{
-                if employee.employeeType == "Deputy Team Head"{
-                        return employee
-
-        }
-    }
-    return loggedin
-}
-
-
 
 
 

@@ -22,7 +22,7 @@ struct showSelectedDelete: View{
         
         HStack(spacing: 7){
             
-            Text(employee.employeeID)
+            Text(String(employee.employeeID))
                 .frame(width: 45, height: 30, alignment: .leading)
                 .padding(.leading, 3)
             
@@ -248,7 +248,7 @@ struct CreateAccount: View{
     {
         
         
-        self.newBranch.employees.append(Employee(employeeID: accountID, name: accountName, number: accountNumber, status: false, branch: newBranch, employeeType: accountType))
+        self.newBranch.employees.append(Employee(employeeID: Int(accountID)!, name: accountName, number: accountNumber, status: false, branch: newBranch, employeeType: accountType))
         
         
         
@@ -409,7 +409,7 @@ struct EditAccountMain: View{
                         
                         Divider()
                         
-                        Text(employee.employeeID)
+                        Text(String(employee.employeeID))
                             .frame(width: 46, height: 40, alignment: .center)
                         
                         Divider()
@@ -514,7 +514,7 @@ struct DeleteAccounts: View{
                     ScrollView { ForEach(selectedEmployees){employee in
                         
                         HStack{
-                            Text(employee.employeeID)
+                            Text(String(employee.employeeID))
                                 .frame(width: 45, height: 30, alignment: .leading)
                                 .padding(.leading, 3)
                             

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Main_FireFighter: View {
     
+    @Binding var loggedin: Employee
     
     @State var onCall = false
     
@@ -19,7 +20,7 @@ struct Main_FireFighter: View {
         
         VStack(spacing: 25 ){
             
-            TopMenu
+            TopMenu(loggedin: $loggedin)
             Spacer()
             
             HStack{
@@ -78,7 +79,7 @@ Spacer()
 struct MainPage_FireFighter: View {
     @State var menuOpened = false
     
-    
+    @Binding var loggedin: Employee
     // body
     
     var body: some View {
@@ -88,7 +89,7 @@ struct MainPage_FireFighter: View {
         
         NavigationView{
             
-            Main_FireFighter().navigationTitle("Emergency Link")
+            Main_FireFighter(loggedin: $loggedin).navigationTitle("Emergency Link")
         
         } // close navi
             
@@ -103,8 +104,12 @@ struct MainPage_FireFighter: View {
 }
 
 
+
+
+
+/*
 struct Main_Page_Firefighter_Previews: PreviewProvider {
     static var previews: some View {
         MainPage_FireFighter()
     }
-}
+}*/

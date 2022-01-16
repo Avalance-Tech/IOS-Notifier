@@ -19,10 +19,12 @@ struct Main_TeamHead: View{
     @State var showingAssignPopUp = false
     @State var reason = ""
     
+    @Binding var loggedin: Employee
+    
     var body: some View{
         
         VStack{
-            TopMenu
+            TopMenu(loggedin: $loggedin)
             
             Spacer()
             // Create Emergency button
@@ -74,7 +76,7 @@ struct Main_TeamHead: View{
                 VStack{
                     Spacer()
                     
-                    Text("Are you sure you would like to assign \(deputyTeamHead.name) as the Acting Team Head")
+                    Text("Are you sure you would like to assign  as the Acting Team Head")
                     TextField("Reason", text: $reason)
                     HStack(spacing: 30){
                         Button {
@@ -135,7 +137,8 @@ struct Main_TeamHead: View{
 
 struct MainPage_TeamHead: View {
     // Properties
-
+    
+    @Binding var loggedin: Employee
     
     // body
     
@@ -145,7 +148,7 @@ struct MainPage_TeamHead: View {
                 
                 NavigationView{
                     
-                    Main_TeamHead().navigationTitle("Emergency Link")
+                    Main_TeamHead(loggedin: $loggedin).navigationTitle("Emergency Link")
                     
                 } // close navi
                 
@@ -162,10 +165,11 @@ struct MainPage_TeamHead: View {
 }
 
 
-
+/*
 
 struct MainPreview_TeamHead: PreviewProvider {
     static var previews: some View {
         MainPage_TeamHead()
     }
 }
+*/

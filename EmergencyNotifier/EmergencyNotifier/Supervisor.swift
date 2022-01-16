@@ -9,13 +9,12 @@ import SwiftUI
 
 struct Main_Supervisor: View{
     
-    
+    @Binding var loggedin: Employee
     
     var body: some View{
         
         VStack{
-            TopMenu
-            
+            TopMenu(loggedin: $loggedin)
             Spacer()
             // Create Emergency button
                 
@@ -96,7 +95,8 @@ struct Main_Supervisor: View{
 
 struct MainPage_Supervisor: View {
     // Properties
-
+    
+    @Binding var loggedin: Employee
     
     
     // body
@@ -107,7 +107,7 @@ struct MainPage_Supervisor: View {
                 
                 NavigationView{
                     
-                    Main_Supervisor().navigationTitle("Emergency Link")
+                    Main_Supervisor(loggedin: $loggedin).navigationTitle("Emergency Link")
                     
                 } // close navi
                 
@@ -122,10 +122,11 @@ struct MainPage_Supervisor: View {
 }
 
 
-
+/*
 
 struct Main_Page_Previews: PreviewProvider {
     static var previews: some View {
         MainPage_Supervisor()
     }
 }
+*/
