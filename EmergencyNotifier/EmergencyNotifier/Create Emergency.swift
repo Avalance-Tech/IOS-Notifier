@@ -12,7 +12,7 @@ struct showSelectedEmergency: View{
     
     let employee: Employee
     
-    @Binding var selectedItems: Set<UUID>
+    @Binding var selectedItems: Set<Int>
     
     var isSelected: Bool{
         
@@ -26,7 +26,7 @@ struct showSelectedEmergency: View{
         
         HStack(spacing: 7){
             
-            Text(String(employee.employeeID))
+            Text(String(employee.id))
                 .frame(width: 45, height: 30, alignment: .leading)
                 .padding(.leading, 3)
             
@@ -79,16 +79,8 @@ struct showSelectedEmergency: View{
     
 }
 
-
-
-
-
-
-
-
-
 struct SortsView: View{
-
+    
     @Binding var sort: String
     @Binding var sortOrder: Bool
     
@@ -96,55 +88,175 @@ struct SortsView: View{
     var descendingImage = "chevron.down"
     var ascendingImage = "chevron.up"
     
-    let sorts = ["Id", "Name", "Status", "Branch"]
-    
     var body: some View{
-        
-        Button {
-
-            sort = "Name"
-            sortOrder.toggle()
-
-        } label: {
-            HStack{
-
-                Text("Name")
-                Image(systemName: sortOrder && sort == "Name" ? "chevron.down" : "chevron.up")
-
+        VStack{
+            
+            Button {
+                
+                sort = "Name"
+                sortOrder.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Name")
+                    Image(systemName: sortOrder && sort == "Name" ? "chevron.down" : "chevron.up")
+                    
+                }
             }
-        }
-        
-        Button {
-
-            sort = "Id"
-            sortOrder.toggle()
-
-        } label: {
-            HStack{
-
-                Text("Employee ID")
-                Image(systemName: sortOrder && sort == "Id" ? "chevron.down" : "chevron.up")
-
+            
+            Button {
+                
+                sort = "Id"
+                sortOrder.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Employee ID")
+                    Image(systemName: sortOrder && sort == "Id" ? "chevron.down" : "chevron.up")
+                    
+                }}
+            
+            Button {
+                
+                sort = "Status"
+                sortOrder.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Status")
+                    Image(systemName: sortOrder && sort == "Status" ? "chevron.down" : "chevron.up")
+                    
+                }
             }
+            
+            Button{
+                sort = "Branch"
+                sortOrder.toggle()
+            } label: {
+                HStack{
+                    Text("Branch")
+                    Image(systemName: sortOrder && sort == "Branch" ? "chevron.down" : "chevron.up")
+                }
+            }
+            
+            Button{
+                sort = "Role"
+                sortOrder.toggle()
+            } label: {
+                HStack{
+                    Text("Employee Type")
+                    Image(systemName: sortOrder && sort == "Role" ? "chevron.down" : "chevron.up")
+                }
+            }
+            
+            
         }
         
         
     }
 }
 
-
 struct FiltersView: View{
     @Binding var filters: [String]
     
     
+    
+    
+    
     var body: some View{
-        
-        
-        Text("Filters")
-        
-        
-        
+        VStack{
+            
+            
+            HStack{
+                
+                Spacer()
+                
+                Button{
+                    
+                    
+                    if filters.contains("Status"){
+                        filters.removeAll(where: {$0 == "Status"})
+                    }else{
+                        filters.append("Status")
+                    }
+                    
+                    
+                } label: {
+                    Text("Status")
+                    if filters.contains("Status"){ Image(systemName: "checkmark")}
+                }.frame(width: 180, height: 5, alignment: .center)
+                
+                Spacer()
+                
+                Button{
+                    
+                    if filters.contains("Branch"){
+                        filters.removeAll(where: {$0 == "Branch"})
+                    }else{
+                        filters.append("Branch")
+                    }
+                    
+                } label: {
+                    Text("Branch")
+                    if filters.contains("Branch"){Image(systemName: "checkmark")}
+                    
+                }.frame(width: 180, height: 5, alignment: .center)
+                
+                Spacer()
+                
+            }
+            HStack{
+                
+                Spacer()
+                
+                Button{
+                    
+                    if filters.contains("Employee Type"){
+                        filters.removeAll(where: {$0 == "Employee Type"})
+                    }else{
+                        filters.append("Employee Type")
+                    }
+                    
+                } label: {
+                    Text("Employee Type")
+                    if filters.contains("Employee Type"){Image(systemName: "checkmark")}
+                    
+                    
+                }.frame(width: 180, height: 5, alignment: .center)
+                
+                Spacer()
+                
+                Button{
+                    
+                    if filters.contains("Selected"){
+                        filters.removeAll(where: {$0 == "Selected"})
+                    }else{
+                        filters.append("Selected")
+                    }
+                    
+                } label: {
+                    Text("Selected")
+                    if filters.contains("Selected"){Image(systemName: "checkmark")}
+                    
+                }.frame(width: 180, height: 5, alignment: .center)
+                Spacer()
+            }.padding(.top, 20)
+        }
+        Divider()
+        ScrollView(.horizontal){
+            HStack{
+                
+                
+                
+            }
+            
+        }
     }
+    
+    
 }
 
 
@@ -165,6 +277,9 @@ struct Create_Emergency: View {
         emp = doSort(list: allEmployeesShown,  sort: sort, type: typeS)
         
         
+        if search != ""{
+            return emp.filter({$0.name.contains(search.lowercased())})
+        }
         
         return emp
     }
@@ -187,7 +302,7 @@ struct Create_Emergency: View {
     
     
     
-    @State var selectedEmployeesID = Set<UUID>()
+    @State var selectedEmployeesID = Set<Int>()
     
     var selectedEmployees: [Employee]{
         
@@ -257,10 +372,12 @@ struct Create_Emergency: View {
             }
             
             else if showSorts{
-     
+                
                 SortsView(sort: $sort, sortOrder: $typeS)
                 
             } else if showFilters{
+                
+                FiltersView(filters: $filters)
                 
             }
             
@@ -270,6 +387,7 @@ struct Create_Emergency: View {
             }
             
             ScrollView{
+                
                 HStack{
                     
                     
@@ -279,6 +397,8 @@ struct Create_Emergency: View {
                     
                     Button {
                         showFilters.toggle()
+                        showSorts = false
+                        
                     } label: {
                         Text("Filter")
                     }
@@ -286,6 +406,7 @@ struct Create_Emergency: View {
                     
                     Button {
                         showSorts.toggle()
+                        showFilters = false
                     } label: {
                         Text("Sort")
                     }.padding(.trailing, 5)
@@ -356,12 +477,41 @@ struct Create_Emergency: View {
             
         }else if sort == "Id"{
             if type{
-                newList = list.sorted(by: {$0.employeeID < $1.employeeID})
+                newList = list.sorted(by: {$0.id < $1.id})
             }
             else{
-                newList = list.sorted(by: {$0.employeeID > $1.employeeID})
+                newList = list.sorted(by: {$0.id > $1.id})
+            }
+        }else if sort == "Status"{
+            if type{
+                newList = list.sorted(by: { user1, user2 in
+                    return user1.status
+                })
+            }
+            else{
+                newList = list.sorted(by: {user1, user2 in
+                    return !user1.status
+                })
+            }
+        }else if sort == "Branch"{
+            if type{
+                newList = list.sorted(by: {  $0.branch.name < $1.branch.name  })
+            }
+            else{
+                newList = list.sorted(by: { $0.branch.name > $1.branch.name
+                })
+            }
+        }else if sort == "Role"{
+            if type{
+                newList = list.sorted(by: {  $0.employeeType < $1.employeeType  })
+            }
+            else{
+                newList = list.sorted(by: { $0.employeeType > $1.employeeType
+                })
             }
         }
+        
+        
         return newList
     }
     

@@ -75,18 +75,18 @@ var branches = [sharjah, ajman, fujairah, rak, uaq]
 
 
 
-let adnan : Employee = Employee(employeeID: 9999, name: "adnan Odimah", number: "07405074600", status: false, branch: ajman, employeeType: "Operational Manager")
+let adnan : Employee = Employee(id: 9999, name: "adnan Odimah", number: "07405074600", status: false, branch: ajman, employeeType: "Operational Manager")
 
-let ayman = Employee(employeeID:102, name: "ayman", number: "0578432058", status: true, branch: ajman, employeeType: "Fire Fighter")
+let ayman = Employee(id:102, name: "ayman", number: "0578432058", status: true, branch: rak, employeeType: "Fire Fighter")
 
-let talal = Employee(employeeID: 230, name:"talal", number: "07520752", status: false, branch: ajman, employeeType: "Team Head")
+let talal = Employee(id: 230, name:"talal", number: "07520752", status: false, branch: uaq, employeeType: "Team Head")
 
-let wassim = Employee(employeeID: 302, name: "wassim", number: "08540853085", status: true, branch: ajman, employeeType: "Supervisor")
-
-
+let wassim = Employee(id: 302, name: "wassim", number: "08540853085", status: true, branch: ajman, employeeType: "Supervisor")
 
 
-let notLoggedIn = Employee(employeeID: 0, name: "", number: "", status: false, branch: otherBranch, employeeType: "")
+
+
+let notLoggedIn = Employee(id: 0, name: "", number: "", status: false, branch: otherBranch, employeeType: "")
 
 let otherBranch = Branch(employees: [], name: "", emergencies:[])
 
@@ -121,9 +121,8 @@ let otherBranch = Branch(employees: [], name: "", emergencies:[])
 
 
 struct Employee: Identifiable, Equatable{
-    let id = UUID()
     
-    let employeeID: Int
+    let id: Int
     
     var password: String = "password"  // Encrypt later
     

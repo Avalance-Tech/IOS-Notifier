@@ -57,7 +57,7 @@ struct WhenClicked: View{
             
             HStack{
                 ScrollView{
-                    ForEach(emergency.employeesCalled){ employee in
+                   ForEach(emergency.employeesCalled){ employee in
                         
                         NavigationLink {
                             WhenClickedEmployee(employee: employee, replied: checkReply(employee: employee))
@@ -66,7 +66,7 @@ struct WhenClicked: View{
                             
                             HStack{
                                 Text(employee.name).frame(width: 140, height: 30, alignment: .leading)
-                                Text(String(employee.employeeID)).frame(width: 50, height: 30, alignment: .center)
+                                Text(String(employee.id)).frame(width: 50, height: 30, alignment: .center)
                                 Text(typeInitial(emptype: employee.employeeType)).frame(width: 40, height: 30, alignment: .center)
                                 Text(checkReply(employee: employee)).frame(width: 90, height: 30, alignment: .leading)
                                 

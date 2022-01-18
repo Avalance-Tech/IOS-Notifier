@@ -42,19 +42,6 @@ struct TopMenu: View {
         
         Spacer()
         
-        // Settings
-        NavigationLink {
-            
-            
-            
-        } label: {
-            Image(systemName: "gear")
-                .resizable()
-                .frame(width: 30, height: 30, alignment: .center)
-                .font(.system(size: 10, weight: .light, design: .rounded))
-        }
-        
-        
         // help
         NavigationLink{
             
@@ -68,8 +55,8 @@ struct TopMenu: View {
         }
         
         // profile
-        Button {
-            loggedin = notLoggedIn
+        NavigationLink{
+            Account(loggedIn: $loggedin).statusBar(hidden: true)
         }
         label: {
             Image(systemName: "person.crop.circle" )

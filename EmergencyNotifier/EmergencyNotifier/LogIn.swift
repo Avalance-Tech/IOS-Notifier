@@ -62,10 +62,10 @@ struct Main_LogIn: View{
                 
                 for employee in x.allEmployees{
                 
-                    print(employee.employeeID)
+                    print(employee.id)
                     print(employee.password)
                     
-                    if employee.employeeID == Int(id){
+                    if employee.id == Int(id){
 
                         if employee.password == password{
                             
