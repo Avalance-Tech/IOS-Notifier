@@ -320,7 +320,7 @@ struct Create_Emergency: View {
     
     // Sort / filter employees shown
     
-    @StateObject var vm = EmployeesVM()
+    @StateObject var vm = VM_DB()
     
     
 

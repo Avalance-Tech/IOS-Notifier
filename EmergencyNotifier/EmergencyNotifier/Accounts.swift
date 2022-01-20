@@ -58,6 +58,7 @@ struct showSelectedDelete: View{
             
             
         }
+        
         .onTapGesture {
             if self.isSelected{
                 self.selectedItems.remove(self.employee.id)
@@ -76,7 +77,7 @@ struct showSelectedDelete: View{
 
 struct CreateAccount: View{
     
-    @State var employees = EmployeesVM()
+    @State var employees =  VM_DB()
     
     var check: Bool{
         if !["Team Head", "Fire Fighter", "Operational Manager", "Supervisor", "Deputy Team Head", "Assistant Supervisor"].contains(newType){
@@ -87,7 +88,7 @@ struct CreateAccount: View{
             return false
         } else if newID == ""{
             return false
-        } else if !["ajman", "fujairah", "sharjah", "uaq", "rak"].contains(newBranch){
+        } else if !["ajman", "fujairah", "sharjah", "umm al-quwain", "ras al khaimah"].contains(newBranch.lowercased()){
             return false
         }else{
             for employee in employees.allEmployees{
@@ -181,38 +182,37 @@ struct CreateAccount: View{
             // New branch
 
             Menu(newBranch == "" ? "Select Branch" : newBranch) {
-                    
-                    Button {
-                        newBranch = "ajman"
-                    } label: {
-                        Text("Ajman")
-                    }
-                    
-                    Button {
-                        newBranch = "sharjah"
-                    } label: {
-                        Text("Sharjah")
-                    }
-                    
-                    Button {
-                        newBranch = "rak"
-                    } label: {
-                        Text("Ras Al Khaimah")
-                    }
-                    
-                    Button {
-                        newBranch = "uaq"
-                    } label: {
-                        Text("Umm Al-Quwain")
-                    }
-                    
-                    
-                    Button {
-                        newBranch = "fujairah"
-                    } label: {
-                        Text("Fujairah")
-                    }
+                Button {
+                    newBranch = "Ajman"
+                } label: {
+                    Text("Ajman")
                 }
+                
+                Button {
+                    newBranch = "Sharjah"
+                } label: {
+                    Text("Sharjah")
+                }
+                
+                Button {
+                    newBranch = "Ras Al Khaimah"
+                } label: {
+                    Text("Ras Al Khaimah")
+                }
+                
+                Button {
+                    newBranch = "Umm al-Quwain "
+                } label: {
+                    Text("Umm Al-Quwain")
+                }
+                
+                
+                Button {
+                    newBranch = "Fujairah"
+                } label: {
+                    Text("Fujairah")
+                }
+            }
 
             
             Divider()
@@ -241,7 +241,7 @@ struct CreateAccount: View{
             }
             
             
-        }
+        }.onAppear { employees.getData() }
         
     }
     
@@ -312,43 +312,37 @@ struct EditAccount: View{
                 
                 
                 // New branch
-                Text("Test")
                 Menu(newBranch == "" ? "Select Branch" : newBranch) {
                     Button {
-                        newBranch = "ajman"
+                        newBranch = "Ajman"
                     } label: {
                         Text("Ajman")
                     }
                     
                     Button {
-                        newBranch = "sharjah"
+                        newBranch = "Sharjah"
                     } label: {
                         Text("Sharjah")
                     }
                     
                     Button {
-                        newBranch = "rak"
+                        newBranch = "Ras Al Khaimah"
                     } label: {
                         Text("Ras Al Khaimah")
                     }
                     
                     Button {
-                        newBranch = "uaq"
+                        newBranch = "Umm al-Quwain "
                     } label: {
                         Text("Umm Al-Quwain")
                     }
                     
                     
                     Button {
-                        newBranch = "fujairah"
+                        newBranch = "Fujairah"
                     } label: {
                         Text("Fujairah")
                     }
-                }
-
-                Menu(newBranch == "" ? "Select Branch": newBranch) {
-                    
-
                 }
             }
             
@@ -374,7 +368,7 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
-    @State var employees = EmployeesVM()
+    @State var employees =  VM_DB()
     
     
     var shownEmployees: [Employee]{
@@ -436,6 +430,8 @@ struct EditAccountMain: View{
             }
         }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
             .padding(.vertical, 10)
+            .onAppear { employees.getData() }
+            
         
     }
     
@@ -443,7 +439,7 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @State var employees = EmployeesVM()
+    @State var employees =  VM_DB()
 
     
     @State private var showingPopUp = false
@@ -486,7 +482,10 @@ struct DeleteAccounts: View{
             
             Button("Delete \(selectedEmployees.count)"){
                 showingPopUp = true
-            }.disabled(selectedEmployees.count > 0 ? false : true)
+                
+            }
+            .onAppear { employees.getData() }
+            .disabled(selectedEmployees.count > 0 ? false : true)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 8)
             .popover(isPresented: $showingPopUp) {

@@ -11,7 +11,7 @@ import SwiftUI
 
 struct Main_LogIn: View{
     
-    @StateObject var employees = EmployeesVM()
+    @StateObject var employees =  VM_DB()
 
     
     @Binding var loggedin: Employee
