@@ -25,7 +25,7 @@ struct Account: View {
             }
             
             HStack{
-            Text("loggedin.name")
+            Text(loggedIn.name)
             Image(systemName: "pencil")
             }
                 

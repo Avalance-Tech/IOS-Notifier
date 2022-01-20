@@ -117,6 +117,78 @@ class VM_DB: ObservableObject{
     
     let db = Firestore.firestore()
     
+    var sortview: some View{
+
+        VStack{
+            
+            Button {
+                
+                self.sort = "Name"
+                self.typeS.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Name")
+                    Image(systemName: typeS && sort == "Name" ? "chevron.down" : "chevron.up")
+                    
+                }
+            }
+            
+            Button {
+                
+                self.sort = "Id"
+                self.typeS.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Employee ID")
+                    Image(systemName: typeS && sort == "Id" ? "chevron.down" : "chevron.up")
+                    
+                }}
+            
+            Button {
+                
+                self.sort = "Status"
+                self.typeS.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Status")
+                    Image(systemName: typeS && sort == "Status" ? "chevron.down" : "chevron.up")
+                    
+                }
+            }
+            
+            Button{
+                self.sort = "Branch"
+                self.typeS.toggle()
+            } label: {
+                HStack{
+                    Text("Branch")
+                    Image(systemName: typeS && sort == "Branch" ? "chevron.down" : "chevron.up")
+                }
+            }
+            
+            Button{
+                self.sort = "Role"
+                self.typeS.toggle()
+            } label: {
+                HStack{
+                    Text("Employee Type")
+                    Image(systemName: typeS && sort == "Role" ? "chevron.down" : "chevron.up")
+                }
+            }
+            
+            
+        }
+        
+        
+    }
+    
+    
     func getData(){
         
         var newList = [Employee]()

@@ -135,86 +135,6 @@ struct showSelectedEmergency: View{
     
 }
 
-struct SortsView: View{
-    
-    @Binding var sort: String
-    @Binding var sortOrder: Bool
-    
-    
-    var descendingImage = "chevron.down"
-    var ascendingImage = "chevron.up"
-    
-    var body: some View{
-        VStack{
-            
-            Button {
-                
-                sort = "Name"
-                sortOrder.toggle()
-                
-            } label: {
-                HStack{
-                    
-                    Text("Name")
-                    Image(systemName: sortOrder && sort == "Name" ? "chevron.down" : "chevron.up")
-                    
-                }
-            }
-            
-            Button {
-                
-                sort = "Id"
-                sortOrder.toggle()
-                
-            } label: {
-                HStack{
-                    
-                    Text("Employee ID")
-                    Image(systemName: sortOrder && sort == "Id" ? "chevron.down" : "chevron.up")
-                    
-                }}
-            
-            Button {
-                
-                sort = "Status"
-                sortOrder.toggle()
-                
-            } label: {
-                HStack{
-                    
-                    Text("Status")
-                    Image(systemName: sortOrder && sort == "Status" ? "chevron.down" : "chevron.up")
-                    
-                }
-            }
-            
-            Button{
-                sort = "Branch"
-                sortOrder.toggle()
-            } label: {
-                HStack{
-                    Text("Branch")
-                    Image(systemName: sortOrder && sort == "Branch" ? "chevron.down" : "chevron.up")
-                }
-            }
-            
-            Button{
-                sort = "Role"
-                sortOrder.toggle()
-            } label: {
-                HStack{
-                    Text("Employee Type")
-                    Image(systemName: sortOrder && sort == "Role" ? "chevron.down" : "chevron.up")
-                }
-            }
-            
-            
-        }
-        
-        
-    }
-}
-
 struct FiltersView: View{
     @Binding var filters: [String]
     
@@ -303,11 +223,12 @@ struct FiltersView: View{
         }
         Divider()
         ScrollView(.horizontal){
-            HStack{
-                
-                
-                
+            if filters.isEmpty{
+                VStack(alignment: .center){
+            Text("No filters Selected")
             }
+            }
+
             
         }
     }
@@ -369,14 +290,14 @@ struct Create_Emergency: View {
             // to show emergency Details
             if !showSorts && !showFilters{
 
-                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate)
+                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate).animation(Animation.easeIn(duration: 2), value: showSorts || showFilters)
                 
             }
             
             // to show sorts
             else if showSorts{
                 
-                SortsView(sort: $vm.sort, sortOrder: $vm.typeS)
+                vm.sortview
                 
             }
             
@@ -402,8 +323,11 @@ struct Create_Emergency: View {
                     Spacer()
                     
                     Button {
+                        withAnimation{
                         showFilters.toggle()
-                        showSorts = false
+                            showSorts = false
+                        }
+                        
                         
                     } label: {
                         Text("Filter")
@@ -411,8 +335,9 @@ struct Create_Emergency: View {
                     
                     
                     Button {
+                        withAnimation{
                         showSorts.toggle()
-                        showFilters = false
+                        showFilters = false}
                     } label: {
                         Text("Sort")
                     }.padding(.trailing, 5)

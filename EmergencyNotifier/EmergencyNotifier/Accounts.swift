@@ -110,7 +110,28 @@ struct CreateAccount: View{
     @State var newID: String = ""
     @State var newBranch: String = ""
     
+    @State var created = false
+    
     var body: some View{
+        ZStack{
+            
+                if created{
+             
+            VStack{
+                Text("Account Created").frame(width: UIScreen.main.bounds.width, height: 160, alignment: .center)
+                .background(Color.green.opacity(1))
+                .cornerRadius(20)
+                .foregroundColor(Color.white)
+                .animation(Animation.easeInOut, value: !created)
+                .transition(AnyTransition.move(edge: .top))
+
+                
+                Spacer()
+            }
+            .animation(Animation.easeInOut, value: !created)
+            .transition(AnyTransition.move(edge: .top))
+            .ignoresSafeArea()
+        }
         
         VStack{
             
@@ -201,7 +222,7 @@ struct CreateAccount: View{
                 }
                 
                 Button {
-                    newBranch = "Umm al-Quwain "
+                    newBranch = "Umm Al-Quwain"
                 } label: {
                     Text("Umm Al-Quwain")
                 }
@@ -223,7 +244,19 @@ struct CreateAccount: View{
                 
                 Button(action: {
                     
-                    employees.addEmployee(name: newName, id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
+                   employees.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
+
+                    withAnimation{
+                        created = true}
+                    
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
+                        
+                        withAnimation {
+                            created = false
+                        }
+                    }
+
+
                     
                     
                 }, label:
@@ -236,13 +269,19 @@ struct CreateAccount: View{
                     
                     
                 }
-                ).disabled(check ? false : true)
+                ).disabled(check && !created ? false : true)
                 
             }
-            
+        
             
         }.onAppear { employees.getData() }
         
+
+            
+        }
+    }
+    func createdToggle(){
+        self.created.toggle()
     }
     
 }
