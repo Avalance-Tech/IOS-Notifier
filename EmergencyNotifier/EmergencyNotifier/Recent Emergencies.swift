@@ -163,7 +163,7 @@ struct GalleryWithEmergencies: View{
 
 struct ListWithEmergencies: View{
     
-    var employees = EmployeesVM()
+    var employees =  VM_DB()
     
     var emergencies: Array<Emergency>
     

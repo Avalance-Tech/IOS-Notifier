@@ -22,7 +22,7 @@ func branchInitial(branch: String)  -> String{
     
     if branch == "Ras Al-Khaimah"{
         return "RAK"
-    }  else if branch == "Umm Al Quwain"{
+    }  else if branch == "Umm Al-Quwain"{
         return "UAQ"
     } else if branch == "Sharjah"{
         return "SHJ"
@@ -91,7 +91,7 @@ let notLoggedIn = Employee(id: 0, name: "", number: "", status: false, branch: "
 
 
 
-class EmployeesVM: ObservableObject{
+class VM_DB: ObservableObject{
     @Published var allEmployees = [Employee]()
     @Published var allEmergencies = [Emergency]()
     
@@ -109,7 +109,7 @@ class EmployeesVM: ObservableObject{
             
             
             if search != ""{
-                return emp.filter({$0.name.contains(search.lowercased() )})
+                return emp.filter({$0.name.lowercased().contains(search.lowercased() )})
             }
             
             return emp
@@ -159,7 +159,7 @@ class EmployeesVM: ObservableObject{
     func addEmployee(name: String, id: Int, number: String?, branch: String, employeeType: String){
         
         
-        db.collection("Employees").addDocument(data: ["E ID": id,  "Name": name, "Number": number == nil ? "" : number!, "Branch": branch, "Type": employeeType, "Password": "password"]) { error in
+        db.collection("Employees").addDocument(data: ["E ID": id,  "Name": name, "Number": number == nil ? "" : number!, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
             if error == nil{
                 
                 self.getData()
