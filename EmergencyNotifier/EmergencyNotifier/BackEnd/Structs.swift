@@ -20,7 +20,7 @@ import Firebase
 
 func branchInitial(branch: String)  -> String{
     
-    if branch == "Ras Al-Khaimah"{
+    if branch == "Ras Al Khaimah"{
         return "RAK"
     }  else if branch == "Umm Al-Quwain"{
         return "UAQ"
