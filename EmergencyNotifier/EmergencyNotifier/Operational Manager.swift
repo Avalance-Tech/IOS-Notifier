@@ -25,6 +25,21 @@ struct Main_OperationalManager: View{
             
             
             Spacer()
+            
+            HStack{
+                
+                Spacer()
+                
+                Toggle(isOn: $loggedin.status) {
+                Text("On Call")
+                    Image(loggedin.status ? "checkmark.circle.fill" : "circle.slash")
+                    
+                }
+                
+                Spacer()
+                
+            }.padding([.top, .horizontal], 50)
+            
             // Create Emergency button
             
             NavigationLink {

@@ -26,7 +26,20 @@ struct Main_TeamHead: View{
         VStack{
             TopMenu(loggedin: $loggedin)
             
-            Spacer()
+            HStack{
+                
+                Spacer()
+                
+                Toggle(isOn: $loggedin.status) {
+                Text("On Call")
+                    
+                }
+                
+                Spacer()
+                
+            }.padding([.top, .horizontal], 50)
+            
+            
             // Create Emergency button
                 
             NavigationLink {

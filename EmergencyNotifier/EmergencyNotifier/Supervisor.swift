@@ -18,6 +18,19 @@ struct Main_Supervisor: View{
             Spacer()
             // Create Emergency button
                 
+            HStack{
+                
+                Spacer()
+                
+                Toggle(isOn: $loggedin.status) {
+                Text("On Call")
+                    
+                }
+                
+                Spacer()
+                
+            }.padding([.top, .horizontal], 50)
+            
             NavigationLink {
                 
                 Create_Emergency()

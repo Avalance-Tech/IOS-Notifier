@@ -448,6 +448,7 @@ struct Create_Emergency: View {
                 }, label:
                         {
                     Text("Submit")
+                        .bold()
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
                         .foregroundColor(.black)
@@ -459,6 +460,9 @@ struct Create_Emergency: View {
                 
                 
             }.padding(.all, 5)
+                .onAppear {
+                    vm.getData()
+                }
         }
     }
     
@@ -481,6 +485,7 @@ struct Create_Emergency: View {
 struct Create_Emergency_Previews: PreviewProvider {
     static var previews: some View {
         Create_Emergency()
+            .preferredColorScheme(.dark)
             .previewDevice("iPhone SE (2nd generation)")
     }
 }

@@ -27,7 +27,7 @@ struct Main_FireFighter: View {
                 
                 Spacer()
                 
-                Toggle(isOn: $onCall) {
+                Toggle(isOn: $loggedin.status) {
                 Text("On Call")
                     
                 }

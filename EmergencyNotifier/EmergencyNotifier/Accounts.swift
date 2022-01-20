@@ -223,14 +223,7 @@ struct CreateAccount: View{
                 
                 Button(action: {
                     
-                    
-                    print(newNumber)
-                    print(newID)
-                    print(newBranch)
-                    print(newName)
-                    print(newType)
-                    
-                    employees.addEmployee(name: newName, id: Int(newID) ?? 0, number: newNumber, branch: "Ajman", employeeType: newType)
+                    employees.addEmployee(name: newName, id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
                     
                     
                 }, label:
