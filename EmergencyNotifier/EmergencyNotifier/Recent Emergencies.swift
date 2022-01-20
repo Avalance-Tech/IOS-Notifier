@@ -17,7 +17,7 @@ struct WhenClickedEmployee: View{
             
             Text(employee.name)
             
-            Text(employee.branch.name)
+            Text(employee.branch)
             
             Text(employee.employeeType)
             
@@ -163,6 +163,8 @@ struct GalleryWithEmergencies: View{
 
 struct ListWithEmergencies: View{
     
+    var employees = EmployeesVM()
+    
     var emergencies: Array<Emergency>
     
     
@@ -277,10 +279,10 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies(emergencies: [Emergency(details: "test1", location: "Test2", meetingPoint: "Test3", urgency: 3, time: "time", employeesCalled: [adnan, wassim, ayman], branch: ajman, replied: [true: [ayman, wassim], false: [adnan]], checkedIn: Dictionary())])
+                ListWithEmergencies(emergencies: [])
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies(emergencies: [Emergency(details: "test1", location: "Test2", meetingPoint: "Test3", urgency: 3, time: "time", employeesCalled: [adnan, wassim, ayman], branch: ajman, replied: [true: [ayman, wassim], false: [adnan]], checkedIn: Dictionary())])
+                GalleryWithEmergencies(emergencies: [])
             }
         }
     }

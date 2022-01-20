@@ -74,7 +74,7 @@ struct TopMenu: View {
 
 
 struct Search_Preset: View{
-
+    
     @Binding var search: String
     
     var body: some View{

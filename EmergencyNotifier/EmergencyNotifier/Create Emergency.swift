@@ -6,7 +6,63 @@
 //
 
 import SwiftUI
+import Firebase
+import nanopb
 
+
+struct EmergencyDetails: View{
+    
+    @Binding var emergencyDetails: String
+    @Binding var emergencyLocation: String
+    @Binding var meetingPoint: String
+    @Binding var emergencyUrgency: Int
+    @Binding var emergencyDate: Date
+    
+    
+    var body: some View{
+    // Emergency Details
+    HStack(spacing: 10){
+        Text("Details")
+        TextField(" Emergency Details", text: $emergencyDetails)
+            .background(Color.gray.opacity(0.1).cornerRadius(10))
+        
+    }
+    .padding(.horizontal, 10)
+    
+    //Emergency Location
+    HStack(spacing: 10){
+        Text("Location")
+        TextField("Emergency Location", text: $emergencyLocation)
+            .background(Color.gray.opacity(0.1).cornerRadius(10))
+    }
+    .padding(.horizontal, 10)
+    
+    
+    //Meeting point Location
+    HStack(spacing: 10){
+        Text("Meeting Location")
+        TextField("Meeting Point Location", text: $meetingPoint)
+            .background(Color.gray.opacity(0.1).cornerRadius(10))
+    }
+    .padding(.horizontal, 10)
+    
+    
+    HStack(spacing: 10){
+        Stepper(value: $emergencyUrgency, in: 1...5) {
+            Text("Urgency:")
+            Text(String(emergencyUrgency))
+        }
+    }
+    .padding(.horizontal, 10)
+    
+    HStack(spacing: 10){
+        
+        DatePicker(selection: $emergencyDate, label: { Text("Time") })
+        
+    }
+    .padding(.horizontal, 10)
+}
+}
 
 struct showSelectedEmergency: View{
     
@@ -41,7 +97,7 @@ struct showSelectedEmergency: View{
             
             Divider()
             
-            Text(branchInitial(branch: employee.branch.name))
+            Text(branchInitial(branch: employee.branch))
                 .frame(width:40, height: 30, alignment: .leading)
             
             Divider()
@@ -260,37 +316,18 @@ struct FiltersView: View{
 }
 
 
-
 struct Create_Emergency: View {
     
     // Sort / filter employees shown
     
-    var allEmployeesShown: Array<Employee>{
-        return [adnan, talal, wassim, ayman]
-    }
+    @StateObject var vm = EmployeesVM()
     
-    @State var filters: [String] = []
     
-    var shownEmployees: [Employee]{
-        var emp: [Employee] = []
-        
-        emp = doSort(list: allEmployeesShown,  sort: sort, type: typeS)
-        
-        
-        if search != ""{
-            return emp.filter({$0.name.contains(search.lowercased())})
-        }
-        
-        return emp
-    }
-    
-    @State var typeS = true
-    @State var search = ""
-    @State var sort = "Status"
-    
+
     @State var showFilters = false
     @State var showSorts = false
     
+
     // Emergency Properties
     
     @State var emergencyDetails: String = ""
@@ -300,15 +337,14 @@ struct Create_Emergency: View {
     @State var emergencyDate: Date = Date()
     
     
-    
-    
     @State var selectedEmployeesID = Set<Int>()
+    
     
     var selectedEmployees: [Employee]{
         
         var employees: [Employee] = []
         
-        for employee in shownEmployees {
+        for employee in vm.allEmployees {
             
             if selectedEmployeesID.contains(employee.id){
                 
@@ -319,65 +355,35 @@ struct Create_Emergency: View {
         }
         
         return employees
-        
     }
+        
+        
+        
+    
     
     var body: some View {
         
         VStack(spacing: 15){
             
+            
+            // to show emergency Details
             if !showSorts && !showFilters{
-                // Emergency Details
-                HStack(spacing: 10){
-                    Text("Details")
-                    TextField(" Emergency Details", text: $emergencyDetails)
-                        .background(Color.gray.opacity(0.1).cornerRadius(10))
-                    
-                }
-                .padding(.horizontal, 10)
-                
-                //Emergency Location
-                HStack(spacing: 10){
-                    Text("Location")
-                    TextField("Emergency Location", text: $emergencyLocation)
-                        .background(Color.gray.opacity(0.1).cornerRadius(10))
-                }
-                .padding(.horizontal, 10)
-                
-                
-                //Meeting point Location
-                HStack(spacing: 10){
-                    Text("Meeting Location")
-                    TextField("Meeting Point Location", text: $meetingPoint)
-                        .background(Color.gray.opacity(0.1).cornerRadius(10))
-                }
-                .padding(.horizontal, 10)
-                
-                
-                HStack(spacing: 10){
-                    Stepper(value: $emergencyUrgency, in: 1...5) {
-                        Text("Urgency:")
-                        Text(String(emergencyUrgency))
-                    }
-                }
-                .padding(.horizontal, 10)
-                
-                HStack(spacing: 10){
-                    
-                    DatePicker(selection: $emergencyDate, label: { Text("Time") })
-                    
-                }
-                .padding(.horizontal, 10)
+
+                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate)
                 
             }
             
+            // to show sorts
             else if showSorts{
                 
-                SortsView(sort: $sort, sortOrder: $typeS)
+                SortsView(sort: $vm.sort, sortOrder: $vm.typeS)
                 
-            } else if showFilters{
+            }
+            
+            // to show filters
+            else if showFilters{
                 
-                FiltersView(filters: $filters)
+                FiltersView(filters: $vm.filters)
                 
             }
             
@@ -391,7 +397,7 @@ struct Create_Emergency: View {
                 HStack{
                     
                     
-                    Search_Preset(search: $search)
+                    Search_Preset(search: $vm.search)
                     
                     Spacer()
                     
@@ -415,7 +421,7 @@ struct Create_Emergency: View {
                 }.offset(x:-6)
                     .frame(width: UIScreen.main.bounds.width + 10)
                 
-                ForEach(shownEmployees) {Employee in
+                ForEach(vm.shownEmployees) {Employee in
                     
                     showSelectedEmergency(employee: Employee, selectedItems: $selectedEmployeesID)
                     
@@ -460,60 +466,9 @@ struct Create_Emergency: View {
     
     
     
+
     
-    func doSort(list: Array<Employee>, sort: String, type: Bool) -> [Employee]{
-        
-        // if type true then desc else asc
-        
-        var newList: [Employee] = []
-        
-        if sort == "Name"{
-            if type{
-                newList = list.sorted(by: {$0.name < $1.name})
-            }
-            else{
-                newList = list.sorted(by: {$0.name > $1.name})
-            }
-            
-        }else if sort == "Id"{
-            if type{
-                newList = list.sorted(by: {$0.id < $1.id})
-            }
-            else{
-                newList = list.sorted(by: {$0.id > $1.id})
-            }
-        }else if sort == "Status"{
-            if type{
-                newList = list.sorted(by: { user1, user2 in
-                    return user1.status
-                })
-            }
-            else{
-                newList = list.sorted(by: {user1, user2 in
-                    return !user1.status
-                })
-            }
-        }else if sort == "Branch"{
-            if type{
-                newList = list.sorted(by: {  $0.branch.name < $1.branch.name  })
-            }
-            else{
-                newList = list.sorted(by: { $0.branch.name > $1.branch.name
-                })
-            }
-        }else if sort == "Role"{
-            if type{
-                newList = list.sorted(by: {  $0.employeeType < $1.employeeType  })
-            }
-            else{
-                newList = list.sorted(by: { $0.employeeType > $1.employeeType
-                })
-            }
-        }
-        
-        
-        return newList
-    }
+
     
     
     

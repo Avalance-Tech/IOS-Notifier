@@ -37,7 +37,7 @@ struct showSelectedDelete: View{
             
             Divider()
             
-            Text(branchInitial(branch: employee.branch.name))
+            Text(branchInitial(branch: employee.branch))
                 .frame(width:40, height: 30, alignment: .leading)
             
             Divider()
@@ -76,22 +76,25 @@ struct showSelectedDelete: View{
 
 struct CreateAccount: View{
     
+    @State var employees = EmployeesVM()
+    
     var check: Bool{
         if !["Team Head", "Fire Fighter", "Operational Manager", "Supervisor", "Deputy Team Head", "Assistant Supervisor"].contains(newType){
-            print(newType)
             return false
         } else if newNumber == ""{
-            print(newNumber)
             return false
         } else if newName == ""{
-            print(newName)
             return false
         } else if newID == ""{
-            print(newID)
             return false
-        } else if ![ajman.name, sharjah.name, rak.name, uaq.name, fujairah.name].contains(newBranch.name){
-            print(newBranch.name)
+        } else if !["ajman", "fujairah", "sharjah", "uaq", "rak"].contains(newBranch){
             return false
+        }else{
+            for employee in employees.allEmployees{
+                if employee.id == Int(newID){
+                    return false
+                }
+            }
         }
         
         return true
@@ -104,7 +107,7 @@ struct CreateAccount: View{
     @State var newType: String = ""
     @State var newNumber: String = ""
     @State var newID: String = ""
-    @State var newBranch: Branch = Branch(employees: [], name: "none", emergencies: [])
+    @State var newBranch: String = ""
     
     var body: some View{
         
@@ -176,39 +179,41 @@ struct CreateAccount: View{
             
             
             // New branch
-            Menu(newBranch.name == "none" ? "Select Branch": newBranch.name) {
-                
-                Button {
-                    newBranch = ajman
-                } label: {
-                    Text("Ajman")
+
+            Menu(newBranch == "" ? "Select Branch" : newBranch) {
+                    
+                    Button {
+                        newBranch = "ajman"
+                    } label: {
+                        Text("Ajman")
+                    }
+                    
+                    Button {
+                        newBranch = "sharjah"
+                    } label: {
+                        Text("Sharjah")
+                    }
+                    
+                    Button {
+                        newBranch = "rak"
+                    } label: {
+                        Text("Ras Al Khaimah")
+                    }
+                    
+                    Button {
+                        newBranch = "uaq"
+                    } label: {
+                        Text("Umm Al-Quwain")
+                    }
+                    
+                    
+                    Button {
+                        newBranch = "fujairah"
+                    } label: {
+                        Text("Fujairah")
+                    }
                 }
-                
-                Button {
-                    newBranch = sharjah
-                } label: {
-                    Text("Sharjah")
-                }
-                
-                Button {
-                    newBranch = rak
-                } label: {
-                    Text("Ras Al Khaimah")
-                }
-                
-                Button {
-                    newBranch = uaq
-                } label: {
-                    Text("Umm Al-Quwain")
-                }
-                
-                
-                Button {
-                    newBranch = fujairah
-                } label: {
-                    Text("Fujairah")
-                }
-            }
+
             
             Divider()
             
@@ -221,9 +226,12 @@ struct CreateAccount: View{
                     
                     print(newNumber)
                     print(newID)
-                    print(newBranch.name)
+                    print(newBranch)
                     print(newName)
                     print(newType)
+                    
+                    employees.addEmployee(name: newName, id: Int(newID) ?? 0, number: newNumber, branch: "Ajman", employeeType: newType)
+                    
                     
                 }, label:
                         {
@@ -244,19 +252,6 @@ struct CreateAccount: View{
         
     }
     
-    func createAccount(accountName: String, accountType: String, accountID: String, accountNumber: String) -> Void
-    {
-        
-        
-        self.newBranch.employees.append(Employee(id: Int(accountID)!, name: accountName, number: accountNumber, status: false, branch: newBranch, employeeType: accountType))
-        
-        
-        
-        
-        
-    }
-    
-    
 }
 
 struct EditAccount: View{
@@ -265,7 +260,7 @@ struct EditAccount: View{
     /// new
     
     @State var newName: String = ""
-    @State var newBranch: Branch = Branch(employees: [], name: "none", emergencies: [])
+    @State var newBranch = ""
     @State var newType: String = ""
     
     
@@ -324,38 +319,43 @@ struct EditAccount: View{
                 
                 
                 // New branch
-                Menu(newBranch.name == "none" ? "Select Branch": newBranch.name) {
-                    
+                Text("Test")
+                Menu(newBranch == "" ? "Select Branch" : newBranch) {
                     Button {
-                        newBranch = ajman
+                        newBranch = "ajman"
                     } label: {
                         Text("Ajman")
                     }
                     
                     Button {
-                        newBranch = sharjah
+                        newBranch = "sharjah"
                     } label: {
                         Text("Sharjah")
                     }
                     
                     Button {
-                        newBranch = rak
+                        newBranch = "rak"
                     } label: {
                         Text("Ras Al Khaimah")
                     }
                     
                     Button {
-                        newBranch = uaq
+                        newBranch = "uaq"
                     } label: {
                         Text("Umm Al-Quwain")
                     }
                     
                     
                     Button {
-                        newBranch = fujairah
+                        newBranch = "fujairah"
                     } label: {
                         Text("Fujairah")
                     }
+                }
+
+                Menu(newBranch == "" ? "Select Branch": newBranch) {
+                    
+
                 }
             }
             
@@ -381,10 +381,11 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
+    @State var employees = EmployeesVM()
+    
+    
     var shownEmployees: [Employee]{
-        let i = [adnan, wassim, talal, ayman]
-        
-        return i
+        employees.allEmployees
     }
     
     var body: some View{
@@ -414,7 +415,7 @@ struct EditAccountMain: View{
                         
                         Divider()
                         
-                        Text(branchInitial(branch: employee.branch.name))
+                        Text(branchInitial(branch: employee.branch))
                             .frame(width: 39, height: 40, alignment: .center)
                         
                         Spacer()
@@ -449,29 +450,21 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
+    @State var employees = EmployeesVM()
+
+    
     @State private var showingPopUp = false
-    
-    var allEmployees: Array<Employee>{
-        
-        let i: [Employee] = [adnan, ayman, wassim, talal]
-        return i
-        
-    }
-    
-    var shownEmployees: [Employee]{
-        return self.allEmployees
-    }
     
     @State var selectedEmployeesID = Set<Int>()
     var selectedEmployees: [Employee]{
         
-        var employees: [Employee] = []
-        for employee in shownEmployees{
+        var employees2: [Employee] = []
+        for employee in employees.allEmployees{
             if selectedEmployeesID.contains(employee.id){
-                employees.append(employee)
+                employees2.append(employee)
             }
         }
-        return employees
+        return employees2
     }
     
     var body: some View{
@@ -488,7 +481,7 @@ struct DeleteAccounts: View{
             Spacer()
             
             ScrollView{
-                ForEach(shownEmployees){employee in
+                ForEach(employees.allEmployees){employee in
                     
                     showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
                     
@@ -526,7 +519,7 @@ struct DeleteAccounts: View{
                             
                             Divider()
                             
-                            Text(branchInitial(branch: employee.branch.name))
+                            Text(branchInitial(branch: employee.branch))
                                 .frame(width:40, height: 30, alignment: .leading)
                             
                             Divider()
@@ -652,6 +645,6 @@ struct AccountsMain: View{
 
 struct Accounts_Previews: PreviewProvider {
     static var previews: some View {
-        DeleteAccounts()
+        CreateAccount()
     }
 }

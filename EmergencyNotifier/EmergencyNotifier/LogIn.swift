@@ -7,19 +7,12 @@
 
 import SwiftUI
 
-struct dummyDataBase{
-    
-    var allEmployees: [Employee]
-    var allBranches: [Branch]
-
-}
-
-
-let x = dummyDataBase(allEmployees: [adnan, talal, ayman, wassim], allBranches: [ajman, rak, uaq, fujairah, sharjah])
-
 
 
 struct Main_LogIn: View{
+    
+    @StateObject var employees = EmployeesVM()
+
     
     @Binding var loggedin: Employee
     
@@ -60,7 +53,7 @@ struct Main_LogIn: View{
             Button {
                 //log in
                 
-                for employee in x.allEmployees{
+                for employee in employees.allEmployees{
                 
                     print(employee.id)
                     print(employee.password)
@@ -68,6 +61,8 @@ struct Main_LogIn: View{
                     if employee.id == Int(id){
 
                         if employee.password == password{
+                            
+                            
                             
                             loggedin = employee
                             loggingIn = true
@@ -80,11 +75,7 @@ struct Main_LogIn: View{
                 if loggedin == notLoggedIn{
                     failed = true
                 }
-                
-                print(password)
-                print(id)
-                print(loggedin.name)
-                print(loggedin)
+            
                 
             } label: {
                 Text("Log In").padding(.all, 20)
@@ -118,7 +109,6 @@ struct Main_LogIn: View{
             }
         }
     }
-    
     
 }
 

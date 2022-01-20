@@ -39,7 +39,9 @@ struct Account: View {
 
             
             Button {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 loggedIn = notLoggedIn
+                }
             } label: {
                 Text("Log Out").underline()
             }.padding()

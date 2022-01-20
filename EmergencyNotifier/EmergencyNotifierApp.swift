@@ -19,7 +19,6 @@ struct EmergencyNotifierApp: App {
     
     var test: some View{
         
-        print(" test updated ")
         if loggedin.employeeType == "Operational Manager"{
             
             return AnyView(MainPage_OperationalManager(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
@@ -47,6 +46,7 @@ struct EmergencyNotifierApp: App {
     
     var body: some Scene{
         WindowGroup{
+            
             
             test.animation(Animation.easeInOut(duration: 2), value: loggedin)
             
