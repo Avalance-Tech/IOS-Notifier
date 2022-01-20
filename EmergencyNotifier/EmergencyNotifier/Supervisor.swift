@@ -1,23 +1,13 @@
 //
-//  Main Page.swift
-//  Emergency Notifier
+//  Supervisor.swift
+//  EmergencyNotifier
 //
-//  Created by Adnan Odimah on 02/01/2022.
+//  Created by Adnan Odimah on 09/01/2022.
 //
 
 import SwiftUI
 
-// FOR TEAM HEAD
-
-
-
-
-
-// Home page for team head
-
-struct Main_TeamHead: View{
-    @State var showingAssignPopUp = false
-    @State var reason = ""
+struct Main_Supervisor: View{
     
     @Binding var loggedin: Employee
     
@@ -25,7 +15,9 @@ struct Main_TeamHead: View{
         
         VStack{
             TopMenu(loggedin: $loggedin)
-            
+            Spacer()
+            // Create Emergency button
+                
             HStack{
                 
                 Spacer()
@@ -39,9 +31,6 @@ struct Main_TeamHead: View{
                 
             }.padding([.top, .horizontal], 50)
             
-            
-            // Create Emergency button
-                
             NavigationLink {
                 
                 Create_Emergency()
@@ -72,74 +61,43 @@ struct Main_TeamHead: View{
                 
             }
             
-            
             // Assign Acting Team Head button
-            Button(action: {
+            Button( action: {
                 
-                showingAssignPopUp = true
+                print("Hello")
                 
             }, label:{
-                Text("Assign Team Head")
+                Text("Assign Supervisor")
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
-            }).popover(isPresented: $showingAssignPopUp) {
-                VStack{
-                    Spacer()
-                    
-                    Text("Are you sure you would like to assign  as the Acting Team Head")
-                    TextField("Reason", text: $reason)
-                    HStack(spacing: 30){
-                        Button {
-
-                            // set acting team head
-                            
-                        } label: {
-                            Text("Yes")
-                                .padding(.all, 8)
-                                .foregroundColor(Color.red)
-                                .border(Color.blue.opacity(0.8))
-                        }
-
-                        
-                        Button{
-                            showingAssignPopUp = false
-                        }
-                    label: {
-                        Text("No")
-                    
-                        .padding(.all, 8)
-                        .foregroundColor(Color.green)
-                        .border(Color.blue.opacity(0.8))
-                    }
-                    }
-                    Spacer()
-                    
-                    
-                }
-            }
+            })
             
             
             // Recent Emergencies
             
-            Button(action:{
+            NavigationLink{
                 
-                print("test")
+                Recent_Emergencies()
                 
-            },label: {
-                Text("Previous emergencies")
+            }label:{
+                Text("Recent Emergencies")
+                
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
                 
-            })
+            }
         
             
             Spacer()
+            
             BottomMenu
+        
         }
     }
 }
@@ -148,10 +106,11 @@ struct Main_TeamHead: View{
 // MAIN PAGE
 
 
-struct MainPage_TeamHead: View {
+struct MainPage_Supervisor: View {
     // Properties
     
     @Binding var loggedin: Employee
+    
     
     // body
     
@@ -161,7 +120,7 @@ struct MainPage_TeamHead: View {
                 
                 NavigationView{
                     
-                    Main_TeamHead(loggedin: $loggedin).navigationTitle("Emergency Link")
+                    Main_Supervisor(loggedin: $loggedin).navigationTitle("Emergency Link")
                     
                 } // close navi
                 
@@ -173,16 +132,14 @@ struct MainPage_TeamHead: View {
     
     // Methods
     
-
-    
 }
 
 
 /*
 
-struct MainPreview_TeamHead: PreviewProvider {
+struct Main_Page_Previews: PreviewProvider {
     static var previews: some View {
-        MainPage_TeamHead()
+        MainPage_Supervisor()
     }
 }
 */

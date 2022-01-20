@@ -10,16 +10,36 @@ import SwiftUI
 
 
 
-struct Home_OperationalManager: View{
+struct Main_OperationalManager: View{
+    
+    @Binding var loggedin: Employee
+    
+    @State var showingAssignPopUp = false
+    @State var reason = ""
     
     var body: some View{
         
         VStack{
             
-            TopMenu
+            TopMenu(loggedin: $loggedin)
             
             
             Spacer()
+            
+            HStack{
+                
+                Spacer()
+                
+                Toggle(isOn: $loggedin.status) {
+                Text("On Call")
+                    Image(loggedin.status ? "checkmark.circle.fill" : "circle.slash")
+                    
+                }
+                
+                Spacer()
+                
+            }.padding([.top, .horizontal], 50)
+            
             // Create Emergency button
             
             NavigationLink {
@@ -38,7 +58,7 @@ struct Home_OperationalManager: View{
             
             // Create account Button
             NavigationLink{
-            
+                
                 MainAccountsMenu()
                 
             }label:{
@@ -53,9 +73,9 @@ struct Home_OperationalManager: View{
             }
             
             // Assign Acting Team Head button
-            Button( action: {
+            Button(action: {
                 
-                print("Hhello")
+                showingAssignPopUp = true
                 
             }, label:{
                 Text("Assign Operational Manager")
@@ -64,62 +84,69 @@ struct Home_OperationalManager: View{
                     .padding(.horizontal, 10)
                     .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
-            })
+            }).popover(isPresented: $showingAssignPopUp) {
+                    // add a selection from a list of team heads
+                
+                
+            }
             
             
             // Recent Emergencies
-            
-            Button(action:{
+            NavigationLink{
                 
-                print("test")
+                Recent_Emergencies()
                 
-            },label: {
-                Text("Previous emergencies")
+            }label:{
+                Text("Recent Emergencies")
+                
                     .underline()
                     .padding(.vertical, 15)
                     .padding(.horizontal, 10)
+                    .foregroundColor(Color.blue)
                     .font(.system(size: 20, design: .rounded))
                 
-            })
-        
+            }
+            
             
             
             Spacer()
-        
+            
             BottomMenu
-
-        }
-    }
-}
-
-
-
-
-
-struct Main_OperationalManager: View {
-    
-    var body: some View {
-
-            VStack{
-                NavigationView{
-                    
-                    Home_OperationalManager()
-                        .navigationTitle("Emergency Link")
-                    
-                    
-                }.opacity(0.9)
-                
             
         }
     }
 }
 
+
+
+
+
+struct MainPage_OperationalManager: View {
+    
+    @Binding var loggedin: Employee
+    
+    var body: some View {
+        
+        VStack{
+            NavigationView{
+                
+                Main_OperationalManager(loggedin: $loggedin)
+                    .navigationTitle("Emergency Link")
+                
+                
+            }
+        }
+    }
+}
+
+/*
 struct Operational_Manager_swift_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Main_OperationalManager()
-            Main_OperationalManager()
+            MainPage_OperationalManager()
+            MainPage_OperationalManager()
                 .previewDevice("iPhone 12")
         }
     }
 }
+*/

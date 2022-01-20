@@ -6,27 +6,83 @@
 //
 
 import SwiftUI
+import Firebase
+import nanopb
 
 
-struct showSelected: View{
+struct EmergencyDetails: View{
+    
+    @Binding var emergencyDetails: String
+    @Binding var emergencyLocation: String
+    @Binding var meetingPoint: String
+    @Binding var emergencyUrgency: Int
+    @Binding var emergencyDate: Date
+    
+    
+    var body: some View{
+    // Emergency Details
+    HStack(spacing: 10){
+        Text("Details")
+        TextField(" Emergency Details", text: $emergencyDetails)
+            .background(Color.gray.opacity(0.1).cornerRadius(10))
+        
+    }
+    .padding(.horizontal, 10)
+    
+    //Emergency Location
+    HStack(spacing: 10){
+        Text("Location")
+        TextField("Emergency Location", text: $emergencyLocation)
+            .background(Color.gray.opacity(0.1).cornerRadius(10))
+    }
+    .padding(.horizontal, 10)
+    
+    
+    //Meeting point Location
+    HStack(spacing: 10){
+        Text("Meeting Location")
+        TextField("Meeting Point Location", text: $meetingPoint)
+            .background(Color.gray.opacity(0.1).cornerRadius(10))
+    }
+    .padding(.horizontal, 10)
+    
+    
+    HStack(spacing: 10){
+        Stepper(value: $emergencyUrgency, in: 1...5) {
+            Text("Urgency:")
+            Text(String(emergencyUrgency))
+        }
+    }
+    .padding(.horizontal, 10)
+    
+    HStack(spacing: 10){
+        
+        DatePicker(selection: $emergencyDate, label: { Text("Time") })
+        
+    }
+    .padding(.horizontal, 10)
+}
+}
+
+struct showSelectedEmergency: View{
     
     let employee: Employee
     
-    @Binding var selectedItems: Set<UUID>
+    @Binding var selectedItems: Set<Int>
     
     var isSelected: Bool{
-    
+        
         selectedItems.contains(employee.id)
         
     }
-    	 
+    
     
     
     var body: some View{
         
         HStack(spacing: 7){
             
-            Text(employee.employeeID)
+            Text(String(employee.id))
                 .frame(width: 45, height: 30, alignment: .leading)
                 .padding(.leading, 3)
             
@@ -41,9 +97,9 @@ struct showSelected: View{
             
             Divider()
             
-            Text(branchInitial(branch: employee.branch.name))
+            Text(branchInitial(branch: employee.branch))
                 .frame(width:40, height: 30, alignment: .leading)
-
+            
             Divider()
             
             Text(typeInitial(emptype: employee.employeeType))
@@ -53,14 +109,14 @@ struct showSelected: View{
             Divider()
             
             if self.isSelected{
-            Image(systemName:"checkmark")
-                .foregroundColor(Color.blue)
-                .frame(width: 20, height: 30)
+                Image(systemName:"checkmark")
+                    .foregroundColor(Color.blue)
+                    .frame(width: 20, height: 30)
             }else{
                 Text("").frame(width: 20, height: 30)
             }
             
-        
+            
         }
         .onTapGesture {
             if self.isSelected{
@@ -70,171 +126,356 @@ struct showSelected: View{
             }
         }
         .frame(width: UIScreen.main.bounds.width, height: 70, alignment: .leading)
-            .border(Color.gray.opacity(self.isSelected ? 1 : 0.3))
-            .shadow(color: Color.black.opacity(self.isSelected ? 0.4 : 0), radius: 2, x: 2, y: 2)
+        .border(Color.gray.opacity(self.isSelected ? 1 : 0.3))
+        .shadow(color: Color.black.opacity(self.isSelected ? 0.4 : 0), radius: 2, x: 2, y: 2)
         
     }
     
-    func branchInitial(branch: String)  -> String{
-        
-        if branch == "Ras Al-Khaimah"{
-            return "RAK"
-        }  else if branch == "Umm Al Quwain"{
-            return "UAQ"
-        } else if branch == "Sharjah"{
-            return "SHJ"
-        } else if branch == "Ajman"{
-            return "AJM"
-        } else if branch == "Fujairah"{
-            return "FUJ"
+    
+    
+}
+
+struct SortsView: View{
+    
+    @Binding var sort: String
+    @Binding var sortOrder: Bool
+    
+    
+    var descendingImage = "chevron.down"
+    var ascendingImage = "chevron.up"
+    
+    var body: some View{
+        VStack{
+            
+            Button {
+                
+                sort = "Name"
+                sortOrder.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Name")
+                    Image(systemName: sortOrder && sort == "Name" ? "chevron.down" : "chevron.up")
+                    
+                }
+            }
+            
+            Button {
+                
+                sort = "Id"
+                sortOrder.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Employee ID")
+                    Image(systemName: sortOrder && sort == "Id" ? "chevron.down" : "chevron.up")
+                    
+                }}
+            
+            Button {
+                
+                sort = "Status"
+                sortOrder.toggle()
+                
+            } label: {
+                HStack{
+                    
+                    Text("Status")
+                    Image(systemName: sortOrder && sort == "Status" ? "chevron.down" : "chevron.up")
+                    
+                }
+            }
+            
+            Button{
+                sort = "Branch"
+                sortOrder.toggle()
+            } label: {
+                HStack{
+                    Text("Branch")
+                    Image(systemName: sortOrder && sort == "Branch" ? "chevron.down" : "chevron.up")
+                }
+            }
+            
+            Button{
+                sort = "Role"
+                sortOrder.toggle()
+            } label: {
+                HStack{
+                    Text("Employee Type")
+                    Image(systemName: sortOrder && sort == "Role" ? "chevron.down" : "chevron.up")
+                }
+            }
+            
+            
         }
         
-        return "Error"
         
+    }
+}
+
+struct FiltersView: View{
+    @Binding var filters: [String]
+    
+    
+    
+    
+    
+    var body: some View{
+        VStack{
+            
+            
+            HStack{
+                
+                Spacer()
+                
+                Button{
+                    
+                    
+                    if filters.contains("Status"){
+                        filters.removeAll(where: {$0 == "Status"})
+                    }else{
+                        filters.append("Status")
+                    }
+                    
+                    
+                } label: {
+                    Text("Status")
+                    if filters.contains("Status"){ Image(systemName: "checkmark")}
+                }.frame(width: 180, height: 5, alignment: .center)
+                
+                Spacer()
+                
+                Button{
+                    
+                    if filters.contains("Branch"){
+                        filters.removeAll(where: {$0 == "Branch"})
+                    }else{
+                        filters.append("Branch")
+                    }
+                    
+                } label: {
+                    Text("Branch")
+                    if filters.contains("Branch"){Image(systemName: "checkmark")}
+                    
+                }.frame(width: 180, height: 5, alignment: .center)
+                
+                Spacer()
+                
+            }
+            HStack{
+                
+                Spacer()
+                
+                Button{
+                    
+                    if filters.contains("Employee Type"){
+                        filters.removeAll(where: {$0 == "Employee Type"})
+                    }else{
+                        filters.append("Employee Type")
+                    }
+                    
+                } label: {
+                    Text("Employee Type")
+                    if filters.contains("Employee Type"){Image(systemName: "checkmark")}
+                    
+                    
+                }.frame(width: 180, height: 5, alignment: .center)
+                
+                Spacer()
+                
+                Button{
+                    
+                    if filters.contains("Selected"){
+                        filters.removeAll(where: {$0 == "Selected"})
+                    }else{
+                        filters.append("Selected")
+                    }
+                    
+                } label: {
+                    Text("Selected")
+                    if filters.contains("Selected"){Image(systemName: "checkmark")}
+                    
+                }.frame(width: 180, height: 5, alignment: .center)
+                Spacer()
+            }.padding(.top, 20)
+        }
+        Divider()
+        ScrollView(.horizontal){
+            HStack{
+                
+                
+                
+            }
+            
+        }
     }
     
-    func typeInitial(emptype: String) -> String{
-        
-        if emptype == "Team Head"{
-                return "T.H."
-        }
-        else if emptype == "Fire Fighter"{
-            return "F.F."
-        }
-        else if emptype == "Supervisor"{
-            return "S.V."
-        }
-        else if emptype == "Operational Manager"{
-            return "O.M."
-        }
-        else if emptype == "Deputy Team Head"{
-            return "D.T.H"
-        }
-        else if emptype == "Assistant Supervisor"{
-            return "A.S."
-        }
-        else{
-            return "Error"
-        }
-        
-    }
     
 }
 
 
 struct Create_Emergency: View {
     
-   // @State var employee: Employee
-   
-   
-    let shownEmployees: Array<Employee> = [
-    adnan,
-    talal,
-    ayman,
-    wassim
-    ]
+    // Sort / filter employees shown
+    
+    @StateObject var vm = EmployeesVM()
     
     
+
+    @State var showFilters = false
+    @State var showSorts = false
+    
+
     // Emergency Properties
     
     @State var emergencyDetails: String = ""
     @State var emergencyLocation: String = ""
+    @State var meetingPoint: String = ""
     @State var emergencyUrgency = 1
     @State var emergencyDate: Date = Date()
     
     
-    @State var selectedEmployeesID = Set<UUID>()
+    @State var selectedEmployeesID = Set<Int>()
+    
+    
     var selectedEmployees: [Employee]{
+        
         var employees: [Employee] = []
-        for employee in shownEmployees {
+        
+        for employee in vm.allEmployees {
+            
             if selectedEmployeesID.contains(employee.id){
+                
                 employees.append(employee)
+                
             }
+            
         }
+        
         return employees
     }
+        
+        
+        
+    
     
     var body: some View {
         
         VStack(spacing: 15){
             
             
-            // Emergency Details
-            HStack(spacing: 10){
-                Text("Details")
-                TextField(" Emergency Details", text: $emergencyDetails)
-                    .background(Color.gray.opacity(0.1).cornerRadius(10))
+            // to show emergency Details
+            if !showSorts && !showFilters{
+
+                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate)
                 
             }
-            .padding(.horizontal, 10)
             
-            //Emergency Location
-            HStack(spacing: 10){
-                Text("Location")
-                TextField("Emergency Location", text: $emergencyLocation)
-                    .background(Color.gray.opacity(0.1).cornerRadius(10))
-            }
-            .padding(.horizontal, 10)
-            
-            HStack(spacing: 10){
-                Stepper(value: $emergencyUrgency, in: 1...5) {
-                Text("Urgency:")
-                    Text(String(emergencyUrgency))
-            }
-            }
-            .padding(.horizontal, 10)
-            
-            HStack(spacing: 10){
+            // to show sorts
+            else if showSorts{
                 
-                DatePicker(selection: $emergencyDate, label: { Text("Time") })
+                SortsView(sort: $vm.sort, sortOrder: $vm.typeS)
                 
             }
-            .padding(.horizontal, 10)
             
-            Divider()
-             
+            // to show filters
+            else if showFilters{
+                
+                FiltersView(filters: $vm.filters)
+                
+            }
+            
+            
+            Divider().onTapGesture {
+                // scroll to the top
+            }
             
             ScrollView{
-                ForEach(shownEmployees) {Employee in
-                    
-                showSelected(employee: Employee, selectedItems: $selectedEmployeesID)
                 
+                HStack{
+                    
+                    
+                    Search_Preset(search: $vm.search)
+                    
+                    Spacer()
+                    
+                    Button {
+                        showFilters.toggle()
+                        showSorts = false
+                        
+                    } label: {
+                        Text("Filter")
+                    }
+                    
+                    
+                    Button {
+                        showSorts.toggle()
+                        showFilters = false
+                    } label: {
+                        Text("Sort")
+                    }.padding(.trailing, 5)
+                    
+                    
+                }.offset(x:-6)
+                    .frame(width: UIScreen.main.bounds.width + 10)
+                
+                ForEach(vm.shownEmployees) {Employee in
+                    
+                    showSelectedEmergency(employee: Employee, selectedItems: $selectedEmployeesID)
+                    
                 }
             }
-
-        Divider()
-        
-        // Submit Button
-        HStack{
-            Spacer()
-            Button(action: {
-                
-                
-                print(emergencyDetails)
-                print(emergencyDate)
-                print(emergencyLocation)
-                print(emergencyUrgency)
-                
-                print(shownEmployees)
-                
-                
-            }, label:
-                    {
-                Text("Submit")
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .foregroundColor(.black)
-                    .background(RoundedRectangle(cornerRadius: 5))
             
+            Divider()
             
-            }
-            )
-
-
-        }.padding(.all, 5)
+            // Submit Button
+            HStack{
+                Spacer()
+                Button(action: {
+                    
+                    
+                    print(emergencyDetails)
+                    print(emergencyDate)
+                    print(emergencyLocation)
+                    print(meetingPoint)
+                    print(emergencyUrgency)
+                    
+                    print(selectedEmployees)
+                    
+                    
+                }, label:
+                        {
+                    Text("Submit")
+                        .bold()
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.black)
+                        .background(RoundedRectangle(cornerRadius: 5))
+                    
+                    
+                }
+                )
+                
+                
+            }.padding(.all, 5)
+                .onAppear {
+                    vm.getData()
+                }
         }
     }
+    
+    
+    
+    
+    
 
+    
+
+    
+    
+    
     
 }
 
@@ -248,5 +489,6 @@ struct Create_Emergency_Previews: PreviewProvider {
             .previewDevice("iPhone SE (2nd generation)")
     }
 }
+
 
 

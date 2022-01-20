@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct Home_Firefighter: View {
+struct Main_FireFighter: View {
     
+    @Binding var loggedin: Employee
     
     @State var onCall = false
     
@@ -19,14 +20,14 @@ struct Home_Firefighter: View {
         
         VStack(spacing: 25 ){
             
-            TopMenu
-            
+            TopMenu(loggedin: $loggedin)
+            Spacer()
             
             HStack{
                 
                 Spacer()
                 
-                Toggle(isOn: $onCall) {
+                Toggle(isOn: $loggedin.status) {
                 Text("On Call")
                     
                 }
@@ -38,11 +39,11 @@ struct Home_Firefighter: View {
             
             
             // Create Emergency button
-            Button( action: {
+            NavigationLink(destination: {
                 
-                print("Hhello")
                 
-            }, label:{
+                
+            }, label: {
                 Text("Report an emergency")
                     .underline()
                     .padding(.vertical, 15)
@@ -55,8 +56,10 @@ struct Home_Firefighter: View {
             
             // Recent Emergencies
             
-            Button(action:{
-                print("test")
+            NavigationLink(destination:{
+                
+    
+            
             },label: {
                 Text("Previous emergencies")
                     .underline()
@@ -66,19 +69,17 @@ struct Home_Firefighter: View {
                 
             })
         
-            Spacer()
-            Spacer()
-            
+Spacer()
             BottomMenu
         }
         
     }
 }
 
-struct Main_Page_Firefighter: View {
+struct MainPage_FireFighter: View {
     @State var menuOpened = false
     
-    
+    @Binding var loggedin: Employee
     // body
     
     var body: some View {
@@ -88,7 +89,7 @@ struct Main_Page_Firefighter: View {
         
         NavigationView{
             
-            Home_Firefighter().navigationTitle("Home")
+            Main_FireFighter(loggedin: $loggedin).navigationTitle("Emergency Link")
         
         } // close navi
             
@@ -103,8 +104,12 @@ struct Main_Page_Firefighter: View {
 }
 
 
+
+
+
+/*
 struct Main_Page_Firefighter_Previews: PreviewProvider {
     static var previews: some View {
-        Main_Page_Firefighter()
+        MainPage_FireFighter()
     }
-}
+}*/

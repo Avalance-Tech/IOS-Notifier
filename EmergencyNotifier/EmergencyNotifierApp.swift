@@ -6,45 +6,50 @@
 //
 
 import SwiftUI
-
-
-struct main_debug: View{
-    var body: some View{
-        VStack(spacing: 40){
-        
-            NavigationLink {
-                Main_OperationalManager()
-            } label: {
-                Text("Operational Manager Main")
-            }
-
-            NavigationLink {
-                MainPage_TeamHead()
-            } label: {
-                Text("Team Head Main")
-            }
-
-            NavigationLink {
-                Main_Page_Firefighter()
-            } label: {
-                Text("Fire Fighter Main")
-            }
-
-            // NavigationLink(destination: <#T##() -> _#>, label: <#T##() -> _#>)
-            
-            
-        }
-    }
-}
-
+import Firebase
 
 @main
 struct EmergencyNotifierApp: App {
-    var body: some Scene {
-        WindowGroup {
-            
-            Main_OperationalManager()
+    
+    init(){
+        FirebaseApp.configure()
+    }
+    
+    @State var loggedin = notLoggedIn
+    
+    var test: some View{
         
+        if loggedin.employeeType == "Operational Manager"{
+            
+            return AnyView(MainPage_OperationalManager(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
+            
+        }else if loggedin.employeeType == "Team Head"{
+            
+            return AnyView(MainPage_TeamHead(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
+            
+        }else if loggedin.employeeType == "Fire Fighter" || loggedin.employeeType == "Coordinator"{
+            
+            return AnyView(MainPage_FireFighter(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
+
+        }else if loggedin.employeeType == "Supervisor"{
+
+            return AnyView(MainPage_Supervisor(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
+            
+            
+        }
+
+        return AnyView(LogIn_Main(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
+        
+        
+    }
+    
+    
+    var body: some Scene{
+        WindowGroup{
+            
+            
+            test.animation(Animation.easeInOut(duration: 2), value: loggedin)
+            
         }
     }
 }
