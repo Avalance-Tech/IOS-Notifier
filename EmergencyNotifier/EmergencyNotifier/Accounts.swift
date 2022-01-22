@@ -79,29 +79,6 @@ struct CreateAccount: View{
     
     @State var employees =  VM_DB()
     
-    var check: Bool{
-        if !["Team Head", "Fire Fighter", "Operational Manager", "Supervisor", "Deputy Team Head", "Assistant Supervisor"].contains(newType){
-            return false
-        } else if newNumber == ""{
-            return false
-        } else if newName == ""{
-            return false
-        } else if newID == ""{
-            return false
-        } else if !["ajman", "fujairah", "sharjah", "umm al-quwain", "ras al khaimah"].contains(newBranch.lowercased()){
-            return false
-        }else{
-            for employee in employees.allEmployees{
-                if employee.id == Int(newID){
-                    return false
-                }
-            }
-        }
-        
-        return true
-    }
-    
-    
     // New account Properties
     
     @State var newName: String = ""
@@ -118,7 +95,9 @@ struct CreateAccount: View{
                 if created{
              
             VStack{
-                Text("Account Created").frame(width: UIScreen.main.bounds.width, height: 160, alignment: .center)
+                Text("Account Created")
+                .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+                .padding(.bottom, 35)
                 .background(Color.green.opacity(1))
                 .cornerRadius(20)
                 .foregroundColor(Color.white)
@@ -167,72 +146,32 @@ struct CreateAccount: View{
             // New Type
             Menu(newType == "" ? "Select Type":newType) {
                 
-                Button {
-                    newType = "Team Head"
-                } label: {
-                    Text("Team Head")
-                }
+                Button { newType = "Team Head" } label: { Text("Team Head") }
                 
-                Button {
-                    newType = "Deputy Team Head"
-                } label: {
-                    Text("Deputy Team Head")
-                }
+                Button { newType = "Deputy Team Head" } label: { Text("Deputy Team Head") }
                 
-                Button {
-                    newType = "Supervisor"
-                } label: {
-                    Text("Supervisor")
-                }
+                Button { newType = "Supervisor" } label: { Text("Supervisor") }
                 
-                Button {
-                    newType = "Assistant Supervisor"
-                } label: {
-                    Text("Assistant Supervisor")
-                }
+                Button { newType = "Assistant Supervisor" } label: { Text("Assistant Supervisor") }
                 
+                Button { newType = "Fire Fighter" } label: { Text("Fire Fighter") }
                 
-                Button {
-                    newType = "Fire Fighter"
-                } label: {
-                    Text("Fire Fighter")
-                }
             }
             
             
             // New branch
 
             Menu(newBranch == "" ? "Select Branch" : newBranch) {
-                Button {
-                    newBranch = "Ajman"
-                } label: {
-                    Text("Ajman")
-                }
                 
-                Button {
-                    newBranch = "Sharjah"
-                } label: {
-                    Text("Sharjah")
-                }
+                Button {  newBranch = "Ajman" } label: { Text("Ajman") }
                 
-                Button {
-                    newBranch = "Ras Al Khaimah"
-                } label: {
-                    Text("Ras Al Khaimah")
-                }
+                Button { newBranch = "Sharjah" } label: { Text("Sharjah") }
                 
-                Button {
-                    newBranch = "Umm Al-Quwain"
-                } label: {
-                    Text("Umm Al-Quwain")
-                }
+                Button { newBranch = "Ras Al Khaimah" } label: { Text("Ras Al Khaimah") }
                 
+                Button { newBranch = "Umm Al-Quwain" } label: { Text("Umm Al-Quwain") }
                 
-                Button {
-                    newBranch = "Fujairah"
-                } label: {
-                    Text("Fujairah")
-                }
+                Button { newBranch = "Fujairah" } label: { Text("Fujairah") }
             }
 
             
@@ -249,8 +188,8 @@ struct CreateAccount: View{
                     withAnimation{
                         created = true}
                     
-                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
-                        
+                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                        	
                         withAnimation {
                             created = false
                         }
@@ -269,7 +208,7 @@ struct CreateAccount: View{
                     
                     
                 }
-                ).disabled(check && !created ? false : true)
+                ).disabled(check() && !created ? false : true)
                 
             }
         
@@ -667,10 +606,7 @@ struct AccountsMain: View{
             MainAccountsMenu()
             
         }
-        
     }
-    
-    
 }
 
 
@@ -678,4 +614,45 @@ struct Accounts_Previews: PreviewProvider {
     static var previews: some View {
         CreateAccount()
     }
+}
+
+
+
+// MARK: Functions Create Account
+
+extension CreateAccount{
+
+func check() -> Bool{
+    if !["Team Head", "Fire Fighter", "Operational Manager", "Supervisor", "Deputy Team Head", "Assistant Supervisor"].contains(newType){
+        
+        return false
+        
+    } else if newNumber == ""{
+        return false
+        
+    } else if newName == ""{
+        return false
+        
+    } else if newID == ""{
+        return false
+        
+    } else if !["ajman", "fujairah", "sharjah", "umm al-quwain", "ras al khaimah"].contains(newBranch.lowercased()){
+        return false
+        
+    }else{
+        for employee in employees.allEmployees{
+            if employee.id == Int(newID){
+                
+                return false
+                
+            }
+        }
+    }
+    
+    return true
+}
+    
+    
+    
+
 }

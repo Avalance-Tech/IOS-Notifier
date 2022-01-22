@@ -11,37 +11,19 @@ struct Main_FireFighter: View {
     
     @Binding var loggedin: Employee
     
-    @State var onCall = false
-    
-    
     var body: some View {
         
-
-        
         VStack(spacing: 25 ){
-            
             TopMenu(loggedin: $loggedin)
+            
             Spacer()
             
-            HStack{
-                
-                Spacer()
-                
-                Toggle(isOn: $loggedin.status) {
-                Text("On Call")
-                    
-                }
-                
-                Spacer()
-                
-            }.padding([.top, .horizontal], 50)
-            
-            
+            onCall(loggedin: $loggedin)
             
             // Create Emergency button
             NavigationLink(destination: {
                 
-                
+                Create_Emergency()
                 
             }, label: {
                 Text("Report an emergency")
@@ -53,13 +35,11 @@ struct Main_FireFighter: View {
                 
             })
             
-            
             // Recent Emergencies
-            
             NavigationLink(destination:{
                 
-    
-            
+                Recent_Emergencies()
+                
             },label: {
                 Text("Previous emergencies")
                     .underline()
@@ -68,48 +48,15 @@ struct Main_FireFighter: View {
                     .font(.system(size: 20, design: .rounded))
                 
             })
-        
-Spacer()
+            
+            Spacer()
+            Spacer()
+            
             BottomMenu
         }
-        
     }
 }
 
-struct MainPage_FireFighter: View {
-    @State var menuOpened = false
-    
-    @Binding var loggedin: Employee
-    // body
-    
-    var body: some View {
-        ZStack{
-
-        
-        
-        NavigationView{
-            
-            Main_FireFighter(loggedin: $loggedin).navigationTitle("Emergency Link")
-        
-        } // close navi
-            
-    
-        } // close zstack
-    } // close body
-    
-    
-    
-    // Methods
-    
-}
 
 
 
-
-
-/*
-struct Main_Page_Firefighter_Previews: PreviewProvider {
-    static var previews: some View {
-        MainPage_FireFighter()
-    }
-}*/

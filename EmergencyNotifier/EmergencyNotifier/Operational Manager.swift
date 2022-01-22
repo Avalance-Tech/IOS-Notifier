@@ -16,7 +16,7 @@ struct Main_OperationalManager: View{
     
     @State var showingAssignPopUp = false
     @State var reason = ""
-    
+    	
     var body: some View{
         
         VStack{
@@ -26,69 +26,25 @@ struct Main_OperationalManager: View{
             
             Spacer()
             
-            HStack{
-                
-                Spacer()
-                
-                Toggle(isOn: $loggedin.status) {
-                Text("On Call")
-                    Image(loggedin.status ? "checkmark.circle.fill" : "circle.slash")
-                    
-                }
-                
-                Spacer()
-                
-            }.padding([.top, .horizontal], 50)
+            
+            onCall(loggedin: $loggedin)
+            
             
             // Create Emergency button
             
-            NavigationLink {
-                
-                Create_Emergency()
-                
-            }label:{
-                Text("Report an emergency")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-            }
+            createEmergency
+
             
             
             // Create account Button
-            NavigationLink{
-                
-                MainAccountsMenu()
-                
-            }label:{
-                Text("Create/edit/delete an account")
-                
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
+
+            createAccount
+            
+            
             
             // Assign Acting Team Head button
-            Button(action: {
-                
-                showingAssignPopUp = true
-                
-            }, label:{
-                Text("Assign Operational Manager")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-            }).popover(isPresented: $showingAssignPopUp) {
-                    // add a selection from a list of team heads
-                
-                
-            }
+
+            assignActing
             
             
             // Recent Emergencies
@@ -121,32 +77,73 @@ struct Main_OperationalManager: View{
 
 
 
-struct MainPage_OperationalManager: View {
-    
-    @Binding var loggedin: Employee
-    
-    var body: some View {
-        
-        VStack{
-            NavigationView{
-                
-                Main_OperationalManager(loggedin: $loggedin)
-                    .navigationTitle("Emergency Link")
-                
-                
-            }
-        }
-    }
-}
+// MARK: Content
 
-/*
-struct Operational_Manager_swift_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MainPage_OperationalManager()
-            MainPage_OperationalManager()
-                .previewDevice("iPhone 12")
+extension Main_OperationalManager{
+    
+    
+    var createEmergency: some View{
+        NavigationLink {
+            
+            Create_Emergency()
+            
+        }label:{
+            Text("Report an emergency")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
         }
     }
+    
+    
+    var createAccount: some View{
+        NavigationLink{
+            
+            MainAccountsMenu()
+            
+        }label:{
+            Text("Create/edit/delete an account")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+    }
+    
+    
+    var assignActing: some View{
+        
+        Button(action: {
+            
+            showingAssignPopUp = true
+            
+        }, label:{
+            Text("Assign Operational Manager")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+        }).popover(isPresented: $showingAssignPopUp) {
+                // add a selection from a list of team heads
+            
+                actingPopOver
+            
+        }
+        
+    }
+    
+    
+    var actingPopOver: some View{
+        Text("oof")
+    }
+    
+    
+    
+    
 }
-*/

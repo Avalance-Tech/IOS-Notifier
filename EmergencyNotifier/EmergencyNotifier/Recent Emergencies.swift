@@ -57,7 +57,7 @@ struct WhenClicked: View{
             
             HStack{
                 ScrollView{
-                   ForEach(emergency.employeesCalled){ employee in
+                    ForEach(emergency.employeesCalled){ employee in
                         
                         NavigationLink {
                             WhenClickedEmployee(employee: employee, replied: checkReply(employee: employee))
@@ -84,11 +84,11 @@ struct WhenClicked: View{
     
     
     func checkReply(employee: Employee) -> String{
-        //     if emergency.replied[true]!.contains(employee){
-        //  return "accepted"
-        //   } else if emergency.replied[false]!.contains(employee){
-        //    return "rejected"
-        //  }
+        if emergency.replied[true]!.contains(employee){
+            return "accepted"
+        } else if emergency.replied[false]!.contains(employee){
+            return "rejected"
+        }
         return "not replied"
     }
     
@@ -220,11 +220,11 @@ struct ListWithEmergencies: View{
                                 
                                 Divider().frame(width: 100, height:1)
                                 
-                                Text(String(emergency.replied[true]!.count)).frame(width:100, height: 1)
+                             //   Text(String(emergency.replied[true]!.count)).frame(width:100, height: 1)
                                 
                                 Divider().frame(width: 100, height: 1)
                                 
-                                Text(String(emergency.checkedIn.count)).frame(width:100, height:1)
+                              //  Text(String(emergency.checkedIn.count)).frame(width:100, height:1)
                             }
                             
                             
@@ -279,10 +279,10 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies(emergencies: [])
+                ListWithEmergencies(emergencies: [Emergency(details: "details", location: "location", meetingPoint: "meeting Point", urgency: 3, time: "", employeesCalled: [Employee(id: 20, name: "A", number: "1234", status: true, branch: "Ajman", employeeType: "Operational Manager")], branch: "Ajman")])
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies(emergencies: [])
+                GalleryWithEmergencies(emergencies: [Emergency(details: "details", location: "location", meetingPoint: "meeting Point", urgency: 3, time: "", employeesCalled: [Employee(id: 20, name: "A", number: "1234", status: true, branch: "Ajman", employeeType: "Operational Manager")], branch: "Ajman")])
             }
         }
     }

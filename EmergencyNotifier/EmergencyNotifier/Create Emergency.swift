@@ -314,16 +314,16 @@ struct Create_Emergency: View {
             }
             
             ScrollView{
-                
+
                 HStack{
                     
                     
                     Search_Preset(search: $vm.search)
-                    
+                        
                     Spacer()
                     
                     Button {
-                        withAnimation{
+                        withAnimation(Animation.easeInOut){
                         showFilters.toggle()
                             showSorts = false
                         }
@@ -335,10 +335,10 @@ struct Create_Emergency: View {
                     
                     
                     Button {
-                        withAnimation{
+                        withAnimation(Animation.easeInOut){
                         showSorts.toggle()
                         showFilters = false}
-                    } label: {
+                    } label: {	
                         Text("Sort")
                     }.padding(.trailing, 5)
                     

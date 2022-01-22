@@ -25,10 +25,16 @@ struct Main_LogIn: View{
     
     var body: some View {
         ZStack{
-            VStack{
+            
+            //Background
+        
+            
+            VStack(spacing:20){
+                Spacer()
             
             Text("Log In").font(.largeTitle).fontWeight(.bold)
                 .padding(.all, 20)
+                .padding(.top, 50)
             
             TextField("Employee ID ", text: $id)
                 .padding()
@@ -54,9 +60,7 @@ struct Main_LogIn: View{
                 //log in
                 
                 for employee in employees.allEmployees{
-                
-                    print(employee.id)
-                    print(employee.password)
+            
                     
                     if employee.id == Int(id){
 
@@ -95,44 +99,18 @@ struct Main_LogIn: View{
                 Text("Forgot Password?").underline()
             }
 
-                        
-        }.padding()
-            if loggingIn{
-                Text("Success! Logging In")
-                    .padding()
-                    .padding()
-                    .background(Color(red: 140/255, green: 150/255, blue: 160/255, opacity: 0.8))
-                    .foregroundColor(Color.white)
-                    .cornerRadius(20)
-                    .font(.title)
+         Spacer()
+                Spacer()
                 
-            }
+        }.padding()
+            
+            
+            
         }
     }
     
 }
 
 
-struct LogIn_Main: View {
-    
-    @Binding var loggedin: Employee
-    
-    
-    var body: some View{
-        NavigationView{
-        Main_LogIn(loggedin: $loggedin).navigationBarHidden(true)
-    }
-    }
-}
 
-/*
-struct LogIn_Previews: PreviewProvider {
-    static var previews: some View {
-        
 
-           LogIn_Main(loggedin: )
-        
-    
-    }
-}
-*/

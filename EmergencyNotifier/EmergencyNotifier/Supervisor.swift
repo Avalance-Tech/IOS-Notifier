@@ -12,30 +12,17 @@ struct Main_Supervisor: View{
     @Binding var loggedin: Employee
     
     var body: some View{
-        
         VStack{
             TopMenu(loggedin: $loggedin)
             Spacer()
-            // Create Emergency button
-                
-            HStack{
-                
-                Spacer()
-                
-                Toggle(isOn: $loggedin.status) {
-                Text("On Call")
-                    
-                }
-                
-                Spacer()
-                
-            }.padding([.top, .horizontal], 50)
+            
+            onCall(loggedin: $loggedin)
             
             NavigationLink {
                 
                 Create_Emergency()
                 
-                }label:{
+            }label:{
                 Text("Report an emergency")
                     .underline()
                     .padding(.vertical, 15)
@@ -47,7 +34,7 @@ struct Main_Supervisor: View{
             
             // Create account Button
             NavigationLink{
-            
+                
                 MainAccountsMenu()
                 
             }label:{
@@ -63,8 +50,7 @@ struct Main_Supervisor: View{
             
             // Assign Acting Team Head button
             Button( action: {
-                
-                print("Hello")
+
                 
             }, label:{
                 Text("Assign Supervisor")
@@ -92,54 +78,12 @@ struct Main_Supervisor: View{
                     .font(.system(size: 20, design: .rounded))
                 
             }
-        
+            
             
             Spacer()
             
             BottomMenu
-        
         }
     }
 }
 
-
-// MAIN PAGE
-
-
-struct MainPage_Supervisor: View {
-    // Properties
-    
-    @Binding var loggedin: Employee
-    
-    
-    // body
-    
-    var body: some View {
-        ZStack{
-                
-                
-                NavigationView{
-                    
-                    Main_Supervisor(loggedin: $loggedin).navigationTitle("Emergency Link")
-                    
-                } // close navi
-                
-            
-        } // close zstack
-    } // close body
-    
-    
-    
-    // Methods
-    
-}
-
-
-/*
-
-struct Main_Page_Previews: PreviewProvider {
-    static var previews: some View {
-        MainPage_Supervisor()
-    }
-}
-*/

@@ -11,49 +11,44 @@ import Firebase
 @main
 struct EmergencyNotifierApp: App {
     
-    init(){
-        FirebaseApp.configure()
-    }
+    init(){ FirebaseApp.configure() }
     
     @State var loggedin = notLoggedIn
     
-    
     var body: some Scene{
-        withAnimation{
-        WindowGroup{
+            
+            WindowGroup{
+                NavigationView{
                 
-            if loggedin.employeeType == "Operational Manager"{
-                withAnimation{
+                switch loggedin.employeeType{
+                case "Operational Manager":
+                    Main_OperationalManager(loggedin: $loggedin).navigationBarHidden(true)
                     
-                    MainPage_OperationalManager(loggedin: $loggedin).animation(Animation.easeIn(duration: 1), value: loggedin)
-                        .transition(.opacity)
+                case "Team Head":
+                    Main_TeamHead(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Deputy Team Head":
+                    Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Supervisor":
+                    Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Assistant Supervisor":
+                    Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Fire Fighter":
+                    Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Coordinator":
+                    Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                default:
+                    Main_LogIn(loggedin: $loggedin).navigationBarHidden(true)
                 }
-                }else if loggedin.employeeType == "Team Head"{
-                    
-                    MainPage_TeamHead(loggedin: $loggedin).animation(Animation.easeIn(duration: 1), value: loggedin)
-                        .transition(.opacity)
-                    
-                }else if loggedin.employeeType == "Fire Fighter" || loggedin.employeeType == "Coordinator"{
-                    
-                    MainPage_FireFighter(loggedin: $loggedin).animation(Animation.easeIn(duration: 1), value: loggedin)
-                        .transition(.opacity)
-
-                }else if loggedin.employeeType == "Supervisor"{
-
-                    withAnimation{
-                    MainPage_Supervisor(loggedin: $loggedin).animation(Animation.easeIn(duration: 1), value: loggedin)
-                        .transition(.opacity)
-                    }}
-                    
-                    
-
-            else{
-              LogIn_Main(loggedin: $loggedin).animation(Animation.easeIn(duration: 1), value: loggedin)
-                    .transition(.opacity)
+                
+                }
             }
-            
-            
-        }}
     }
 }
-	
+
+
