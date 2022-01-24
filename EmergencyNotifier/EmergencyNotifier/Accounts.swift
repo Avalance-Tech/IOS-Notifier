@@ -417,7 +417,7 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @State var employees =  VM_DB()
+    @State var vm =  VM_DB()
 
     
     @State private var showingPopUp = false
@@ -426,7 +426,7 @@ struct DeleteAccounts: View{
     var selectedEmployees: [Employee]{
         
         var employees2: [Employee] = []
-        for employee in employees.allEmployees{
+        for employee in vm.allEmployees{
             if selectedEmployeesID.contains(employee.id){
                 employees2.append(employee)
             }
@@ -448,7 +448,7 @@ struct DeleteAccounts: View{
             Spacer()
             
             ScrollView{
-                ForEach(employees.allEmployees){employee in
+                ForEach(vm.allEmployees){employee in
                     
                     showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
                     
@@ -462,7 +462,7 @@ struct DeleteAccounts: View{
                 showingPopUp = true
                 
             }
-            .onAppear { employees.getData() }
+            .onAppear { vm.getData() }
             .disabled(selectedEmployees.count > 0 ? false : true)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 8)
@@ -536,7 +536,8 @@ struct DeleteAccounts: View{
 
 
             
-        }
+        }.onAppear{ vm.getData() }
+        
     }
 }
 

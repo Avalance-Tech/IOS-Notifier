@@ -14,6 +14,7 @@ struct Main_FireFighter: View {
     var body: some View {
         
         VStack(spacing: 25 ){
+            
             TopMenu(loggedin: $loggedin)
             
             Spacer()
@@ -21,42 +22,58 @@ struct Main_FireFighter: View {
             onCall(loggedin: $loggedin)
             
             // Create Emergency button
-            NavigationLink(destination: {
-                
-                Create_Emergency()
-                
-            }, label: {
-                Text("Report an emergency")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            })
+            reportEmergency
             
             // Recent Emergencies
-            NavigationLink(destination:{
-                
-                Recent_Emergencies()
-                
-            },label: {
-                Text("Previous emergencies")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .font(.system(size: 20, design: .rounded))
-                
-            })
+            recentEmergencies
             
             Spacer()
             Spacer()
             
             BottomMenu
+            
         }
     }
 }
 
 
 
+extension Main_FireFighter{
+    
+    var reportEmergency: some View{
+        
+        NavigationLink(destination: {
+            
+            Create_Emergency()
+            
+        }, label: {
+            Text("Report an emergency")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        })
+        
+    }
+    
+    
+    var recentEmergencies: some View{
+        
+        NavigationLink(destination:{
+            
+            Recent_Emergencies()
+            
+        },label: {
+            Text("Previous emergencies")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .font(.system(size: 20, design: .rounded))
+            
+        })
 
+    }
+    
+}

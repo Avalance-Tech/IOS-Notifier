@@ -96,7 +96,8 @@ struct WhenClicked: View{
 
 struct GalleryWithEmergencies: View{
     
-    var emergencies: [Emergency]
+    @StateObject var vm = VM_DB()
+    
     @State var showingEmergency = false
     
     var body: some View{
@@ -104,16 +105,22 @@ struct GalleryWithEmergencies: View{
         VStack{
             
             ScrollView{
-                ForEach(emergencies){ emergency in
+                ForEach(vm.allEmergencies){ emergency in
                     
                     ZStack{
                         Image("").frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
                         HStack{
-                            Spacer()
-                            Text(emergency.details)
-                                .foregroundColor(Color.black.opacity(1))
-                                .background(Color.gray.opacity(0.3))
-                            Spacer()
+                            
+                            NavigationLink{
+                                WhenClicked(emergency: emergency)
+                            } label: {
+                                Spacer()
+                                Text(emergency.details)
+                                    .foregroundColor(Color.black.opacity(1))
+                                    .background(Color.gray.opacity(0.3))
+                                Spacer()
+                            }
+
                         }
                     }.onTapGesture {
                         showingEmergency = true
@@ -134,7 +141,7 @@ struct GalleryWithEmergencies: View{
                             
                             HStack{
                                 Text(emergency.details)
-                                //    Text(emergency.urgency)
+                                Text("\(emergency.urgency)")
                             }
                             
                             Divider()
@@ -163,17 +170,15 @@ struct GalleryWithEmergencies: View{
 
 struct ListWithEmergencies: View{
     
-    var employees =  VM_DB()
+    @StateObject var vm = VM_DB()
     
-    var emergencies: Array<Emergency>
     
     
     var body: some View{
         
         VStack{
-            
             HStack{
-                Text("Location").frame(width: 120, height:50, alignment: .center).font(.title)
+                Text("Location").frame(width: 120, height:50, alignment: .center).font(.title).onAppear {print("\(vm.allEmergencies)")}
                 
                 Divider().frame(height: 50)
                 
@@ -197,7 +202,7 @@ struct ListWithEmergencies: View{
             
             ScrollView{
                 
-                ForEach(emergencies){
+                ForEach(vm.allEmergencies){
                     emergency in
                     
                     NavigationLink {
@@ -206,8 +211,10 @@ struct ListWithEmergencies: View{
                         
                         HStack{
                             
-                            Text(emergency.location).frame(width: 120, height: 50, alignment: .leading)
-                            
+                            Text("\(emergency.location)").frame(width: 120, height: 50, alignment: .leading).onAppear {
+                                print(emergency.details)
+                            }
+                          
                             Divider().frame(height:50)
                             
                             Text("\(emergency.meetingPoint)").frame(width: 120, height: 50, alignment: .center)
@@ -220,11 +227,11 @@ struct ListWithEmergencies: View{
                                 
                                 Divider().frame(width: 100, height:1)
                                 
-                             //   Text(String(emergency.replied[true]!.count)).frame(width:100, height: 1)
+                                Text(String(emergency.replied[true]!.count)).frame(width:100, height: 1)
                                 
                                 Divider().frame(width: 100, height: 1)
-                                
-                              //  Text(String(emergency.checkedIn.count)).frame(width:100, height:1)
+                        
+                                Text(String(emergency.arrived.count)).frame(width:100, height:1)
                             }
                             
                             
@@ -244,7 +251,7 @@ struct ListWithEmergencies: View{
 
 struct Recent_Emergencies: View {
     
-    
+
     @State var search = ""
     @State var viewType = "list"
     
@@ -279,10 +286,10 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies(emergencies: [Emergency(details: "details", location: "location", meetingPoint: "meeting Point", urgency: 3, time: "", employeesCalled: [Employee(id: 20, name: "A", number: "1234", status: true, branch: "Ajman", employeeType: "Operational Manager")], branch: "Ajman")])
+                ListWithEmergencies()
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies(emergencies: [Emergency(details: "details", location: "location", meetingPoint: "meeting Point", urgency: 3, time: "", employeesCalled: [Employee(id: 20, name: "A", number: "1234", status: true, branch: "Ajman", employeeType: "Operational Manager")], branch: "Ajman")])
+                GalleryWithEmergencies()
             }
         }
     }

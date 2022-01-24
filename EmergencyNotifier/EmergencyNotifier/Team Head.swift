@@ -19,44 +19,42 @@ struct Main_TeamHead: View{
     @Binding var loggedin: Employee
     
     var body: some View{
+        
+        VStack{
             
-            VStack{
-                
-                TopMenu(loggedin: $loggedin)
-                
-                Spacer()
-                
-                onCall(loggedin: $loggedin)
-                
-                
-                // Create Emergency button
-                
-                createEmergency
-                
-                
-                
-                // Create account Button
-                
-                accountsLink
-                
-                
-                
-                // Assign Acting Team Head button
-                
-                actingLink
-                
-                
-                
-                // Recent Emergencies
-                
-                recentsEmergency
-                
-                
-                Spacer()
-                Spacer()
-                
-                BottomMenu
-            }
+            TopMenu(loggedin: $loggedin)
+            
+            Spacer()
+            
+            onCall(loggedin: $loggedin)
+            
+            
+            // Create Emergency button
+            createEmergency
+            
+            
+            
+            // Create account Button
+            accountsLink
+            
+            
+            
+            // Assign Acting Team Head button
+            
+            actingLink
+            
+            
+            
+            // Recent Emergencies
+            
+            recentsEmergency
+            
+            
+            Spacer()
+            Spacer()
+            
+            BottomMenu
+        }
     }
 }
 
@@ -136,40 +134,44 @@ extension Main_TeamHead{
             
         }).popover(isPresented: $showingAssignPopUp) {
             
+            assignActingPopOver
             
-            VStack{
-                Spacer()
-                
-                Text("Are you sure you would like to assign  as the Acting Team Head")
-                TextField("Reason", text: $reason)
-                HStack(spacing: 30){
-                    Button {
-                        
-                        // set acting team head
-                        
-                    } label: {
-                        Text("Yes")
-                            .padding(.all, 8)
-                            .foregroundColor(Color.red)
-                            .border(Color.blue.opacity(0.8))
-                    }
+        }
+    }
+    
+    var assignActingPopOver: some View{
+        
+        VStack{
+            Spacer()
+            
+            Text("Are you sure you would like to assign  as the Acting Team Head")
+            TextField("Reason", text: $reason)
+            HStack(spacing: 30){
+                Button {
                     
+                    // set acting team head
                     
-                    Button{
-                        showingAssignPopUp = false
-                    }
-                label: {
-                    Text("No")
-                    
+                } label: {
+                    Text("Yes")
                         .padding(.all, 8)
-                        .foregroundColor(Color.green)
+                        .foregroundColor(Color.red)
                         .border(Color.blue.opacity(0.8))
                 }
+                
+                
+                Button{
+                    showingAssignPopUp = false
                 }
-                Spacer()
+            label: {
+                Text("No")
+                
+                    .padding(.all, 8)
+                    .foregroundColor(Color.green)
+                    .border(Color.blue.opacity(0.8))
             }
+            }
+            Spacer()
         }
-        
     }
     
 }

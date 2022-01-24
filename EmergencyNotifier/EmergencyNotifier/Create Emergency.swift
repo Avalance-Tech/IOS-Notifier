@@ -8,13 +8,16 @@
 import SwiftUI
 import Firebase
 import nanopb
+import MapKit
 
 
 struct EmergencyDetails: View{
     
     @Binding var emergencyDetails: String
+    
     @Binding var emergencyLocation: String
     @Binding var meetingPoint: String
+    
     @Binding var emergencyUrgency: Int
     @Binding var emergencyDate: Date
     
@@ -243,7 +246,7 @@ struct Create_Emergency: View {
     
     @StateObject var vm = VM_DB()
     
-    
+    @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
 
     @State var showFilters = false
     @State var showSorts = false
@@ -304,7 +307,9 @@ struct Create_Emergency: View {
             // to show filters
             else if showFilters{
                 
-                FiltersView(filters: $vm.filters)
+                
+                mapPopUp
+                // FiltersView(filters: $vm.filters)
                 
             }
             
@@ -369,6 +374,8 @@ struct Create_Emergency: View {
                     
                     print(selectedEmployees)
                     
+                    vm.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0))
+                    
                     
                 }, label:
                         {
@@ -417,3 +424,14 @@ struct Create_Emergency_Previews: PreviewProvider {
 
 
 
+//MARK: CREATE EMERGENCY POPUPS
+extension Create_Emergency{
+    
+
+    
+    var mapPopUp: some View{
+        
+        Map(coordinateRegion: $region).ignoresSafeArea()
+        
+    }
+}

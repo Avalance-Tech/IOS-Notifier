@@ -27,19 +27,10 @@ struct EmergencyNotifierApp: App {
                 case "Team Head":
                     Main_TeamHead(loggedin: $loggedin).navigationBarHidden(true)
                     
-                case "Deputy Team Head":
+                case "Deputy Team Head", "Supervisor":
                     Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
                     
-                case "Supervisor":
-                    Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
-                    
-                case "Assistant Supervisor":
-                    Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
-                    
-                case "Fire Fighter":
-                    Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
-                    
-                case "Coordinator":
+                case "Assistant Supervisor", "Fire Fighter", "Coordinator":
                     Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
                     
                 default:

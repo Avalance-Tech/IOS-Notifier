@@ -31,38 +31,19 @@ struct Main_OperationalManager: View{
             
             
             // Create Emergency button
-            
             createEmergency
 
             
-            
             // Create account Button
-
             createAccount
             
             
-            
             // Assign Acting Team Head button
-
             assignActing
             
             
             // Recent Emergencies
-            NavigationLink{
-                
-                Recent_Emergencies()
-                
-            }label:{
-                Text("Recent Emergencies")
-                
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
-            
+            recentEmergencies
             
             
             Spacer()
@@ -130,8 +111,7 @@ extension Main_OperationalManager{
                 .foregroundColor(Color.blue)
                 .font(.system(size: 20, design: .rounded))
         }).popover(isPresented: $showingAssignPopUp) {
-                // add a selection from a list of team heads
-            
+
                 actingPopOver
             
         }
@@ -140,7 +120,29 @@ extension Main_OperationalManager{
     
     
     var actingPopOver: some View{
+        // add a selection from a list of team heads
         Text("oof")
+        
+    }
+    
+    
+    var recentEmergencies: some View{
+        
+        NavigationLink{
+            
+            Recent_Emergencies()
+            
+        }label:{
+            Text("Recent Emergencies")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+        
     }
     
     
