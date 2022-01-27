@@ -21,16 +21,19 @@ struct WhenClickedEmployee: View{
             
             Text(employee.employeeType)
             
-            if replied == "accepted" || replied == "arrived"{
-                
+            
+            switch replied{
+            case "arrived":
                 Image("checkmark.circle.fill")
-                
-            }
-            else if replied == "rejected"{
+            case "accepted":
+                Text("ETA")
+            case "rejected":
                 Text("Reason")
-            }
-            else if replied == "not replied"{
-                Text("not replied")
+            case "not replied":
+                Text("Not replied")
+                
+            default:
+                Text("ERROR")
             }
             
         }
@@ -48,9 +51,27 @@ struct WhenClicked: View{
     var body: some View{
         
         VStack{
+            HStack{
+                Spacer()
+                NavigationLink{
+                    //Edit Emergency
+                }label: {
+                    Text("Edit").frame(width: 30, height: 30, alignment: .center)
+                    Image(systemName: "pencil").resizable()
+                        .frame(width: 30, height: 30, alignment: .center)
+                        .padding()
+                }
+            }
+            
             
             Text("Details:   \(emergency.details)").multilineTextAlignment(.center)
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width, alignment: .center)
+            
+            Text("\(emergency.location)")
+            Text("\(emergency.meetingPoint)")
+            Text("\(emergency.urgency)")
+            Text("\(emergency.branch)")
+          //  Text("\(emergency.imageURL)")
             
             
             Text("Time:   \(emergency.time)")
@@ -84,9 +105,12 @@ struct WhenClicked: View{
     
     
     func checkReply(employee: Employee) -> String{
-        if emergency.replied[true]!.contains(employee){
+        if emergency.arrived.contains(employee.id){
+            return "arrived"
+        }else
+        if emergency.replied[true]!.contains(employee.id){
             return "accepted"
-        } else if emergency.replied[false]!.contains(employee){
+        } else if emergency.replied[false]!.contains(employee.id){
             return "rejected"
         }
         return "not replied"
@@ -122,42 +146,7 @@ struct GalleryWithEmergencies: View{
                             }
 
                         }
-                    }.onTapGesture {
-                        showingEmergency = true
                     }
-                    .popover(isPresented: $showingEmergency, content: {
-                        
-                        VStack{
-                            
-                            HStack{
-                                Text("Meeting Point:\(emergency.meetingPoint)")
-                                
-                                Text("Location: \(emergency.location)")
-                                
-                                Text("Time: \(emergency.time)")
-                                
-                                
-                            }
-                            
-                            HStack{
-                                Text(emergency.details)
-                                Text("\(emergency.urgency)")
-                            }
-                            
-                            Divider()
-                            
-                            /*                  ForEach(emergency.checkedIn){image in
-                             
-                             // Image(image)
-                             
-                             
-                             }
-                             */
-                            
-                            
-                            
-                        }
-                    })
                     .padding(.vertical, 20)
                     .padding(.horizontal, 10)
                 }
@@ -178,12 +167,18 @@ struct ListWithEmergencies: View{
         
         VStack{
             HStack{
-                Text("Location").frame(width: 120, height:50, alignment: .center).font(.title).onAppear {print("\(vm.allEmergencies)")}
+                VStack{
+                    Text("Location").frame(height: 20, alignment: .center)
+                    
+                    Text("Meeting Point").frame(height: 20)
+                        .font(.system(size: 14))
+                }
+                .frame(width:105, alignment: .center)
                 
+            
                 Divider().frame(height: 50)
                 
-                Text("Meeting Point").frame(width: 120, height:50,alignment: .center).font(.system(size: 20))
-                    .multilineTextAlignment(.center)
+                Text("Details").frame(width: 160, height: 50, alignment: .center)
                 
                 Divider().frame(height: 50)
                 
@@ -205,39 +200,66 @@ struct ListWithEmergencies: View{
                 ForEach(vm.allEmergencies){
                     emergency in
                     
-                    NavigationLink {
-                        WhenClicked(emergency: emergency)
-                    } label: {
                         
                         HStack{
                             
-                            Text("\(emergency.location)").frame(width: 120, height: 50, alignment: .leading).onAppear {
-                                print(emergency.details)
-                            }
-                          
-                            Divider().frame(height:50)
+                            VStack{
                             
-                            Text("\(emergency.meetingPoint)").frame(width: 120, height: 50, alignment: .center)
+                                Button {
+                                    
+
+                                    // Open location
+                                    
+                                    
+                                } label: {
+                                    Text("Location").frame(width: 105, height: 40, alignment: .center)
+                                }
+
+                                
+                                Button {
+                                    
+                                    
+                                    //Open location
+                                    
+                                    
+                                } label: {
+                                    Text("M.P.").frame(width: 105, height: 40, alignment: .center)
+                                    
+                                }
+
+                                
+                            }.frame(width: 105, height: 80, alignment: .center)
+
+                        NavigationLink {
+                                WhenClicked(emergency: emergency)
+                            } label: {
                             
-                            Divider().frame(height:50)
+                            Divider().frame(height:70)
+                            
+                            
+                            Text(emergency.details).frame(width: 160, height: 80, alignment: .top)
+                                .multilineTextAlignment(.center)
+                            
+                            
+                            Divider().frame(height:70)
                             
                             VStack(alignment: .leading){
                                 
-                                Text(String(emergency.employeesCalled.count)).frame(width: 100,height: 1)
+                                Text(String(emergency.employeesCalled.count)).frame(width: 100,height: 5)
                                 
                                 Divider().frame(width: 100, height:1)
                                 
-                                Text(String(emergency.replied[true]!.count)).frame(width:100, height: 1)
+                                Text(String(emergency.replied[true]!.count)).frame(width:100, height: 5)
                                 
                                 Divider().frame(width: 100, height: 1)
                         
-                                Text(String(emergency.arrived.count)).frame(width:100, height:1)
+                                Text(String(emergency.arrived.count)).frame(width:100, height:5)
                             }
                             
                             
                             
                             
-                        }.padding(.horizontal, 10)
+                        }
                     }
                     Divider()
                 }

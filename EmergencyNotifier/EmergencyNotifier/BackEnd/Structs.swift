@@ -32,11 +32,16 @@ struct Employee: Identifiable, Equatable{
 }
 
 
+struct ImageType: Identifiable{
+    
+    let id = UUID()
+    var imageURL: String
+    
+}
+
 struct Emergency: Identifiable{  // to be logged later
     
     var id: String?
-
-    var test = (1, 2)
     
     var details: String
     var location: GeoPoint
@@ -46,9 +51,24 @@ struct Emergency: Identifiable{  // to be logged later
     var employeesCalled: Array<Employee>
     var branch: String // = Employee.branch
     
-    var replied: Dictionary<Bool, Array<Employee>> = [:]
-    var arrived: [Employee]
+
     
+    var replied: Dictionary<Bool, Array<Employee.ID>> = [:]
+    var arrived: [Employee.ID]
+    
+    var imageURLs: [String]
+    
+    var imageURL: [ImageType]{
+        var list: [ImageType] = []
+        for url in imageURLs{
+            list.append(ImageType(imageURL: url))
+        }
+        return list
+    }
+
+    var injuries: Int
+    var casualties: Int
+
 }
 
 
@@ -108,10 +128,6 @@ func typeInitial(emptype: String) -> String{
  
  
  */
-
-
-
-
 
 class VM_DB: ObservableObject{
     @Published var allEmployees = [Employee]()
@@ -205,15 +221,18 @@ func getEmergencies(){
                             let location = doc["Location"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
                             let meetingPoint = doc["Meeting Point"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
                             let calledID = doc["Employees Called"] as? [Int] ?? []
-                            let declined = doc["Rejected"] as? [Employee] ?? []
-                            let accepted = doc["Accepted"] as? [Employee] ?? []
-                            let arrived = doc["Arrived"] as? [Employee] ?? []
+                            let declined = doc["Rejected"] as? [Employee.ID] ?? []
+                            let accepted = doc["Accepted"] as? [Employee.ID] ?? []
+                            let arrived = doc["Arrived"] as? [Employee.ID] ?? []
                             let branch = doc["Branch"] as? String ?? ""
                             let urgency = doc["Urgency"] as? Int ?? 0
                             let timestamp = doc["Time"] as? Timestamp ?? Timestamp()
                             let time = timestamp.dateValue()
+                            let imageURLs = doc["Image URL"] as? [String] ?? []
+                            let casualties = doc["Casualties"] as? Int ?? 0
+                            let injuries = doc["Injuries"] as? Int ?? 0
                             
-                            let repliedDict: Dictionary<Bool, [Employee]> = [false: declined, true: accepted]
+                            let repliedDict: Dictionary<Bool, [Employee.ID]> = [false: declined, true: accepted]
                             
                             var called: [Employee]{
                             var list: [Employee] = []
@@ -226,14 +245,8 @@ func getEmergencies(){
                                 }
                                 return list
                             }
-                            
-                          //  print()
-                            
-                         //   print("\([called, doc["Branch"]])")
-                            
-                            print("\(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, replied: repliedDict, arrived: arrived))")
-                            
-                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, replied: repliedDict, arrived: arrived))
+                                     
+                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
                         }
 
                     self.allEmergencies = newList
@@ -269,14 +282,12 @@ func addEmployee(name: String, id: Int, number: String?, branch: String, employe
     
     func addEmergency(details: String, called: [Employee], time: Date, urgency: Int, location: GeoPoint, meetingPoint: GeoPoint){
         
-        
     var calledID: [Int]{
         var x: [Int] = []
         for emp in called{
             x.append(emp.id)
         }
         return x
-    
     }
         
         db.collection("Emergencies").addDocument(data: [
@@ -287,7 +298,8 @@ func addEmployee(name: String, id: Int, number: String?, branch: String, employe
             "Meeting Point": meetingPoint,
             "Urgency": urgency,
             "Accepted": [],
-            "Arrived": []
+            "Arrived": [],
+            "Image URL": []
         ]) { error in
             if error == nil{
                 

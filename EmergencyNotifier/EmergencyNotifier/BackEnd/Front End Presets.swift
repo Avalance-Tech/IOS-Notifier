@@ -61,14 +61,14 @@ struct TopMenu: View {
             
             HStack(spacing:12){
                 
-                Link(destination: URL(string: "https://www.emiratesfire.ae")!, label:{
+         /*       Link(destination: URL(string: "https://www.emiratesfire.ae")!, label:{
                     
                     Image(systemName: "flame")
                         .resizable()
                         .frame(width: 30, height: 30, alignment: .center)
                         .foregroundColor(Color.red)
                         .padding(.leading, 15)
-                })
+                })*/
                 
                 
                 Spacer()

@@ -21,9 +21,6 @@ struct Main_FireFighter: View {
             
             onCall(loggedin: $loggedin)
             
-            // Create Emergency button
-            reportEmergency
-            
             // Recent Emergencies
             recentEmergencies
             

@@ -11,6 +11,8 @@ import nanopb
 import MapKit
 
 
+// ADD CASUALTIES AND INJURIES
+
 struct EmergencyDetails: View{
     
     @Binding var emergencyDetails: String
@@ -21,6 +23,8 @@ struct EmergencyDetails: View{
     @Binding var emergencyUrgency: Int
     @Binding var emergencyDate: Date
     
+    @Binding var casualties: Int
+    @Binding var injuries: Int
     
     var body: some View{
     // Emergency Details
@@ -57,6 +61,24 @@ struct EmergencyDetails: View{
         }
     }
     .padding(.horizontal, 10)
+        
+    HStack(spacing: 10){
+        
+        Stepper(value: $injuries) {
+                Text("Injuries:")
+                Text(String(injuries))
+        
+        }
+        
+        Spacer()
+        
+        Stepper(value: $casualties) {
+            Text("Casualties:")
+            Text(String(casualties))
+    
+    }
+    }
+        .padding(.horizontal, 10)
     
     HStack(spacing: 10){
         
@@ -260,6 +282,9 @@ struct Create_Emergency: View {
     @State var emergencyUrgency = 1
     @State var emergencyDate: Date = Date()
     
+    @State var injuries = 0
+    @State var casualties = 0
+    
     
     @State var selectedEmployeesID = Set<Int>()
     
@@ -293,7 +318,7 @@ struct Create_Emergency: View {
             // to show emergency Details
             if !showSorts && !showFilters{
 
-                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate).animation(Animation.easeIn(duration: 2), value: showSorts || showFilters)
+                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate, casualties: $casualties, injuries: $injuries).animation(Animation.easeIn(duration: 2), value: showSorts || showFilters)
                 
             }
             
@@ -364,15 +389,6 @@ struct Create_Emergency: View {
             HStack{
                 Spacer()
                 Button(action: {
-                    
-                    
-                    print(emergencyDetails)
-                    print(emergencyDate)
-                    print(emergencyLocation)
-                    print(meetingPoint)
-                    print(emergencyUrgency)
-                    
-                    print(selectedEmployees)
                     
                     vm.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0))
                     
