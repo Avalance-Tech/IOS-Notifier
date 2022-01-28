@@ -346,7 +346,7 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
-    @State var employees =  VM_DB()
+    @StateObject var employees =  VM_DB()
     
     
     var shownEmployees: [Employee]{
@@ -417,7 +417,9 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @State var vm =  VM_DB()
+    @StateObject var vm =  VM_DB()
+    
+    @State var dragDown = false
 
     
     @State private var showingPopUp = false
@@ -429,12 +431,34 @@ struct DeleteAccounts: View{
         for employee in vm.allEmployees{
             if selectedEmployeesID.contains(employee.id){
                 employees2.append(employee)
-            }
+            } 
         }
         return employees2
     }
     
     var body: some View{
+        ZStack{
+        
+            if dragDown{
+         
+        VStack{
+            Text("Accounts Deleted")
+            .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+            .padding(.bottom, 35)
+            .background(Color.red.opacity(1))
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .animation(Animation.easeInOut, value: !dragDown)
+            .transition(AnyTransition.move(edge: .top))
+
+            
+            Spacer()
+        }
+        .animation(Animation.easeInOut, value: !dragDown)
+        .transition(AnyTransition.move(edge: .top))
+        .ignoresSafeArea()
+    }
+            
         VStack{
             HStack(spacing:10){
                 Text("Delete Accounts").font(.title).padding(.leading, UIScreen.main.bounds.width/3)
@@ -510,24 +534,40 @@ struct DeleteAccounts: View{
                     HStack(spacing: 30){
                         Button {
                             // delete accounts
+                            for employee in selectedEmployees {
+                                vm.deleteEmployee(employee: employee)
+                            }
+                            
+                            withAnimation{
+                                dragDown = true}
+                            
+                            Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                                    
+                                withAnimation {
+                                    dragDown = false
+                                }
+                            }
+                            showingPopUp = false
+                            
                         } label: {
                             Text("Yes")
                                 .padding(.all, 8)
-                                .foregroundColor(Color.red)
-                                .border(Color.blue.opacity(0.8))
+                                .background(Color.red)
+                                .cornerRadius(10)
+                                .foregroundColor(Color.white)
                         }
 
-                        
+                        	
                         Button{
                             self.selectedEmployeesID.removeAll()
                             showingPopUp = false
                         }
                     label: {
                         Text("No")
-                    
-                        .padding(.all, 8)
-                        .foregroundColor(Color.green)
-                        .border(Color.blue.opacity(0.8))
+                            .padding(.all, 8)
+                            .background(Color.green)
+                            .cornerRadius(10)
+                            .foregroundColor(Color.white)
                     }
                     }
                     Spacer()
@@ -535,7 +575,7 @@ struct DeleteAccounts: View{
             }
 
 
-            
+        }
         }.onAppear{ vm.getData() }
         
     }
