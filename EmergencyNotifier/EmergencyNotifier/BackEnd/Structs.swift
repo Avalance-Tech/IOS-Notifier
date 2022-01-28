@@ -51,7 +51,7 @@ struct Emergency: Identifiable{  // to be logged later
     var employeesCalled: Array<Employee>
     var branch: String // = Employee.branch
     
-
+    
     
     var replied: Dictionary<Bool, Array<Employee.ID>> = [:]
     var arrived: [Employee.ID]
@@ -65,10 +65,10 @@ struct Emergency: Identifiable{  // to be logged later
         }
         return list
     }
-
+    
     var injuries: Int
     var casualties: Int
-
+    
 }
 
 
@@ -168,18 +168,18 @@ class VM_DB: ObservableObject{
 //MARK: VM FUNCTIONS
 extension VM_DB{
     
-func getData(){
+    func getData(){
         self.getEmployees()
-    
+        
         self.getEmergencies()
-}
+    }
     
     
-func getEmployees(){
-    var newList = [Employee]()
-    db.collection("Employees").getDocuments { snapshot, error in
-        if error == nil {
-            if let snapshot = snapshot{
+    func getEmployees(){
+        var newList = [Employee]()
+        db.collection("Employees").getDocuments { snapshot, error in
+            if error == nil {
+                if let snapshot = snapshot{
                     
                     for doc in snapshot.documents{
                         
@@ -193,28 +193,28 @@ func getEmployees(){
                         
                         newList.append(Employee(id: eID, password: pwd, name: name, number: num, status: sts, branch: brc, employeeType: etype, docID: doc.documentID))
                         
-
-
+                        
+                        
+                        
+                    }
+                    
+                    self.allEmployees = newList
                     
                 }
                 
-                self.allEmployees = newList
-                
+            }else{
+                // error handle
             }
-            
-        }else{
-            // error handle
         }
     }
-}
     
     
-func getEmergencies(){
-    var newList = [Emergency]()
-    db.collection("Emergencies").getDocuments { snapshot, error in
-        if error == nil {
-            if let snapshot = snapshot{
-                DispatchQueue.main.async {
+    func getEmergencies(){
+        var newList = [Emergency]()
+        db.collection("Emergencies").getDocuments { snapshot, error in
+            if error == nil {
+                if let snapshot = snapshot{
+                    DispatchQueue.main.async {
                         
                         for doc in snapshot.documents{
                             let details = doc["Details"] as? String ?? ""
@@ -235,7 +235,7 @@ func getEmergencies(){
                             let repliedDict: Dictionary<Bool, [Employee.ID]> = [false: declined, true: accepted]
                             
                             var called: [Employee]{
-                            var list: [Employee] = []
+                                var list: [Employee] = []
                                 for id in calledID{
                                     for employee in self.allEmployees{
                                         if employee.id == id{
@@ -245,24 +245,24 @@ func getEmergencies(){
                                 }
                                 return list
                             }
-                                     
+                            
                             newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
                         }
-
-                    self.allEmergencies = newList
+                        
+                        self.allEmergencies = newList
+                    }
                 }
+                
             }
             
-        }
-        
-        else{
-            // error handle
+            else{
+                // error handle
+            }
         }
     }
-}
     
     
-func addEmployee(name: String, id: Int, number: String?, branch: String, employeeType: String){
+    func addEmployee(name: String, id: Int, number: String?, branch: String, employeeType: String){
         
         
         db.collection("Employees").addDocument(data: ["E ID": id,  "Name": name, "Number": number == nil ? "" : number!, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
@@ -276,19 +276,32 @@ func addEmployee(name: String, id: Int, number: String?, branch: String, employe
             }
         }
         
-}
+    }
     
+    
+    
+    func deleteEmployee(employee: Employee){
+        db.collection("Employees").document(employee.docID ?? "").delete(){
+            err in
+            if let err = err {
+                print("Error removing document \(err)")
+            }
+            else{
+                self.getData()
+            }
+        }
+    }
     
     
     func addEmergency(details: String, called: [Employee], time: Date, urgency: Int, location: GeoPoint, meetingPoint: GeoPoint){
         
-    var calledID: [Int]{
-        var x: [Int] = []
-        for emp in called{
-            x.append(emp.id)
+        var calledID: [Int]{
+            var x: [Int] = []
+            for emp in called{
+                x.append(emp.id)
+            }
+            return x
         }
-        return x
-    }
         
         db.collection("Emergencies").addDocument(data: [
             "Details": details,
@@ -310,11 +323,11 @@ func addEmployee(name: String, id: Int, number: String?, branch: String, employe
                 //
             }
         }
-
         
         
-    
-    
+        
+        
+        
     }
     
     

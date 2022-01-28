@@ -38,6 +38,22 @@ struct EmergencyDetails: View{
     
     //Emergency Location
     HStack(spacing: 10){
+        
+        Button {
+            // open location tab
+        } label: {
+            Text("Location")
+            Image(systemName: "location.circle")
+        }
+
+        Button {
+            // open Meeting location tab
+        } label: {
+            Text("Location")
+            Image(systemName: "location.fill")
+        }
+        
+        
         Text("Location")
         TextField("Emergency Location", text: $emergencyLocation)
             .background(Color.gray.opacity(0.1).cornerRadius(10))
@@ -65,7 +81,7 @@ struct EmergencyDetails: View{
     HStack(spacing: 10){
         
         Stepper(value: $injuries) {
-                Text("Injuries:")
+            Text("Injuries:").font(.system(size: 10))
                 Text(String(injuries))
         
         }
@@ -73,7 +89,7 @@ struct EmergencyDetails: View{
         Spacer()
         
         Stepper(value: $casualties) {
-            Text("Casualties:")
+            Text("Casualties:").font(.system(size: 10))
             Text(String(casualties))
     
     }
