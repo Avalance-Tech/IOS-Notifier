@@ -13,6 +13,8 @@ import SwiftUI
 
 struct Main_TeamHead: View{
     
+    @StateObject var vm = VM_DB()
+    
     @State var showingAssignPopUp = false
     @State var reason = ""
     
@@ -26,7 +28,7 @@ struct Main_TeamHead: View{
             
             Spacer()
             
-            onCall(loggedin: $loggedin)
+            onCall(status: $loggedin.status)
             
             
             // Create Emergency button
@@ -54,6 +56,8 @@ struct Main_TeamHead: View{
             Spacer()
             
             BottomMenu
+        }.onChange(of: loggedin.status) { __ in
+            vm.updateEmployee(employee: loggedin)
         }
     }
 }

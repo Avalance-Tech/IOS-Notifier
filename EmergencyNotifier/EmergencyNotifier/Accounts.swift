@@ -227,16 +227,38 @@ struct CreateAccount: View{
 
 struct EditAccount: View{
     @State var editedEmployee: Employee
+     
+    @StateObject var vm = VM_DB()
     
-    /// new
+    @State var created = false
     
-    @State var newName: String = ""
-    @State var newBranch = ""
-    @State var newType: String = ""
-    
-    
+    @State var shownAlert = false
     
     var body: some View{
+        ZStack{
+        
+            if created{
+         
+        VStack{
+            Text("Account Edited")
+            .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+            .padding(.bottom, 35)
+            .background(
+                Color.orange
+            )
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .animation(Animation.easeInOut, value: !created)
+            .transition(AnyTransition.move(edge: .top))
+
+            
+            Spacer()
+        }
+        .animation(Animation.easeInOut, value: !created)
+        .transition(AnyTransition.move(edge: .top))
+        .ignoresSafeArea()
+    }
+            
         VStack{
             
             HStack{
@@ -245,41 +267,53 @@ struct EditAccount: View{
                 
                 
                 TextField("Name", text: $editedEmployee.name)
-                    .border(Color.gray.opacity(0.8))
+                    .padding(.all, 8)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+            }
+            
+            HStack{
+                Text("Phone No.:")
                     .padding(.horizontal, 8)
+                
+                
+                TextField("Number", text: $editedEmployee.number)
+                    .padding(.all, 8)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
             }
             
             HStack{
                 // New Type
-                Menu(newType == "" ? "Select Type":newType) {
+                Menu(editedEmployee.employeeType) {
                     
                     Button {
-                        newType = "Team Head"
+                        editedEmployee.employeeType = "Team Head"
                     } label: {
                         Text("Team Head")
                     }
                     
                     Button {
-                        newType = "Deputy Team Head"
+                        editedEmployee.employeeType = "Deputy Team Head"
                     } label: {
                         Text("Deputy Team Head")
                     }
                     
                     Button {
-                        newType = "Supervisor"
+                        editedEmployee.employeeType = "Supervisor"
                     } label: {
                         Text("Supervisor")
                     }
                     
                     Button {
-                        newType = "Assistant Supervisor"
+                        editedEmployee.employeeType = "Assistant Supervisor"
                     } label: {
                         Text("Assistant Supervisor")
                     }
                     
                     
                     Button {
-                        newType = "Fire Fighter"
+                        editedEmployee.employeeType = "Fire Fighter"
                     } label: {
                         Text("Fire Fighter")
                     }
@@ -290,54 +324,75 @@ struct EditAccount: View{
                 
                 
                 // New branch
-                Menu(newBranch == "" ? "Select Branch" : newBranch) {
+                Menu(editedEmployee.branch) {
                     Button {
-                        newBranch = "Ajman"
+                        editedEmployee.branch = "Ajman"
                     } label: {
                         Text("Ajman")
                     }
                     
                     Button {
-                        newBranch = "Sharjah"
+                        editedEmployee.branch = "Sharjah"
                     } label: {
                         Text("Sharjah")
                     }
                     
                     Button {
-                        newBranch = "Ras Al Khaimah"
+                        editedEmployee.branch = "Ras Al Khaimah"
                     } label: {
                         Text("Ras Al Khaimah")
                     }
                     
                     Button {
-                        newBranch = "Umm al-Quwain "
+                        editedEmployee.branch = "Umm al-Quwain "
                     } label: {
                         Text("Umm Al-Quwain")
                     }
                     
                     
                     Button {
-                        newBranch = "Fujairah"
+                        editedEmployee.branch = "Fujairah"
                     } label: {
                         Text("Fujairah")
                     }
                 }
             }
+
             
             Button {
                 
-                self.editedEmployee.name = newName.lowercased()
-                self.editedEmployee.branch = newBranch
-                self.editedEmployee.employeeType = newType
+                shownAlert.toggle()
+                
+
                 
             } label: {
-                Text("change name \(self.editedEmployee.name)")
+                Text("Edit Employee")
             }
-            .foregroundColor(Color.white)
-            .padding(.all, 10)
-            .background(RoundedRectangle(cornerRadius: 10))
+                .foregroundColor(Color.white)
+                .padding(.all, 10)
+                .background(Color.blue)
+                .cornerRadius(10)
+
             
-            
+        }
+        }.alert(isPresented: $shownAlert) {
+            Alert(
+                title: Text("Are you sure"),
+                message: Text("Are you sure you want to edit this user"),
+                primaryButton: .destructive(Text("Confirm"), action: {
+                    vm.updateEmployee(employee: editedEmployee)
+                    
+                    withAnimation{
+                        created = true}
+                    
+                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                            
+                        withAnimation {
+                            created = false
+                        }
+                    }
+                }),
+                secondaryButton: .cancel())
         }
     }
     
@@ -431,7 +486,7 @@ struct DeleteAccounts: View{
         for employee in vm.allEmployees{
             if selectedEmployeesID.contains(employee.id){
                 employees2.append(employee)
-            } 
+            }
         }
         return employees2
     }

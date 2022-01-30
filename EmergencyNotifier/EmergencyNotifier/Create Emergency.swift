@@ -31,7 +31,9 @@ struct EmergencyDetails: View{
     HStack(spacing: 10){
         Text("Details")
         TextField(" Emergency Details", text: $emergencyDetails)
-            .background(Color.gray.opacity(0.1).cornerRadius(10))
+            .padding(.all, 8)
+            .background(Color.gray.opacity(0.12))
+            .cornerRadius(10)
         
     }
     .padding(.horizontal, 10)
@@ -52,47 +54,34 @@ struct EmergencyDetails: View{
             Text("Location")
             Image(systemName: "location.fill")
         }
-        
-        
-        Text("Location")
-        TextField("Emergency Location", text: $emergencyLocation)
-            .background(Color.gray.opacity(0.1).cornerRadius(10))
-    }
-    .padding(.horizontal, 10)
-    
-    
-    //Meeting point Location
-    HStack(spacing: 10){
-        Text("Meeting Location")
-        TextField("Meeting Point Location", text: $meetingPoint)
-            .background(Color.gray.opacity(0.1).cornerRadius(10))
     }
     .padding(.horizontal, 10)
     
     
     HStack(spacing: 10){
-        Stepper(value: $emergencyUrgency, in: 1...5) {
+        Stepper(value: $emergencyUrgency, in: 1...99999) {
             Text("Urgency:")
             Text(String(emergencyUrgency))
         }
     }
     .padding(.horizontal, 10)
         
-    HStack(spacing: 10){
+    HStack(spacing: 5){
         
-        Stepper(value: $injuries) {
-            Text("Injuries:").font(.system(size: 10))
+        Stepper(value: $injuries, in: 0...99999) {
+            Text("Injuries:")
                 Text(String(injuries))
         
-        }
+        }.font(.system(size: 10))
         
         Spacer()
         
         Stepper(value: $casualties) {
-            Text("Casualties:").font(.system(size: 10))
+            Text("Casualties:")
             Text(String(casualties))
-    
+
     }
+        .font(.system(size: 10))
     }
         .padding(.horizontal, 10)
     
@@ -282,6 +271,14 @@ struct Create_Emergency: View {
     
     // Sort / filter employees shown
     
+    var check: Bool{
+        
+        if emergencyDetails == "" || selectedEmployeesID.isEmpty{
+            return false
+        }
+        return true
+    }
+    
     @StateObject var vm = VM_DB()
     
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
@@ -420,7 +417,7 @@ struct Create_Emergency: View {
                     
                     
                 }
-                )
+                ).disabled(check ? false : true)
                 
                 
             }.padding(.all, 5)

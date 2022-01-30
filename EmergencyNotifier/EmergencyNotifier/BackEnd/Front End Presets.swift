@@ -27,12 +27,12 @@ var BottomMenu: some View{
 
 
 struct onCall: View{
-    @Binding var loggedin: Employee
+    @Binding var status: Bool
     
     var body: some View{
         HStack{
             Spacer()
-            Toggle(isOn: $loggedin.status) {
+            Toggle(isOn: $status) {
                 Text("On Call")
             }
             Spacer()

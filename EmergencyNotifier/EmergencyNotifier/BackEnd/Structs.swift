@@ -5,9 +5,20 @@ import MapKit
 /// WITH DATABSE
 
 
-let notLoggedIn = Employee(id: 0, name: "", number: "", status: false, branch: "", employeeType: "")
+let notLoggedIn = Employee(id: 0, password: "", name: "", number: "", status: false, branch: "", employeeType: "", docID: "NotLoggedIn")
 
-struct Employee: Identifiable, Equatable{
+class Employee: Identifiable, Equatable{
+    
+    init(id: Int, password: String, name: String, number: String, status: Bool, branch: String, employeeType: String, docID: String){
+        self.id = id
+        self.password = password
+        self.name = name
+        self.number = number
+        self.status = status
+        self.branch = branch
+        self.employeeType = employeeType
+        self.docID = docID
+    }
     
     let id: Int
     
@@ -28,6 +39,9 @@ struct Employee: Identifiable, Equatable{
         
         return lhs.id == rhs.id
         
+    }
+    func statusToggle(){
+        self.status.toggle()
     }
 }
 
@@ -279,6 +293,23 @@ extension VM_DB{
     }
     
     
+    func updateEmployee(employee: Employee){
+        
+        let updated = db.collection("Employees").document(employee.docID ?? "")
+        
+        updated.getDocument { (document, err) in
+            
+            if let err = err {
+                print(err)
+            }
+            else {
+                document?.reference.updateData(["E ID": employee.id,  "Name": employee.name, "Number": employee.number, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
+                self.getData()
+            }
+            
+        }
+        
+    }
     
     func deleteEmployee(employee: Employee){
         db.collection("Employees").document(employee.docID ?? "").delete(){

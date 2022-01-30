@@ -9,6 +9,8 @@ import SwiftUI
 
 struct Main_FireFighter: View {
     
+    @StateObject var vm = VM_DB()
+    
     @Binding var loggedin: Employee
     
     var body: some View {
@@ -19,7 +21,7 @@ struct Main_FireFighter: View {
             
             Spacer()
             
-            onCall(loggedin: $loggedin)
+            onCall(status: $loggedin.status)
             
             // Recent Emergencies
             recentEmergencies
@@ -29,10 +31,11 @@ struct Main_FireFighter: View {
             
             BottomMenu
             
+        }.onChange(of: loggedin.status) { __ in
+            vm.updateEmployee(employee: loggedin)
         }
     }
 }
-
 
 
 extension Main_FireFighter{

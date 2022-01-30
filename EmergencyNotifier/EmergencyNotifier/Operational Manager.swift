@@ -12,6 +12,8 @@ import SwiftUI
 
 struct Main_OperationalManager: View{
     
+    @StateObject var vm = VM_DB()
+    
     @Binding var loggedin: Employee
     
     @State var showingAssignPopUp = false
@@ -27,7 +29,7 @@ struct Main_OperationalManager: View{
             Spacer()
             
             
-            onCall(loggedin: $loggedin)
+            onCall(status: $loggedin.status)
             
             
             // Create Emergency button
@@ -50,6 +52,8 @@ struct Main_OperationalManager: View{
             
             BottomMenu
             
+        }.onChange(of: loggedin.status) { __ in
+            vm.updateEmployee(employee: loggedin)
         }
     }
 }

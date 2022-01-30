@@ -9,6 +9,8 @@ import SwiftUI
 
 struct Main_Supervisor: View{
     
+    @StateObject var vm = VM_DB()
+    
     @Binding var loggedin: Employee
     @State var showPopOver = true
     
@@ -19,14 +21,15 @@ struct Main_Supervisor: View{
             
             Spacer()
             
-            onCall(loggedin: $loggedin)
+            onCall(status: $loggedin.status)
             
             // Create account Button
             accountsLink
             
             // Assign Acting Team Head button
+            if loggedin.employeeType == "Supervisor"{
             assignActing
-            
+            }
             
             // Recent Emergencies
             recentEmergencies
@@ -35,6 +38,9 @@ struct Main_Supervisor: View{
             Spacer()
             
             BottomMenu
+            
+        }.onChange(of: loggedin.status) { __ in
+            vm.updateEmployee(employee: loggedin)
         }
     }
 }
