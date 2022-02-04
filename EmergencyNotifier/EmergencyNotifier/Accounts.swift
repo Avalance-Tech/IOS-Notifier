@@ -172,6 +172,10 @@ struct CreateAccount: View{
                 Button { newBranch = "Umm Al-Quwain" } label: { Text("Umm Al-Quwain") }
                 
                 Button { newBranch = "Fujairah" } label: { Text("Fujairah") }
+                
+                Button { newBranch = "Abu Dhabi" } label: { Text("Abu Dhabi") }
+                
+                Button { newBranch = "Dubai" } label: { Text("Dubai") }
             }
 
             
@@ -348,7 +352,18 @@ struct EditAccount: View{
                     } label: {
                         Text("Umm Al-Quwain")
                     }
+          
+                    Button {
+                        editedEmployee.branch = "Abu Dhabi"
+                    } label: {
+                        Text("Abu Dhabi")
+                    }
                     
+                    Button {
+                        editedEmployee.branch = "Dubai"
+                    } label: {
+                        Text("Dubai")
+                    }
                     
                     Button {
                         editedEmployee.branch = "Fujairah"

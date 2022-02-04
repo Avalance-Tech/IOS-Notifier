@@ -508,7 +508,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EmergencyNotifier/EmergencyNotifier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"EmergencyNotifier/Preview Content\"";
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
@@ -540,7 +540,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = EmergencyNotifier/EmergencyNotifier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"EmergencyNotifier/Preview Content\"";
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;

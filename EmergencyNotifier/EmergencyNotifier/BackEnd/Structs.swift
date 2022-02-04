@@ -1,15 +1,16 @@
 import SwiftUI
 import Firebase
 import MapKit
+import simd
 
 /// WITH DATABSE
 
 
-let notLoggedIn = Employee(id: 0, password: "", name: "", number: "", status: false, branch: "", employeeType: "", docID: "NotLoggedIn")
+let notLoggedIn = Employee(id: 0, password: "", name: "", number: "", status: false, branch: "", employeeType: "", docID: ".")
 
 class Employee: Identifiable, Equatable{
     
-    init(id: Int, password: String, name: String, number: String, status: Bool, branch: String, employeeType: String, docID: String){
+    init(id: Int, password: String, name: String, number: String, status: Bool, branch: String, employeeType: String, docID: String?){
         self.id = id
         self.password = password
         self.name = name
@@ -24,6 +25,7 @@ class Employee: Identifiable, Equatable{
     
     var password: String = "password"  // Encrypt later
     
+    var docID: String?
     
     var name: String
     var number: String  // Used for login
@@ -32,8 +34,6 @@ class Employee: Identifiable, Equatable{
     var branch: String
     
     var employeeType: String
-    
-    var docID: String?
     
     static func == (lhs: Employee, rhs: Employee) -> Bool{
         
@@ -98,6 +98,10 @@ func branchInitial(branch: String)  -> String{
         return "AJM"
     } else if branch == "Fujairah"{
         return "FUJ"
+    } else if branch == "Abu Dhabi"{
+        return "AD"
+    } else if branch == "Dubai"{
+        return "DXB"
     }
     
     return "Error"
@@ -311,6 +315,32 @@ extension VM_DB{
         
     }
     
+    func updateEmergency(emergency: Emergency){
+        let updated = db.collection("Emergencies").document(emergency.id ?? "")
+        
+        updated.getDocument { (document, err) in
+            
+            if let err = err {
+                print(err)
+            }
+            else{
+                document?.reference.updateData([
+                    "Details": emergency.details,
+                    "Location": emergency.location,
+                    "Meeting Point": emergency.meetingPoint,
+                    "Urgency": emergency.urgency,
+             //       "Accepted": emergency.replied[true],
+                //    "Arrived": emergency.arrived,
+                    "Injuries": emergency.injuries,
+                    "Casualties": emergency.casualties
+                ])
+                self.getData()
+            }
+            
+        }
+        
+    }
+    
     func deleteEmployee(employee: Employee){
         db.collection("Employees").document(employee.docID ?? "").delete(){
             err in
@@ -324,7 +354,7 @@ extension VM_DB{
     }
     
     
-    func addEmergency(details: String, called: [Employee], time: Date, urgency: Int, location: GeoPoint, meetingPoint: GeoPoint){
+    func addEmergency(details: String, called: [Employee], time: Date, urgency: Int, location: GeoPoint, meetingPoint: GeoPoint, injuries: Int, casualties: Int){
         
         var calledID: [Int]{
             var x: [Int] = []
@@ -343,7 +373,9 @@ extension VM_DB{
             "Urgency": urgency,
             "Accepted": [],
             "Arrived": [],
-            "Image URL": []
+            "Image URL": [],
+            "Injuries": injuries,
+            "Casualties": casualties
         ]) { error in
             if error == nil{
                 

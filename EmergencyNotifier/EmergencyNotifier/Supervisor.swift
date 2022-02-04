@@ -58,7 +58,7 @@ extension Main_Supervisor{
         
         NavigationLink{
             
-            Recent_Emergencies()
+            Recent_Emergencies(loggedin: $loggedin)
             
         }label:{
             Text("Recent Emergencies")

@@ -4,8 +4,10 @@
 //
 //  Created by Adnan Odimah on 10/01/2022.
 //
-
 import SwiftUI
+import Firebase
+import MapKit
+
 struct WhenClickedEmployee: View{
     
     var employee: Employee
@@ -43,25 +45,153 @@ struct WhenClickedEmployee: View{
 }
 
 
+struct EditEmergency: View{
+    
+    var emergency: Emergency
+    
+    @StateObject var vm = VM_DB()
+    
+    @State var dragDown = false
+    
+    @State var nEDetails: String = ""
+    
+    @State var nELocation = GeoPoint(latitude: 0, longitude: 0)
+    @State var nEMP = GeoPoint(latitude: 0, longitude: 0)
+    
+    @State var nEUrgency = 1
+    
+    @State var casualties = 0
+    @State var injuries = 0
+    
+    var docID: String
+    
+     
+    var body: some View{
+        ZStack{
+            
+            if dragDown{
+         
+        VStack{
+            Text("Emergency Editted")
+            .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+            .padding(.bottom, 35)
+            .background(Color.green.opacity(1))
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .animation(Animation.easeInOut, value: !dragDown)
+            .transition(AnyTransition.move(edge: .top))
+
+            
+            Spacer()
+        }
+        .animation(Animation.easeInOut, value: !dragDown)
+        .transition(AnyTransition.move(edge: .top))
+        .ignoresSafeArea()
+    }
+            
+            VStack{
+                
+                Spacer()
+                
+
+                HStack(spacing: 10){
+                    
+                    Stepper("Casualties\n\(casualties)", value: $casualties).multilineTextAlignment(.center)
+                    
+                    Stepper("Injuries\n\(injuries)", value: $injuries).multilineTextAlignment(.center)
+                    
+                }
+                .onChange(of: casualties) { newValue in
+                    if casualties < 0{
+                        casualties = 0
+                    }
+                }
+                .onChange(of: injuries) { newValue in
+                    if injuries < 0{
+                        injuries = 0
+                    }
+                }
+                
+                
+                HStack(spacing: 30){
+                    
+                    Button {
+                        // open location tab
+                    } label: {
+                        Text("Location")
+                        Image(systemName: "location.circle")
+                    }
+
+                    Button {
+                        // open Meeting location tab
+                    } label: {
+                        Text("Meeting Point")
+                        Image(systemName: "location.fill")
+                    }
+                }
+                .padding(.horizontal, 0)
+                
+                
+                
+                Stepper("Urgency: \(nEUrgency)", value: $nEUrgency)
+                
+                TextField("Emergency Details", text: $nEDetails)
+                    .foregroundColor(Color.white)
+                    .padding(.all, 8)
+                    .background(Color.gray.opacity(6))
+                    .cornerRadius(10)
+                Spacer()
+                Spacer()
+                Divider()
+                Button {
+                     
+                    vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
+                   
+                    withAnimation{
+                        dragDown = true}
+                    
+                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                            
+                        withAnimation {
+                            dragDown = false
+                        }
+                    }
+                    // Edit Emergency
+                } label: {
+                    Text("Edit Emergency")
+                        .bold()
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .foregroundColor(.black)
+                        .background(RoundedRectangle(cornerRadius: 5))
+                    
+                }.disabled(nEDetails != "" ? false : true)
+
+                
+            }.padding(.horizontal, 5)
+        }
+    }
+    
+}
+
 struct WhenClicked: View{
+    
+    @Binding var loggedin: Employee
     
     var emergency: Emergency
     @State var employeePopUp = false
+    @State var forwardPopUp = false
     
     var body: some View{
         
         VStack{
-            HStack{
-                Spacer()
-                NavigationLink{
-                    //Edit Emergency
-                }label: {
-                    Text("Edit").frame(width: 30, height: 30, alignment: .center)
-                    Image(systemName: "pencil").resizable()
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .padding()
-                }
+            
+            
+            if loggedin.employeeType == "Team Head" || loggedin.employeeType == "Acting Team Head" || loggedin.employeeType == "Operational Manager"{
+                topBar
             }
+
+            
             
             
             Text("Details:   \(emergency.details)").multilineTextAlignment(.center)
@@ -71,7 +201,7 @@ struct WhenClicked: View{
             Text("\(emergency.meetingPoint)")
             Text("\(emergency.urgency)")
             Text("\(emergency.branch)")
-          //  Text("\(emergency.imageURL)")
+            //  Text("\(emergency.imageURL)")
             
             
             Text("Time:   \(emergency.time)")
@@ -121,7 +251,8 @@ struct WhenClicked: View{
 struct GalleryWithEmergencies: View{
     
     @StateObject var vm = VM_DB()
-    
+    @Binding var loggedin: Employee
+
     @State var showingEmergency = false
     
     var body: some View{
@@ -136,7 +267,7 @@ struct GalleryWithEmergencies: View{
                         HStack{
                             
                             NavigationLink{
-                                WhenClicked(emergency: emergency)
+                                WhenClicked(loggedin: $loggedin, emergency: emergency)
                             } label: {
                                 Spacer()
                                 Text(emergency.details)
@@ -144,7 +275,7 @@ struct GalleryWithEmergencies: View{
                                     .background(Color.gray.opacity(0.3))
                                 Spacer()
                             }
-
+                            
                         }
                     }
                     .padding(.vertical, 20)
@@ -152,6 +283,8 @@ struct GalleryWithEmergencies: View{
                 }
             }
             
+        }.onAppear {
+            vm.getData()
         }
         
     }
@@ -160,7 +293,8 @@ struct GalleryWithEmergencies: View{
 struct ListWithEmergencies: View{
     
     @StateObject var vm = VM_DB()
-    
+    @Binding var loggedin: Employee
+
     
     
     var body: some View{
@@ -175,7 +309,7 @@ struct ListWithEmergencies: View{
                 }
                 .frame(width:105, alignment: .center)
                 
-            
+                
                 Divider().frame(height: 50)
                 
                 Text("Details").frame(width: 160, height: 50, alignment: .center)
@@ -200,39 +334,39 @@ struct ListWithEmergencies: View{
                 ForEach(vm.allEmergencies){
                     emergency in
                     
+                    
+                    HStack{
                         
-                        HStack{
+                        VStack{
                             
-                            VStack{
-                            
-                                Button {
-                                    
-
-                                    // Open location
-                                    
-                                    
-                                } label: {
-                                    Text("Location").frame(width: 105, height: 40, alignment: .center)
-                                }
-
+                            Button {
                                 
-                                Button {
-                                    
-                                    
-                                    //Open location
-                                    
-                                    
-                                } label: {
-                                    Text("M.P.").frame(width: 105, height: 40, alignment: .center)
-                                    
-                                }
-
                                 
-                            }.frame(width: 105, height: 80, alignment: .center)
-
-                        NavigationLink {
-                                WhenClicked(emergency: emergency)
+                                // Open location
+                                
+                                
                             } label: {
+                                Text("Location").frame(width: 105, height: 40, alignment: .center)
+                            }
+                            
+                            
+                            Button {
+                                
+                                
+                                //Open location
+                                
+                                
+                            } label: {
+                                Text("M.P.").frame(width: 105, height: 40, alignment: .center)
+                                
+                            }
+                            
+                            
+                        }.frame(width: 105, height: 80, alignment: .center)
+                        
+                        NavigationLink {
+                            WhenClicked(loggedin: $loggedin, emergency: emergency)
+                        } label: {
                             
                             Divider().frame(height:70)
                             
@@ -252,7 +386,7 @@ struct ListWithEmergencies: View{
                                 Text(String(emergency.replied[true]!.count)).frame(width:100, height: 5)
                                 
                                 Divider().frame(width: 100, height: 1)
-                        
+                                
                                 Text(String(emergency.arrived.count)).frame(width:100, height:5)
                             }
                             
@@ -263,6 +397,8 @@ struct ListWithEmergencies: View{
                     }
                     Divider()
                 }
+            }.onAppear {
+                vm.getData()
             }
         }
     }
@@ -272,7 +408,7 @@ struct ListWithEmergencies: View{
 
 
 struct Recent_Emergencies: View {
-    
+    @Binding var loggedin: Employee
 
     @State var search = ""
     @State var viewType = "list"
@@ -308,20 +444,57 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies()
+                ListWithEmergencies(loggedin: $loggedin)
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies()
+                GalleryWithEmergencies(loggedin: $loggedin)
             }
         }
     }
 }
 
-struct Recent_Emergencies_Previews: PreviewProvider {
-    static var previews: some View {
-        //Recent_Emergencies()
-        NavigationView{
-            Recent_Emergencies()
+
+
+
+
+//MARK: When Clicked Aspects
+extension WhenClicked{
+    
+    var topBar: some View{
+       
+        HStack{
+            
+            Button {
+                
+                forwardPopUp = true
+                
+            } label: {
+                Image(systemName: "paperplane").resizable().frame(width: 30, height: 30, alignment: .center)
+            }.padding()
+
+            
+            
+            Spacer()
+            
+
+            NavigationLink{
+                
+                EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
+                //Edit Emergency
+            }label: {
+                Text("Edit").frame(width: 40, height: 30, alignment: .trailing)
+                Image(systemName: "pencil").resizable()
+                    .frame(width: 30, height: 30, alignment: .center)
+                    .padding()
+            }
+        }.popover(isPresented: $forwardPopUp) {
+            Text("Show Employees")
+            
+            // add a list of all employees so you can select
+            
+            
         }
+        
     }
+    
 }

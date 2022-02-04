@@ -13,7 +13,7 @@ struct EmergencyNotifierApp: App {
     
     init(){ FirebaseApp.configure() }
     
-    @State var loggedin = notLoggedIn
+    @State public var loggedin = notLoggedIn
     
     var body: some Scene{
             

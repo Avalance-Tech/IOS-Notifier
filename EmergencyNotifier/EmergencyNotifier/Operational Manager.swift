@@ -134,7 +134,7 @@ extension Main_OperationalManager{
         
         NavigationLink{
             
-            Recent_Emergencies()
+            Recent_Emergencies(loggedin: $loggedin)
             
         }label:{
             Text("Recent Emergencies")

@@ -39,7 +39,7 @@ struct EmergencyDetails: View{
     .padding(.horizontal, 10)
     
     //Emergency Location
-    HStack(spacing: 10){
+    HStack(spacing: 20){
         
         Button {
             // open location tab
@@ -51,7 +51,7 @@ struct EmergencyDetails: View{
         Button {
             // open Meeting location tab
         } label: {
-            Text("Location")
+            Text("Meeting Point")
             Image(systemName: "location.fill")
         }
     }
@@ -59,31 +59,31 @@ struct EmergencyDetails: View{
     
     
     HStack(spacing: 10){
-        Stepper(value: $emergencyUrgency, in: 1...99999) {
+        Stepper(value: $emergencyUrgency, in: 1...5) {
             Text("Urgency:")
             Text(String(emergencyUrgency))
         }
     }
     .padding(.horizontal, 10)
         
-    HStack(spacing: 5){
+        HStack(spacing: 10){
+            
+            Stepper("Casualties:\n\(casualties)", value: $casualties).multilineTextAlignment(.center)
+            
+            Stepper("Injuries:\n\(injuries)", value: $injuries).multilineTextAlignment(.center)
+            
+        }.padding(.horizontal, 5)
+            .onChange(of: casualties) { newValue in
+                if casualties < 0{
+                    casualties = 0
+                }
+            }
+            .onChange(of: injuries) { newValue in
+                if injuries < 0{
+                    injuries = 0
+                }
+            }
         
-        Stepper(value: $injuries, in: 0...99999) {
-            Text("Injuries:")
-                Text(String(injuries))
-        
-        }.font(.system(size: 10))
-        
-        Spacer()
-        
-        Stepper(value: $casualties) {
-            Text("Casualties:")
-            Text(String(casualties))
-
-    }
-        .font(.system(size: 10))
-    }
-        .padding(.horizontal, 10)
     
     HStack(spacing: 10){
         
@@ -403,7 +403,7 @@ struct Create_Emergency: View {
                 Spacer()
                 Button(action: {
                     
-                    vm.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0))
+                    vm.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0), injuries: injuries, casualties: casualties)
                     
                     
                 }, label:

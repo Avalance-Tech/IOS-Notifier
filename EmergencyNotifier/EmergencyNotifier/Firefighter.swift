@@ -63,7 +63,7 @@ extension Main_FireFighter{
         
         NavigationLink(destination:{
             
-            Recent_Emergencies()
+            Recent_Emergencies(loggedin: $loggedin)
             
         },label: {
             Text("Previous emergencies")

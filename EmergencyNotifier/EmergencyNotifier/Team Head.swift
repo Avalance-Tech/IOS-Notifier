@@ -92,7 +92,7 @@ extension Main_TeamHead{
     var recentsEmergency: some View{
         NavigationLink{
             
-            Recent_Emergencies()
+            Recent_Emergencies(loggedin: $loggedin)
             
         } label: {
             Text("Previous emergencies")
