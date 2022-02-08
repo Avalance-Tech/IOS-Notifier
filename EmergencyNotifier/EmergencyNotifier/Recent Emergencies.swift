@@ -65,35 +65,35 @@ struct EditEmergency: View{
     
     var docID: String
     
-     
+    
     var body: some View{
         ZStack{
             
             if dragDown{
-         
-        VStack{
-            Text("Emergency Editted")
-            .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
-            .padding(.bottom, 35)
-            .background(Color.green.opacity(1))
-            .cornerRadius(20)
-            .foregroundColor(Color.white)
-            .animation(Animation.easeInOut, value: !dragDown)
-            .transition(AnyTransition.move(edge: .top))
-
-            
-            Spacer()
-        }
-        .animation(Animation.easeInOut, value: !dragDown)
-        .transition(AnyTransition.move(edge: .top))
-        .ignoresSafeArea()
-    }
+                
+                VStack{
+                    Text("Emergency Editted")
+                        .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+                        .padding(.bottom, 35)
+                        .background(Color.green.opacity(1))
+                        .cornerRadius(20)
+                        .foregroundColor(Color.white)
+                        .animation(Animation.easeInOut, value: !dragDown)
+                        .transition(AnyTransition.move(edge: .top))
+                    
+                    
+                    Spacer()
+                }
+                .animation(Animation.easeInOut, value: !dragDown)
+                .transition(AnyTransition.move(edge: .top))
+                .ignoresSafeArea()
+            }
             
             VStack{
                 
                 Spacer()
                 
-
+                
                 HStack(spacing: 10){
                     
                     Stepper("Casualties\n\(casualties)", value: $casualties).multilineTextAlignment(.center)
@@ -121,7 +121,7 @@ struct EditEmergency: View{
                         Text("Location")
                         Image(systemName: "location.circle")
                     }
-
+                    
                     Button {
                         // open Meeting location tab
                     } label: {
@@ -144,14 +144,14 @@ struct EditEmergency: View{
                 Spacer()
                 Divider()
                 Button {
-                     
+                    
                     vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
-                   
+                    
                     withAnimation{
                         dragDown = true}
                     
                     Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
-                            
+                        
                         withAnimation {
                             dragDown = false
                         }
@@ -166,7 +166,7 @@ struct EditEmergency: View{
                         .background(RoundedRectangle(cornerRadius: 5))
                     
                 }.disabled(nEDetails != "" ? false : true)
-
+                
                 
             }.padding(.horizontal, 5)
         }
@@ -190,7 +190,7 @@ struct WhenClicked: View{
             if loggedin.employeeType == "Team Head" || loggedin.employeeType == "Acting Team Head" || loggedin.employeeType == "Operational Manager"{
                 topBar
             }
-
+            
             
             
             
@@ -252,41 +252,56 @@ struct GalleryWithEmergencies: View{
     
     @StateObject var vm = VM_DB()
     @Binding var loggedin: Employee
-
+    
+    let columns: [GridItem] = [
+        GridItem(),
+        GridItem(),
+    ]
+    
     @State var showingEmergency = false
     
     var body: some View{
-        
-        VStack{
-            
-            ScrollView{
-                ForEach(vm.allEmergencies){ emergency in
+        ZStack{
+            VStack{
+                
+                
+                
+                ScrollView{
                     
-                    ZStack{
-                        Image("").frame(width: UIScreen.main.bounds.width, height: 200, alignment: .center)
-                        HStack{
-                            
+                    LazyVGrid(columns: columns) {
+                        
+                        ForEach(vm.allEmergencies){ emergency in
                             NavigationLink{
+                                
                                 WhenClicked(loggedin: $loggedin, emergency: emergency)
+                                
                             } label: {
-                                Spacer()
-                                Text(emergency.details)
-                                    .foregroundColor(Color.black.opacity(1))
-                                    .background(Color.gray.opacity(0.3))
-                                Spacer()
-                            }
-                            
+                                ZStack{
+                                    
+                                    Image("Avala_logo")
+                                        .resizable()
+                                    
+                                    HStack{
+                                        
+                                        
+                                        Spacer()
+                                        Text(emergency.details)
+                                            .foregroundColor(Color.white.opacity(1))
+                                            .background(Color.gray.opacity(0.8))
+                                            .cornerRadius(10)
+                                        Spacer()
+                                    }
+                                    
+                                }
+                            }.frame(height: 250, alignment: .center)
                         }
                     }
-                    .padding(.vertical, 20)
-                    .padding(.horizontal, 10)
+                    
+                }.onAppear {
+                    vm.getData()
                 }
             }
-            
-        }.onAppear {
-            vm.getData()
         }
-        
     }
 }
 
@@ -294,7 +309,7 @@ struct ListWithEmergencies: View{
     
     @StateObject var vm = VM_DB()
     @Binding var loggedin: Employee
-
+    
     
     
     var body: some View{
@@ -409,7 +424,7 @@ struct ListWithEmergencies: View{
 
 struct Recent_Emergencies: View {
     @Binding var loggedin: Employee
-
+    
     @State var search = ""
     @State var viewType = "list"
     
@@ -461,7 +476,7 @@ struct Recent_Emergencies: View {
 extension WhenClicked{
     
     var topBar: some View{
-       
+        
         HStack{
             
             Button {
@@ -471,12 +486,12 @@ extension WhenClicked{
             } label: {
                 Image(systemName: "paperplane").resizable().frame(width: 30, height: 30, alignment: .center)
             }.padding()
-
+            
             
             
             Spacer()
             
-
+            
             NavigationLink{
                 
                 EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
@@ -496,5 +511,7 @@ extension WhenClicked{
         }
         
     }
+    
+    
     
 }

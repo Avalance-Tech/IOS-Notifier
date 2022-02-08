@@ -42,7 +42,9 @@ struct EmergencyDetails: View{
     HStack(spacing: 20){
         
         Button {
+            
             // open location tab
+        
         } label: {
             Text("Location")
             Image(systemName: "location.circle")
@@ -165,106 +167,8 @@ struct showSelectedEmergency: View{
     
 }
 
-struct FiltersView: View{
-    @Binding var filters: [String]
-    
-    
-    
-    
-    
-    var body: some View{
-        VStack{
-            
-            
-            HStack{
-                
-                Spacer()
-                
-                Button{
-                    
-                    
-                    if filters.contains("Status"){
-                        filters.removeAll(where: {$0 == "Status"})
-                    }else{
-                        filters.append("Status")
-                    }
-                    
-                    
-                } label: {
-                    Text("Status")
-                    if filters.contains("Status"){ Image(systemName: "checkmark")}
-                }.frame(width: 180, height: 5, alignment: .center)
-                
-                Spacer()
-                
-                Button{
-                    
-                    if filters.contains("Branch"){
-                        filters.removeAll(where: {$0 == "Branch"})
-                    }else{
-                        filters.append("Branch")
-                    }
-                    
-                } label: {
-                    Text("Branch")
-                    if filters.contains("Branch"){Image(systemName: "checkmark")}
-                    
-                }.frame(width: 180, height: 5, alignment: .center)
-                
-                Spacer()
-                
-            }
-            HStack{
-                
-                Spacer()
-                
-                Button{
-                    
-                    if filters.contains("Employee Type"){
-                        filters.removeAll(where: {$0 == "Employee Type"})
-                    }else{
-                        filters.append("Employee Type")
-                    }
-                    
-                } label: {
-                    Text("Employee Type")
-                    if filters.contains("Employee Type"){Image(systemName: "checkmark")}
-                    
-                    
-                }.frame(width: 180, height: 5, alignment: .center)
-                
-                Spacer()
-                
-                Button{
-                    
-                    if filters.contains("Selected"){
-                        filters.removeAll(where: {$0 == "Selected"})
-                    }else{
-                        filters.append("Selected")
-                    }
-                    
-                } label: {
-                    Text("Selected")
-                    if filters.contains("Selected"){Image(systemName: "checkmark")}
-                    
-                }.frame(width: 180, height: 5, alignment: .center)
-                Spacer()
-            }.padding(.top, 20)
-        }
-        Divider()
-        ScrollView(.horizontal){
-            if filters.isEmpty{
-                VStack(alignment: .center){
-            Text("No filters Selected")
-            }
-            }
 
-            
-        }
-    }
-    
-    
-}
+
 
 
 struct Create_Emergency: View {
@@ -346,8 +250,8 @@ struct Create_Emergency: View {
             else if showFilters{
                 
                 
-                mapPopUp
-                // FiltersView(filters: $vm.filters)
+                
+                vm.filtersView
                 
             }
             

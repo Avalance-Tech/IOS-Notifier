@@ -85,7 +85,6 @@ struct Emergency: Identifiable{  // to be logged later
     
 }
 
-
 func branchInitial(branch: String)  -> String{
     
     if branch == "Ras Al Khaimah"{
@@ -146,6 +145,12 @@ func typeInitial(emptype: String) -> String{
  
  
  */
+struct filterModel: Identifiable{
+    var id = UUID()
+    var type: String
+    var filter: String
+}
+
 
 class VM_DB: ObservableObject{
     @Published var allEmployees = [Employee]()
@@ -156,13 +161,12 @@ class VM_DB: ObservableObject{
     @Published var typeS = true
     @Published var search = ""
     @Published var sort = "Status"
-    @Published var filters = [String]()
+    @Published var filters = [filterModel]()
     
     var shownEmployees: [Employee]{
         var emp: [Employee] = []
         
-        emp = doSort(list: allEmployees,  sort: sort, type: typeS)
-        
+        emp = doSortFilter(list: allEmployees,  sort: sort, type: typeS, filters: filters)
         
         if search != ""{
             return emp.filter({$0.name.lowercased().contains(search.lowercased() )})
@@ -329,8 +333,8 @@ extension VM_DB{
                     "Location": emergency.location,
                     "Meeting Point": emergency.meetingPoint,
                     "Urgency": emergency.urgency,
-             //       "Accepted": emergency.replied[true],
-                //    "Arrived": emergency.arrived,
+                    //       "Accepted": emergency.replied[true],
+                    //    "Arrived": emergency.arrived,
                     "Injuries": emergency.injuries,
                     "Casualties": emergency.casualties
                 ])
@@ -395,55 +399,120 @@ extension VM_DB{
     
     
     
-    func doSort(list: Array<Employee>, sort: String, type: Bool) -> [Employee]{
+    func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]) -> [Employee]{
         
         // if type true then desc else asc
         
+        var newList1: [Employee] = []
         var newList: [Employee] = []
+        
+        if !filters.isEmpty{
+        for filter1 in filters{
+            switch filter1.type{
+                
+            case "Branch":
+                    for employee in list.filter({ Employee in
+                        Employee.branch == filter1.filter
+                    }){
+                        if !newList1.contains(employee){
+                            newList1.append(employee)
+                        }
+                    }
+                
+            case "Status":
+                switch filter1.filter{
+                    
+                case "Available":
+                    for employee in newList1.filter({ Employee in
+                        Employee.status == true
+                    }){
+                        if !newList.contains(employee){
+                            newList.append(employee)
+                        }
+                    }
+                
+                default:
+                    for employee in newList1.filter({ Employee in
+                        Employee.status == false
+                    }){
+                        if !newList.contains(employee){
+                            newList.append(employee)
+                        }
+                    }
+                    
+                }
+                
+            case "Employee Type":
+                for employee in newList1.filter({ Employee in
+                    Employee.employeeType == filter1.filter
+                }){
+                    if !newList.contains(employee){
+                        newList.append(employee)
+                    }
+                }
+                
+            default: break
+                
+            }
+            
+        }
+        }
+        if filters.count < 1{
+        
+        if newList1.isEmpty{
+            newList = list
+        }
+        if newList.isEmpty{
+            newList = newList1
+        }
+        }
         
         if sort == "Name"{
             if type{
-                newList = list.sorted(by: {$0.name < $1.name})
+                newList = newList.sorted(by: {$0.name < $1.name})
             }
             else{
-                newList = list.sorted(by: {$0.name > $1.name})
+                
+                newList1 = newList.sorted(by: {$0.name > $1.name})
             }
             
         }else if sort == "Id"{
             if type{
-                newList = list.sorted(by: {$0.id < $1.id})
+                newList = newList.sorted(by: {$0.id < $1.id})
             }
             else{
-                newList = list.sorted(by: {$0.id > $1.id})
+                newList = newList.sorted(by: {$0.id > $1.id})
             }
         }else if sort == "Status"{
             if type{
-                newList = list.sorted(by: { user1, user2 in
+                newList = newList.sorted(by: { user1, user2 in
                     return user1.status
                 })
             }
             else{
-                newList = list.sorted(by: {user1, user2 in
+                newList1 = newList1.sorted(by: {user1, user2 in
                     return !user1.status
                 })
             }
         }else if sort == "Branch"{
             if type{
-                newList = list.sorted(by: {  $0.branch < $1.branch  })
+                newList = newList.sorted(by: {  $0.branch < $1.branch  })
             }
             else{
-                newList = list.sorted(by: { $0.branch > $1.branch
+                newList = newList.sorted(by: { $0.branch > $1.branch
                 })
             }
         }else if sort == "Role"{
             if type{
-                newList = list.sorted(by: {  $0.employeeType < $1.employeeType  })
+                newList = newList.sorted(by: {  $0.employeeType < $1.employeeType  })
             }
             else{
-                newList = list.sorted(by: { $0.employeeType > $1.employeeType
+                newList = newList.sorted(by: { $0.employeeType > $1.employeeType
                 })
             }
         }
+        
+        
         return newList}
     
 }
@@ -454,6 +523,150 @@ extension VM_DB{
 extension VM_DB{
     
     
+    
+    
+    
+    
+    var filtersView: some View{
+        ZStack{
+            
+            VStack(spacing: 10){
+                
+                
+                HStack{
+                    
+                    Spacer()
+                    
+                    
+                    Menu("Status") {
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Available"}){
+                        Button { self.filters.append(filterModel(type: "Status", filter: "Available")) } label: { Text("Available") }
+                        }
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Unavailable"}){
+                        Button { self.filters.append(filterModel(type: "Status", filter: "Unavailable")) } label: { Text("Unavailable") }
+                        }
+                        
+                    }.frame(width: 180, height: 30, alignment: .center)
+                    
+                    Spacer()
+                    
+                    
+                    Menu("Branch") {
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Dubai"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Dubai")) } label: { Text("Dubai") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Abu Dhabi"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Abu Dhabi")) } label: { Text("Abu Dhabi") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Fujairah"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Fujairah")) } label: { Text("Fujairah") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Umm Al-Quwain"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Umm Al-Quwain")) } label: { Text("Umm Al-Quwain") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Ras AL Khaimah"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Ras Al Khaimah")) } label: { Text("Ras Al Khaimah") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Sharjah"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Sharjah")) } label: { Text("Sharjah") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Ajman"}){
+                            Button { self.filters.append(filterModel(type: "Branch", filter: "Ajman")) } label: { Text("Ajman") }}
+                        
+                    }.frame(width: 180, height: 30, alignment: .center)
+                    
+                    Spacer()
+                }
+                HStack{
+                    Spacer()
+                    
+                    Menu("Employee Type") {
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Fire Fighter"}){
+                            Button { self.filters.append(filterModel(type: "Employee Type", filter: "Fire Fighter")) } label: { Text("Fire Fighter") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Assistant Supervisor"}){
+                            Button { self.filters.append(filterModel(type: "Employee Type", filter: "Assistant Supervisor")) } label: { Text("Assistant Supervisor") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Supervisor"}){
+                            Button { self.filters.append(filterModel(type: "Employee Type", filter: "Supervisor")) } label: { Text("Supervisor") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Deputy Team Head"}){
+                            Button { self.filters.append(filterModel(type: "Employee Type", filter: "Deputy Team Head")) } label: { Text("Deputy Team Head") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Team Head"}){
+                            Button { self.filters.append(filterModel(type: "Employee Type", filter: "Team Head")) } label: { Text("Team Head") }}
+                        
+                    }.frame(width: 180, height: 30, alignment: .center)
+                    
+                    Spacer()
+                    
+                    Menu("Selection") {
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Selected"}){
+                            Button { self.filters.append(filterModel(type: "Selection", filter: "Selected")) } label: { Text("Selected") }}
+                        
+                        if !filters.contains(where: { filterModel in
+                            filterModel.filter == "Not Selected"}){
+                        Button { self.filters.append(filterModel(type: "Selection", filter: "Not Selected")) } label: { Text("Not Selected") }}
+                        
+                    }.frame(width: 180, height: 30, alignment: .center)
+                    
+                    Spacer()
+                    
+                }
+                
+                Divider()
+                ScrollView(.horizontal){
+                    if filters.isEmpty{
+                        VStack(alignment: .center){
+                            Text("No filters Selected")
+                        }
+                    }
+                    
+                    else if !filters.isEmpty{
+                        HStack(spacing: 0){
+                        ForEach(filters) { filter in
+
+                            Text(filter.filter)
+                                .padding([.leading, .top, .bottom], 10)
+                                    .padding(.trailing, 25)
+                                    .background(Color.gray.opacity(0.3))
+                                    .cornerRadius(30)
+                            Image(systemName: "xmark")
+                                .offset(x: -20)
+                                    .onTapGesture {
+                                    self.filters.removeAll { filterModel in
+                                        filterModel.filter == filter.filter
+                                    }
+                                    }
+                            }
+                        }.padding(.leading, 10)
+                    }
+                    
+                }
+                
+            }
+        }
+    }
     
     var sortview: some View{
         
@@ -519,13 +732,8 @@ extension VM_DB{
                     Image(systemName: typeS && sort == "Role" ? "chevron.down" : "chevron.up")
                 }
             }
-            
-            
         }
-        
-        
     }
-    
 }
 
 
