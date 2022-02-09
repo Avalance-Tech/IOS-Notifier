@@ -403,68 +403,74 @@ extension VM_DB{
         
         // if type true then desc else asc
         
-        var newList1: [Employee] = []
+        var BranchEmps: [Employee] = []
+        var EmpTypes: [Employee] = []
+        var EmpStatus: [Employee] = []
+        
         var newList: [Employee] = []
         
         if !filters.isEmpty{
-        for filter1 in filters{
-            switch filter1.type{
-                
-            case "Branch":
-                    for employee in list.filter({ Employee in
-                        Employee.branch == filter1.filter
-                    }){
-                        if !newList1.contains(employee){
-                            newList1.append(employee)
-                        }
-                    }
-                
-            case "Status":
-                switch filter1.filter{
+            
+            for fil in filters{
+                switch fil.type{
                     
-                case "Available":
-                    for employee in newList1.filter({ Employee in
-                        Employee.status == true
-                    }){
-                        if !newList.contains(employee){
-                            newList.append(employee)
-                        }
+                case "Branch":
+                    
+                    BranchEmps.append(contentsOf: list.filter({ Employee in
+                        Employee.branch == fil.filter
+                    }))
+                    
+                    
+                    
+                case "Employee Type":
+                    
+                    EmpTypes.append(contentsOf: list.filter({ Employee in
+                        Employee.employeeType == fil.filter
+                    }))
+                    
+                    
+                    
+                case "Status":
+                    switch fil.filter{
+                        
+                    case "Available":
+                        
+                        EmpStatus.append(contentsOf: list.filter({Employee in
+                            Employee.status == true
+                        }))
+                        
+                    default:
+                        
+                        EmpStatus.append(contentsOf: list.filter({Employee in
+                            Employee.status == false
+                        }))
+                        
                     }
-                
-                default:
-                    for employee in newList1.filter({ Employee in
-                        Employee.status == false
-                    }){
-                        if !newList.contains(employee){
-                            newList.append(employee)
-                        }
-                    }
+                    
+                default: break
                     
                 }
-                
-            case "Employee Type":
-                for employee in newList1.filter({ Employee in
-                    Employee.employeeType == filter1.filter
-                }){
-                    if !newList.contains(employee){
-                        newList.append(employee)
-                    }
-                }
-                
-            default: break
                 
             }
-            
         }
-        }
-        if filters.count < 1{
         
-        if newList1.isEmpty{
+        if EmpTypes.isEmpty{
+            EmpTypes = list
+        }
+        
+        if EmpStatus.isEmpty{
+            EmpStatus = list
+        }
+        if BranchEmps.isEmpty{
+            BranchEmps = list
+        }
+        
+        newList = BranchEmps.filter({ Employee in
+            EmpStatus.contains(Employee) && EmpTypes.contains(Employee)
+        })
+        
+        if filters.isEmpty{
             newList = list
-        }
-        if newList.isEmpty{
-            newList = newList1
-        }
         }
         
         if sort == "Name"{
@@ -473,7 +479,7 @@ extension VM_DB{
             }
             else{
                 
-                newList1 = newList.sorted(by: {$0.name > $1.name})
+                newList = newList.sorted(by: {$0.name > $1.name})
             }
             
         }else if sort == "Id"{
@@ -490,7 +496,7 @@ extension VM_DB{
                 })
             }
             else{
-                newList1 = newList1.sorted(by: {user1, user2 in
+                newList = newList.sorted(by: {user1, user2 in
                     return !user1.status
                 })
             }
@@ -542,12 +548,12 @@ extension VM_DB{
                         
                         if !filters.contains(where: { filterModel in
                             filterModel.filter == "Available"}){
-                        Button { self.filters.append(filterModel(type: "Status", filter: "Available")) } label: { Text("Available") }
+                            Button { self.filters.append(filterModel(type: "Status", filter: "Available")) } label: { Text("Available") }
                         }
                         
                         if !filters.contains(where: { filterModel in
                             filterModel.filter == "Unavailable"}){
-                        Button { self.filters.append(filterModel(type: "Status", filter: "Unavailable")) } label: { Text("Unavailable") }
+                            Button { self.filters.append(filterModel(type: "Status", filter: "Unavailable")) } label: { Text("Unavailable") }
                         }
                         
                     }.frame(width: 180, height: 30, alignment: .center)
@@ -615,21 +621,7 @@ extension VM_DB{
                             Button { self.filters.append(filterModel(type: "Employee Type", filter: "Team Head")) } label: { Text("Team Head") }}
                         
                     }.frame(width: 180, height: 30, alignment: .center)
-                    
-                    Spacer()
-                    
-                    Menu("Selection") {
-                        
-                        if !filters.contains(where: { filterModel in
-                            filterModel.filter == "Selected"}){
-                            Button { self.filters.append(filterModel(type: "Selection", filter: "Selected")) } label: { Text("Selected") }}
-                        
-                        if !filters.contains(where: { filterModel in
-                            filterModel.filter == "Not Selected"}){
-                        Button { self.filters.append(filterModel(type: "Selection", filter: "Not Selected")) } label: { Text("Not Selected") }}
-                        
-                    }.frame(width: 180, height: 30, alignment: .center)
-                    
+                                                            
                     Spacer()
                     
                 }
@@ -638,25 +630,25 @@ extension VM_DB{
                 ScrollView(.horizontal){
                     if filters.isEmpty{
                         VStack(alignment: .center){
-                            Text("No filters Selected")
+                            Text("No filters Selected").padding(.horizontal, 20)
                         }
                     }
                     
                     else if !filters.isEmpty{
                         HStack(spacing: 0){
-                        ForEach(filters) { filter in
-
-                            Text(filter.filter)
-                                .padding([.leading, .top, .bottom], 10)
+                            ForEach(filters) { filter in
+                                
+                                Text(filter.filter)
+                                    .padding([.leading, .top, .bottom], 10)
                                     .padding(.trailing, 25)
                                     .background(Color.gray.opacity(0.3))
                                     .cornerRadius(30)
-                            Image(systemName: "xmark")
-                                .offset(x: -20)
+                                Image(systemName: "xmark")
+                                    .offset(x: -20)
                                     .onTapGesture {
-                                    self.filters.removeAll { filterModel in
-                                        filterModel.filter == filter.filter
-                                    }
+                                        self.filters.removeAll { filterModel in
+                                            filterModel.filter == filter.filter
+                                        }
                                     }
                             }
                         }.padding(.leading, 10)
