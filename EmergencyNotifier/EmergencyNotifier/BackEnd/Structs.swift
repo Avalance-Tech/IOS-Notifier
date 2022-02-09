@@ -303,18 +303,22 @@ extension VM_DB{
     
     func updateEmployee(employee: Employee){
         
-        let updated = db.collection("Employees").document(employee.docID ?? "")
-        
-        updated.getDocument { (document, err) in
+        DispatchQueue.main.async {
             
-            if let err = err {
-                print(err)
-            }
-            else {
-                document?.reference.updateData(["E ID": employee.id,  "Name": employee.name, "Number": employee.number, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
-                self.getData()
-            }
             
+            let updated = self.db.collection("Employees").document(employee.docID ?? "")
+            
+            updated.getDocument { (document, err) in
+                
+                if let err = err {
+                    print(err)
+                }
+                else {
+                    document?.reference.updateData(["E ID": employee.id,  "Name": employee.name, "Number": employee.number, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
+                    self.getData()
+                }
+                
+            }
         }
         
     }
@@ -621,7 +625,7 @@ extension VM_DB{
                             Button { self.filters.append(filterModel(type: "Employee Type", filter: "Team Head")) } label: { Text("Team Head") }}
                         
                     }.frame(width: 180, height: 30, alignment: .center)
-                                                            
+                    
                     Spacer()
                     
                 }

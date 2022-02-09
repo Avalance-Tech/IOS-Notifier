@@ -18,6 +18,7 @@ struct Main_OperationalManager: View{
     
     @State var showingAssignPopUp = false
     @State var reason = ""
+    @State var status = false
     	
     var body: some View{
         
@@ -29,7 +30,7 @@ struct Main_OperationalManager: View{
             Spacer()
             
             
-            onCall(status: $loggedin.status)
+            onCall(status: $status)
             
             
             // Create Emergency button
@@ -52,7 +53,10 @@ struct Main_OperationalManager: View{
             
             BottomMenu
             
-        }.onChange(of: loggedin.status) { __ in
+        }.onChange(of: status) { __ in
+            
+            self.loggedin.status = status
+            
             vm.updateEmployee(employee: loggedin)
         }
     }
