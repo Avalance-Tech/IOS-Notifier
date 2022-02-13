@@ -9,107 +9,72 @@ import SwiftUI
 
 struct Main_FireFighter: View {
     
+    @StateObject var vm = VM_DB()
+    
     @Binding var loggedin: Employee
     
-    @State var onCall = false
-    
-    
     var body: some View {
-        
-
         
         VStack(spacing: 25 ){
             
             TopMenu(loggedin: $loggedin)
+            
             Spacer()
             
-            HStack{
-                
-                Spacer()
-                
-                Toggle(isOn: $loggedin.status) {
-                Text("On Call")
-                    
-                }
-                
-                Spacer()
-                
-            }.padding([.top, .horizontal], 50)
-            
-            
-            
-            // Create Emergency button
-            NavigationLink(destination: {
-                
-                
-                
-            }, label: {
-                Text("Report an emergency")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            })
-            
+            onCall(status: $loggedin.status)
             
             // Recent Emergencies
+            recentEmergencies
             
-            NavigationLink(destination:{
-                
-    
+            Spacer()
+            Spacer()
             
-            },label: {
-                Text("Previous emergencies")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .font(.system(size: 20, design: .rounded))
-                
-            })
-        
-Spacer()
             BottomMenu
+            
+        }.onChange(of: loggedin.status) { __ in
+            vm.updateEmployee(employee: loggedin)
+            print("works")
         }
-        
     }
 }
 
-struct MainPage_FireFighter: View {
-    @State var menuOpened = false
-    
-    @Binding var loggedin: Employee
-    // body
-    
-    var body: some View {
-        ZStack{
 
+extension Main_FireFighter{
+    
+    var reportEmergency: some View{
         
-        
-        NavigationView{
+        NavigationLink(destination: {
             
-            Main_FireFighter(loggedin: $loggedin).navigationTitle("Emergency Link")
-        
-        } // close navi
+            Create_Emergency()
             
+        }, label: {
+            Text("Report an emergency")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        })
+        
+    }
     
-        } // close zstack
-    } // close body
     
-    
-    
-    // Methods
+    var recentEmergencies: some View{
+        
+        NavigationLink(destination:{
+            
+            Recent_Emergencies(loggedin: $loggedin)
+            
+        },label: {
+            Text("Previous emergencies")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .font(.system(size: 20, design: .rounded))
+            
+        })
+
+    }
     
 }
-
-
-
-
-
-/*
-struct Main_Page_Firefighter_Previews: PreviewProvider {
-    static var previews: some View {
-        MainPage_FireFighter()
-    }
-}*/

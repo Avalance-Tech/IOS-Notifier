@@ -9,137 +9,122 @@ import SwiftUI
 
 struct Main_Supervisor: View{
     
+    @StateObject var vm = VM_DB()
+    
     @Binding var loggedin: Employee
+    @State var showPopOver = false
+    @State var status = false
     
     var body: some View{
-        
         VStack{
-            TopMenu(loggedin: $loggedin)
-            Spacer()
-            // Create Emergency button
-                
-            HStack{
-                
-                Spacer()
-                
-                Toggle(isOn: $loggedin.status) {
-                Text("On Call")
-                    
-                }
-                
-                Spacer()
-                
-            }.padding([.top, .horizontal], 50)
             
-            NavigationLink {
-                
-                Create_Emergency()
-                
-                }label:{
-                Text("Report an emergency")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
+            TopMenu(loggedin: $loggedin)
+            
+            Spacer()
+            
+            onCall(status: $status)
             
             // Create account Button
-            NavigationLink{
-            
-                MainAccountsMenu()
-                
-            }label:{
-                Text("Create/edit/delete an account")
-                
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
+            accountsLink
             
             // Assign Acting Team Head button
-            Button( action: {
-                
-                print("Hello")
-                
-            }, label:{
-                Text("Assign Supervisor")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-            })
-            
+            if loggedin.employeeType == "Supervisor"{
+            assignActing
+            }
             
             // Recent Emergencies
+            recentEmergencies
             
-            NavigationLink{
-                
-                Recent_Emergencies()
-                
-            }label:{
-                Text("Recent Emergencies")
-                
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
-        
             
             Spacer()
             
             BottomMenu
-        
+            
+        }.onChange(of: status) { __ in
+            
+            self.loggedin.status = status
+            
+            vm.updateEmployee(employee: loggedin)
+            
+            
         }
     }
 }
 
 
-// MAIN PAGE
 
 
-struct MainPage_Supervisor: View {
-    // Properties
+
+
+
+//MARK: Content
+extension Main_Supervisor{
     
-    @Binding var loggedin: Employee
-    
-    
-    // body
-    
-    var body: some View {
-        ZStack{
-                
-                
-                NavigationView{
-                    
-                    Main_Supervisor(loggedin: $loggedin).navigationTitle("Emergency Link")
-                    
-                } // close navi
-                
+    var recentEmergencies: some View{
+        
+        NavigationLink{
             
-        } // close zstack
-    } // close body
+            Recent_Emergencies(loggedin: $loggedin)
+            
+        }label:{
+            Text("Recent Emergencies")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
     
-    
-    
-    // Methods
-    
-}
-
-
-/*
-
-struct Main_Page_Previews: PreviewProvider {
-    static var previews: some View {
-        MainPage_Supervisor()
     }
+    
+    
+    var assignActing: some View{
+        
+        Button( action: {
+
+            self.showPopOver = true
+            
+        }, label:{
+            Text("Assign Supervisor")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+        }).popover(isPresented: $showPopOver) {
+            actingPopOver
+        }
+        
+    }
+    
+    
+    
+    var actingPopOver: some View{
+        
+        VStack{
+            Text("Test")
+        }
+        
+    }
+    
+    
+    var accountsLink: some View{
+        NavigationLink{
+            
+            MainAccountsMenu()
+            
+        }label:{
+            
+            Text("Create/edit/delete an account")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+    }
+    
 }
-*/

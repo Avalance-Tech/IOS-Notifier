@@ -12,11 +12,14 @@ import SwiftUI
 
 struct Main_OperationalManager: View{
     
+    @StateObject var vm = VM_DB()
+    
     @Binding var loggedin: Employee
     
     @State var showingAssignPopUp = false
     @State var reason = ""
-    
+    @State var status = false
+    	
     var body: some View{
         
         VStack{
@@ -26,93 +29,35 @@ struct Main_OperationalManager: View{
             
             Spacer()
             
-            HStack{
-                
-                Spacer()
-                
-                Toggle(isOn: $loggedin.status) {
-                Text("On Call")
-                    Image(loggedin.status ? "checkmark.circle.fill" : "circle.slash")
-                    
-                }
-                
-                Spacer()
-                
-            }.padding([.top, .horizontal], 50)
+            
+            onCall(status: $status)
+            
             
             // Create Emergency button
-            
-            NavigationLink {
-                
-                Create_Emergency()
-                
-            }label:{
-                Text("Report an emergency")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-            }
-            
+            createEmergency
+
             
             // Create account Button
-            NavigationLink{
-                
-                MainAccountsMenu()
-                
-            }label:{
-                Text("Create/edit/delete an account")
-                
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
+            createAccount
+            
             
             // Assign Acting Team Head button
-            Button(action: {
-                
-                showingAssignPopUp = true
-                
-            }, label:{
-                Text("Assign Operational Manager")
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-            }).popover(isPresented: $showingAssignPopUp) {
-                    // add a selection from a list of team heads
-                
-                
-            }
+            assignActing
             
             
             // Recent Emergencies
-            NavigationLink{
-                
-                Recent_Emergencies()
-                
-            }label:{
-                Text("Recent Emergencies")
-                
-                    .underline()
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 10)
-                    .foregroundColor(Color.blue)
-                    .font(.system(size: 20, design: .rounded))
-                
-            }
-            
+            recentEmergencies
             
             
             Spacer()
             
             BottomMenu
             
+        }.onChange(of: status) { __ in
+            
+            self.loggedin.status = status
+            
+            vm.updateEmployee(employee: loggedin)
         }
     }
 }
@@ -121,32 +66,94 @@ struct Main_OperationalManager: View{
 
 
 
-struct MainPage_OperationalManager: View {
+// MARK: Content
+
+extension Main_OperationalManager{
     
-    @Binding var loggedin: Employee
     
-    var body: some View {
+    var createEmergency: some View{
+        NavigationLink {
+            
+            Create_Emergency()
+            
+        }label:{
+            Text("Report an emergency")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+        }
+    }
+    
+    
+    var createAccount: some View{
+        NavigationLink{
+            
+            MainAccountsMenu()
+            
+        }label:{
+            Text("Create/edit/delete an account")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+    }
+    
+    
+    var assignActing: some View{
         
-        VStack{
-            NavigationView{
-                
-                Main_OperationalManager(loggedin: $loggedin)
-                    .navigationTitle("Emergency Link")
-                
-                
-            }
-        }
-    }
-}
+        Button(action: {
+            
+            showingAssignPopUp = true
+            
+        }, label:{
+            Text("Assign Operational Manager")
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+        }).popover(isPresented: $showingAssignPopUp) {
 
-/*
-struct Operational_Manager_swift_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MainPage_OperationalManager()
-            MainPage_OperationalManager()
-                .previewDevice("iPhone 12")
+                actingPopOver
+            
         }
+        
     }
+    
+    
+    var actingPopOver: some View{
+        // add a selection from a list of team heads
+        Text("oof")
+        
+    }
+    
+    
+    var recentEmergencies: some View{
+        
+        NavigationLink{
+            
+            Recent_Emergencies(loggedin: $loggedin)
+            
+        }label:{
+            Text("Recent Emergencies")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+        
+    }
+    
+    
+    
+    
 }
-*/

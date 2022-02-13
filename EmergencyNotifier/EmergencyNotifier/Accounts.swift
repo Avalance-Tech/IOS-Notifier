@@ -79,29 +79,6 @@ struct CreateAccount: View{
     
     @State var employees =  VM_DB()
     
-    var check: Bool{
-        if !["Team Head", "Fire Fighter", "Operational Manager", "Supervisor", "Deputy Team Head", "Assistant Supervisor"].contains(newType){
-            return false
-        } else if newNumber == ""{
-            return false
-        } else if newName == ""{
-            return false
-        } else if newID == ""{
-            return false
-        } else if !["ajman", "fujairah", "sharjah", "umm al-quwain", "ras al khaimah"].contains(newBranch.lowercased()){
-            return false
-        }else{
-            for employee in employees.allEmployees{
-                if employee.id == Int(newID){
-                    return false
-                }
-            }
-        }
-        
-        return true
-    }
-    
-    
     // New account Properties
     
     @State var newName: String = ""
@@ -110,7 +87,30 @@ struct CreateAccount: View{
     @State var newID: String = ""
     @State var newBranch: String = ""
     
+    @State var created = false
+    
     var body: some View{
+        ZStack{
+            
+                if created{
+             
+            VStack{
+                Text("Account Created")
+                .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+                .padding(.bottom, 35)
+                .background(Color.green.opacity(1))
+                .cornerRadius(20)
+                .foregroundColor(Color.white)
+                .animation(Animation.easeInOut, value: !created)
+                .transition(AnyTransition.move(edge: .top))
+
+                
+                Spacer()
+            }
+            .animation(Animation.easeInOut, value: !created)
+            .transition(AnyTransition.move(edge: .top))
+            .ignoresSafeArea()
+        }
         
         VStack{
             
@@ -146,72 +146,36 @@ struct CreateAccount: View{
             // New Type
             Menu(newType == "" ? "Select Type":newType) {
                 
-                Button {
-                    newType = "Team Head"
-                } label: {
-                    Text("Team Head")
-                }
+                Button { newType = "Team Head" } label: { Text("Team Head") }
                 
-                Button {
-                    newType = "Deputy Team Head"
-                } label: {
-                    Text("Deputy Team Head")
-                }
+                Button { newType = "Deputy Team Head" } label: { Text("Deputy Team Head") }
                 
-                Button {
-                    newType = "Supervisor"
-                } label: {
-                    Text("Supervisor")
-                }
+                Button { newType = "Supervisor" } label: { Text("Supervisor") }
                 
-                Button {
-                    newType = "Assistant Supervisor"
-                } label: {
-                    Text("Assistant Supervisor")
-                }
+                Button { newType = "Assistant Supervisor" } label: { Text("Assistant Supervisor") }
                 
+                Button { newType = "Fire Fighter" } label: { Text("Fire Fighter") }
                 
-                Button {
-                    newType = "Fire Fighter"
-                } label: {
-                    Text("Fire Fighter")
-                }
             }
             
             
             // New branch
 
             Menu(newBranch == "" ? "Select Branch" : newBranch) {
-                Button {
-                    newBranch = "Ajman"
-                } label: {
-                    Text("Ajman")
-                }
                 
-                Button {
-                    newBranch = "Sharjah"
-                } label: {
-                    Text("Sharjah")
-                }
+                Button {  newBranch = "Ajman" } label: { Text("Ajman") }
                 
-                Button {
-                    newBranch = "Ras Al Khaimah"
-                } label: {
-                    Text("Ras Al Khaimah")
-                }
+                Button { newBranch = "Sharjah" } label: { Text("Sharjah") }
                 
-                Button {
-                    newBranch = "Umm al-Quwain "
-                } label: {
-                    Text("Umm Al-Quwain")
-                }
+                Button { newBranch = "Ras Al Khaimah" } label: { Text("Ras Al Khaimah") }
                 
+                Button { newBranch = "Umm Al-Quwain" } label: { Text("Umm Al-Quwain") }
                 
-                Button {
-                    newBranch = "Fujairah"
-                } label: {
-                    Text("Fujairah")
-                }
+                Button { newBranch = "Fujairah" } label: { Text("Fujairah") }
+                
+                Button { newBranch = "Abu Dhabi" } label: { Text("Abu Dhabi") }
+                
+                Button { newBranch = "Dubai" } label: { Text("Dubai") }
             }
 
             
@@ -223,7 +187,19 @@ struct CreateAccount: View{
                 
                 Button(action: {
                     
-                    employees.addEmployee(name: newName, id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
+                   employees.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
+
+                    withAnimation{
+                        created = true}
+                    
+                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                        	
+                        withAnimation {
+                            created = false
+                        }
+                    }
+
+
                     
                     
                 }, label:
@@ -236,29 +212,57 @@ struct CreateAccount: View{
                     
                     
                 }
-                ).disabled(check ? false : true)
+                ).disabled(check() && !created ? false : true)
                 
             }
-            
+        
             
         }.onAppear { employees.getData() }
         
+
+            
+        }
+    }
+    func createdToggle(){
+        self.created.toggle()
     }
     
 }
 
 struct EditAccount: View{
     @State var editedEmployee: Employee
+     
+    @StateObject var vm = VM_DB()
     
-    /// new
+    @State var created = false
     
-    @State var newName: String = ""
-    @State var newBranch = ""
-    @State var newType: String = ""
-    
-    
+    @State var shownAlert = false
     
     var body: some View{
+        ZStack{
+        
+            if created{
+         
+        VStack{
+            Text("Account Edited")
+            .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+            .padding(.bottom, 35)
+            .background(
+                Color.orange
+            )
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .animation(Animation.easeInOut, value: !created)
+            .transition(AnyTransition.move(edge: .top))
+
+            
+            Spacer()
+        }
+        .animation(Animation.easeInOut, value: !created)
+        .transition(AnyTransition.move(edge: .top))
+        .ignoresSafeArea()
+    }
+            
         VStack{
             
             HStack{
@@ -267,41 +271,53 @@ struct EditAccount: View{
                 
                 
                 TextField("Name", text: $editedEmployee.name)
-                    .border(Color.gray.opacity(0.8))
+                    .padding(.all, 8)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+            }
+            
+            HStack{
+                Text("Phone No.:")
                     .padding(.horizontal, 8)
+                
+                
+                TextField("Number", text: $editedEmployee.number)
+                    .padding(.all, 8)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
             }
             
             HStack{
                 // New Type
-                Menu(newType == "" ? "Select Type":newType) {
+                Menu(editedEmployee.employeeType) {
                     
                     Button {
-                        newType = "Team Head"
+                        editedEmployee.employeeType = "Team Head"
                     } label: {
                         Text("Team Head")
                     }
                     
                     Button {
-                        newType = "Deputy Team Head"
+                        editedEmployee.employeeType = "Deputy Team Head"
                     } label: {
                         Text("Deputy Team Head")
                     }
                     
                     Button {
-                        newType = "Supervisor"
+                        editedEmployee.employeeType = "Supervisor"
                     } label: {
                         Text("Supervisor")
                     }
                     
                     Button {
-                        newType = "Assistant Supervisor"
+                        editedEmployee.employeeType = "Assistant Supervisor"
                     } label: {
                         Text("Assistant Supervisor")
                     }
                     
                     
                     Button {
-                        newType = "Fire Fighter"
+                        editedEmployee.employeeType = "Fire Fighter"
                     } label: {
                         Text("Fire Fighter")
                     }
@@ -312,54 +328,86 @@ struct EditAccount: View{
                 
                 
                 // New branch
-                Menu(newBranch == "" ? "Select Branch" : newBranch) {
+                Menu(editedEmployee.branch) {
                     Button {
-                        newBranch = "Ajman"
+                        editedEmployee.branch = "Ajman"
                     } label: {
                         Text("Ajman")
                     }
                     
                     Button {
-                        newBranch = "Sharjah"
+                        editedEmployee.branch = "Sharjah"
                     } label: {
                         Text("Sharjah")
                     }
                     
                     Button {
-                        newBranch = "Ras Al Khaimah"
+                        editedEmployee.branch = "Ras Al Khaimah"
                     } label: {
                         Text("Ras Al Khaimah")
                     }
                     
                     Button {
-                        newBranch = "Umm al-Quwain "
+                        editedEmployee.branch = "Umm al-Quwain "
                     } label: {
                         Text("Umm Al-Quwain")
                     }
-                    
+          
+                    Button {
+                        editedEmployee.branch = "Abu Dhabi"
+                    } label: {
+                        Text("Abu Dhabi")
+                    }
                     
                     Button {
-                        newBranch = "Fujairah"
+                        editedEmployee.branch = "Dubai"
+                    } label: {
+                        Text("Dubai")
+                    }
+                    
+                    Button {
+                        editedEmployee.branch = "Fujairah"
                     } label: {
                         Text("Fujairah")
                     }
                 }
             }
+
             
             Button {
                 
-                self.editedEmployee.name = newName.lowercased()
-                self.editedEmployee.branch = newBranch
-                self.editedEmployee.employeeType = newType
+                shownAlert.toggle()
+                
+
                 
             } label: {
-                Text("change name \(self.editedEmployee.name)")
+                Text("Edit Employee")
             }
-            .foregroundColor(Color.white)
-            .padding(.all, 10)
-            .background(RoundedRectangle(cornerRadius: 10))
+                .foregroundColor(Color.white)
+                .padding(.all, 10)
+                .background(Color.blue)
+                .cornerRadius(10)
+
             
-            
+        }
+        }.alert(isPresented: $shownAlert) {
+            Alert(
+                title: Text("Are you sure"),
+                message: Text("Are you sure you want to edit this user"),
+                primaryButton: .destructive(Text("Confirm"), action: {
+                    vm.updateEmployee(employee: editedEmployee)
+                    
+                    withAnimation{
+                        created = true}
+                    
+                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                            
+                        withAnimation {
+                            created = false
+                        }
+                    }
+                }),
+                secondaryButton: .cancel())
         }
     }
     
@@ -368,7 +416,7 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
-    @State var employees =  VM_DB()
+    @StateObject var employees =  VM_DB()
     
     
     var shownEmployees: [Employee]{
@@ -439,7 +487,9 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @State var employees =  VM_DB()
+    @StateObject var vm =  VM_DB()
+    
+    @State var dragDown = false
 
     
     @State private var showingPopUp = false
@@ -448,7 +498,7 @@ struct DeleteAccounts: View{
     var selectedEmployees: [Employee]{
         
         var employees2: [Employee] = []
-        for employee in employees.allEmployees{
+        for employee in vm.allEmployees{
             if selectedEmployeesID.contains(employee.id){
                 employees2.append(employee)
             }
@@ -457,6 +507,28 @@ struct DeleteAccounts: View{
     }
     
     var body: some View{
+        ZStack{
+        
+            if dragDown{
+         
+        VStack{
+            Text("Accounts Deleted")
+            .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
+            .padding(.bottom, 35)
+            .background(Color.red.opacity(1))
+            .cornerRadius(20)
+            .foregroundColor(Color.white)
+            .animation(Animation.easeInOut, value: !dragDown)
+            .transition(AnyTransition.move(edge: .top))
+
+            
+            Spacer()
+        }
+        .animation(Animation.easeInOut, value: !dragDown)
+        .transition(AnyTransition.move(edge: .top))
+        .ignoresSafeArea()
+    }
+            
         VStack{
             HStack(spacing:10){
                 Text("Delete Accounts").font(.title).padding(.leading, UIScreen.main.bounds.width/3)
@@ -470,7 +542,7 @@ struct DeleteAccounts: View{
             Spacer()
             
             ScrollView{
-                ForEach(employees.allEmployees){employee in
+                ForEach(vm.allEmployees){employee in
                     
                     showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
                     
@@ -484,7 +556,7 @@ struct DeleteAccounts: View{
                 showingPopUp = true
                 
             }
-            .onAppear { employees.getData() }
+            .onAppear { vm.getData() }
             .disabled(selectedEmployees.count > 0 ? false : true)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 8)
@@ -532,24 +604,40 @@ struct DeleteAccounts: View{
                     HStack(spacing: 30){
                         Button {
                             // delete accounts
+                            for employee in selectedEmployees {
+                                vm.deleteEmployee(employee: employee)
+                            }
+                            
+                            withAnimation{
+                                dragDown = true}
+                            
+                            Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                                    
+                                withAnimation {
+                                    dragDown = false
+                                }
+                            }
+                            showingPopUp = false
+                            
                         } label: {
                             Text("Yes")
                                 .padding(.all, 8)
-                                .foregroundColor(Color.red)
-                                .border(Color.blue.opacity(0.8))
+                                .background(Color.red)
+                                .cornerRadius(10)
+                                .foregroundColor(Color.white)
                         }
 
-                        
+                        	
                         Button{
                             self.selectedEmployeesID.removeAll()
                             showingPopUp = false
                         }
                     label: {
                         Text("No")
-                    
-                        .padding(.all, 8)
-                        .foregroundColor(Color.green)
-                        .border(Color.blue.opacity(0.8))
+                            .padding(.all, 8)
+                            .background(Color.green)
+                            .cornerRadius(10)
+                            .foregroundColor(Color.white)
                     }
                     }
                     Spacer()
@@ -557,8 +645,9 @@ struct DeleteAccounts: View{
             }
 
 
-            
         }
+        }.onAppear{ vm.getData() }
+        
     }
 }
 
@@ -628,10 +717,7 @@ struct AccountsMain: View{
             MainAccountsMenu()
             
         }
-        
     }
-    
-    
 }
 
 
@@ -639,4 +725,45 @@ struct Accounts_Previews: PreviewProvider {
     static var previews: some View {
         CreateAccount()
     }
+}
+
+
+
+// MARK: Functions Create Account
+
+extension CreateAccount{
+
+func check() -> Bool{
+    if !["Team Head", "Fire Fighter", "Operational Manager", "Supervisor", "Deputy Team Head", "Assistant Supervisor"].contains(newType){
+        
+        return false
+        
+    } else if newNumber == ""{
+        return false
+        
+    } else if newName == ""{
+        return false
+        
+    } else if newID == ""{
+        return false
+        
+    } else if !["ajman", "fujairah", "sharjah", "umm al-quwain", "ras al khaimah"].contains(newBranch.lowercased()){
+        return false
+        
+    }else{
+        for employee in employees.allEmployees{
+            if employee.id == Int(newID){
+                
+                return false
+                
+            }
+        }
+    }
+    
+    return true
+}
+    
+    
+    
+
 }

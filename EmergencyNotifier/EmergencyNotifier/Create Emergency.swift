@@ -8,41 +8,54 @@
 import SwiftUI
 import Firebase
 import nanopb
+import MapKit
 
+
+// ADD CASUALTIES AND INJURIES
 
 struct EmergencyDetails: View{
     
     @Binding var emergencyDetails: String
+    
     @Binding var emergencyLocation: String
     @Binding var meetingPoint: String
+    
     @Binding var emergencyUrgency: Int
     @Binding var emergencyDate: Date
     
+    @Binding var casualties: Int
+    @Binding var injuries: Int
     
     var body: some View{
     // Emergency Details
     HStack(spacing: 10){
         Text("Details")
         TextField(" Emergency Details", text: $emergencyDetails)
-            .background(Color.gray.opacity(0.1).cornerRadius(10))
+            .padding(.all, 8)
+            .background(Color.gray.opacity(0.12))
+            .cornerRadius(10)
         
     }
     .padding(.horizontal, 10)
     
     //Emergency Location
-    HStack(spacing: 10){
-        Text("Location")
-        TextField("Emergency Location", text: $emergencyLocation)
-            .background(Color.gray.opacity(0.1).cornerRadius(10))
-    }
-    .padding(.horizontal, 10)
-    
-    
-    //Meeting point Location
-    HStack(spacing: 10){
-        Text("Meeting Location")
-        TextField("Meeting Point Location", text: $meetingPoint)
-            .background(Color.gray.opacity(0.1).cornerRadius(10))
+    HStack(spacing: 20){
+        
+        Button {
+            
+            // open location tab
+        
+        } label: {
+            Text("Location")
+            Image(systemName: "location.circle")
+        }
+
+        Button {
+            // open Meeting location tab
+        } label: {
+            Text("Meeting Point")
+            Image(systemName: "location.fill")
+        }
     }
     .padding(.horizontal, 10)
     
@@ -54,6 +67,25 @@ struct EmergencyDetails: View{
         }
     }
     .padding(.horizontal, 10)
+        
+        HStack(spacing: 10){
+            
+            Stepper("Casualties:\n\(casualties)", value: $casualties).multilineTextAlignment(.center)
+            
+            Stepper("Injuries:\n\(injuries)", value: $injuries).multilineTextAlignment(.center)
+            
+        }.padding(.horizontal, 5)
+            .onChange(of: casualties) { newValue in
+                if casualties < 0{
+                    casualties = 0
+                }
+            }
+            .onChange(of: injuries) { newValue in
+                if injuries < 0{
+                    injuries = 0
+                }
+            }
+        
     
     HStack(spacing: 10){
         
@@ -135,194 +167,25 @@ struct showSelectedEmergency: View{
     
 }
 
-struct SortsView: View{
-    
-    @Binding var sort: String
-    @Binding var sortOrder: Bool
-    
-    
-    var descendingImage = "chevron.down"
-    var ascendingImage = "chevron.up"
-    
-    var body: some View{
-        VStack{
-            
-            Button {
-                
-                sort = "Name"
-                sortOrder.toggle()
-                
-            } label: {
-                HStack{
-                    
-                    Text("Name")
-                    Image(systemName: sortOrder && sort == "Name" ? "chevron.down" : "chevron.up")
-                    
-                }
-            }
-            
-            Button {
-                
-                sort = "Id"
-                sortOrder.toggle()
-                
-            } label: {
-                HStack{
-                    
-                    Text("Employee ID")
-                    Image(systemName: sortOrder && sort == "Id" ? "chevron.down" : "chevron.up")
-                    
-                }}
-            
-            Button {
-                
-                sort = "Status"
-                sortOrder.toggle()
-                
-            } label: {
-                HStack{
-                    
-                    Text("Status")
-                    Image(systemName: sortOrder && sort == "Status" ? "chevron.down" : "chevron.up")
-                    
-                }
-            }
-            
-            Button{
-                sort = "Branch"
-                sortOrder.toggle()
-            } label: {
-                HStack{
-                    Text("Branch")
-                    Image(systemName: sortOrder && sort == "Branch" ? "chevron.down" : "chevron.up")
-                }
-            }
-            
-            Button{
-                sort = "Role"
-                sortOrder.toggle()
-            } label: {
-                HStack{
-                    Text("Employee Type")
-                    Image(systemName: sortOrder && sort == "Role" ? "chevron.down" : "chevron.up")
-                }
-            }
-            
-            
-        }
-        
-        
-    }
-}
 
-struct FiltersView: View{
-    @Binding var filters: [String]
-    
-    
-    
-    
-    
-    var body: some View{
-        VStack{
-            
-            
-            HStack{
-                
-                Spacer()
-                
-                Button{
-                    
-                    
-                    if filters.contains("Status"){
-                        filters.removeAll(where: {$0 == "Status"})
-                    }else{
-                        filters.append("Status")
-                    }
-                    
-                    
-                } label: {
-                    Text("Status")
-                    if filters.contains("Status"){ Image(systemName: "checkmark")}
-                }.frame(width: 180, height: 5, alignment: .center)
-                
-                Spacer()
-                
-                Button{
-                    
-                    if filters.contains("Branch"){
-                        filters.removeAll(where: {$0 == "Branch"})
-                    }else{
-                        filters.append("Branch")
-                    }
-                    
-                } label: {
-                    Text("Branch")
-                    if filters.contains("Branch"){Image(systemName: "checkmark")}
-                    
-                }.frame(width: 180, height: 5, alignment: .center)
-                
-                Spacer()
-                
-            }
-            HStack{
-                
-                Spacer()
-                
-                Button{
-                    
-                    if filters.contains("Employee Type"){
-                        filters.removeAll(where: {$0 == "Employee Type"})
-                    }else{
-                        filters.append("Employee Type")
-                    }
-                    
-                } label: {
-                    Text("Employee Type")
-                    if filters.contains("Employee Type"){Image(systemName: "checkmark")}
-                    
-                    
-                }.frame(width: 180, height: 5, alignment: .center)
-                
-                Spacer()
-                
-                Button{
-                    
-                    if filters.contains("Selected"){
-                        filters.removeAll(where: {$0 == "Selected"})
-                    }else{
-                        filters.append("Selected")
-                    }
-                    
-                } label: {
-                    Text("Selected")
-                    if filters.contains("Selected"){Image(systemName: "checkmark")}
-                    
-                }.frame(width: 180, height: 5, alignment: .center)
-                Spacer()
-            }.padding(.top, 20)
-        }
-        Divider()
-        ScrollView(.horizontal){
-            HStack{
-                
-                
-                
-            }
-            
-        }
-    }
-    
-    
-}
+
 
 
 struct Create_Emergency: View {
     
     // Sort / filter employees shown
     
+    var check: Bool{
+        
+        if emergencyDetails == "" || selectedEmployeesID.isEmpty{
+            return false
+        }
+        return true
+    }
+    
     @StateObject var vm = VM_DB()
     
-    
+    @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
 
     @State var showFilters = false
     @State var showSorts = false
@@ -335,6 +198,9 @@ struct Create_Emergency: View {
     @State var meetingPoint: String = ""
     @State var emergencyUrgency = 1
     @State var emergencyDate: Date = Date()
+    
+    @State var injuries = 0
+    @State var casualties = 0
     
     
     @State var selectedEmployeesID = Set<Int>()
@@ -369,21 +235,23 @@ struct Create_Emergency: View {
             // to show emergency Details
             if !showSorts && !showFilters{
 
-                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate)
+                EmergencyDetails(emergencyDetails: $emergencyDetails, emergencyLocation: $emergencyLocation, meetingPoint: $meetingPoint, emergencyUrgency: $emergencyUrgency, emergencyDate: $emergencyDate, casualties: $casualties, injuries: $injuries).animation(Animation.easeIn(duration: 2), value: showSorts || showFilters)
                 
             }
             
             // to show sorts
             else if showSorts{
                 
-                SortsView(sort: $vm.sort, sortOrder: $vm.typeS)
+                vm.sortview
                 
             }
             
             // to show filters
             else if showFilters{
                 
-                FiltersView(filters: $vm.filters)
+                
+                
+                vm.filtersView
                 
             }
             
@@ -393,17 +261,20 @@ struct Create_Emergency: View {
             }
             
             ScrollView{
-                
+
                 HStack{
                     
                     
                     Search_Preset(search: $vm.search)
-                    
+                        
                     Spacer()
                     
                     Button {
+                        withAnimation(Animation.easeInOut){
                         showFilters.toggle()
-                        showSorts = false
+                            showSorts = false
+                        }
+                        
                         
                     } label: {
                         Text("Filter")
@@ -411,9 +282,10 @@ struct Create_Emergency: View {
                     
                     
                     Button {
+                        withAnimation(Animation.easeInOut){
                         showSorts.toggle()
-                        showFilters = false
-                    } label: {
+                        showFilters = false}
+                    } label: {	
                         Text("Sort")
                     }.padding(.trailing, 5)
                     
@@ -435,14 +307,7 @@ struct Create_Emergency: View {
                 Spacer()
                 Button(action: {
                     
-                    
-                    print(emergencyDetails)
-                    print(emergencyDate)
-                    print(emergencyLocation)
-                    print(meetingPoint)
-                    print(emergencyUrgency)
-                    
-                    print(selectedEmployees)
+                    vm.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0), injuries: injuries, casualties: casualties)
                     
                     
                 }, label:
@@ -456,7 +321,7 @@ struct Create_Emergency: View {
                     
                     
                 }
-                )
+                ).disabled(check ? false : true)
                 
                 
             }.padding(.all, 5)
@@ -492,3 +357,14 @@ struct Create_Emergency_Previews: PreviewProvider {
 
 
 
+//MARK: CREATE EMERGENCY POPUPS
+extension Create_Emergency{
+    
+
+    
+    var mapPopUp: some View{
+        
+        Map(coordinateRegion: $region).ignoresSafeArea()
+        
+    }
+}

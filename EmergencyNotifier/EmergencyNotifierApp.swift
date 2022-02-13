@@ -11,45 +11,35 @@ import Firebase
 @main
 struct EmergencyNotifierApp: App {
     
-    init(){
-        FirebaseApp.configure()
-    }
+    init(){ FirebaseApp.configure() }
     
-    @State var loggedin = notLoggedIn
-    
-    var test: some View{
-        
-        if loggedin.employeeType == "Operational Manager"{
-            
-            return AnyView(MainPage_OperationalManager(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
-            
-        }else if loggedin.employeeType == "Team Head"{
-            
-            return AnyView(MainPage_TeamHead(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
-            
-        }else if loggedin.employeeType == "Fire Fighter" || loggedin.employeeType == "Coordinator"{
-            
-            return AnyView(MainPage_FireFighter(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
-
-        }else if loggedin.employeeType == "Supervisor"{
-
-            return AnyView(MainPage_Supervisor(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
-            
-            
-        }
-
-        return AnyView(LogIn_Main(loggedin: $loggedin)).animation(Animation.easeInOut(duration: 2), value: loggedin)
-        
-        
-    }
-    
+    @State public var loggedin = notLoggedIn
     
     var body: some Scene{
-        WindowGroup{
             
-            
-            test.animation(Animation.easeInOut(duration: 2), value: loggedin)
-            
-        }
+            WindowGroup{
+                NavigationView{
+                
+                switch loggedin.employeeType{
+                case "Operational Manager":
+                    Main_OperationalManager(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Team Head":
+                    Main_TeamHead(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Deputy Team Head", "Supervisor":
+                    Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                case "Assistant Supervisor", "Fire Fighter", "Coordinator":
+                    Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
+                    
+                default:
+                    Main_LogIn(loggedin: $loggedin).navigationBarHidden(true)
+                }
+                
+                }
+            }
     }
 }
+
+
