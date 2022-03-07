@@ -15,6 +15,7 @@ struct Main_OperationalManager: View{
     @StateObject var vm = VM_DB()
     
     @Binding var loggedin: Employee
+    @State var status = false
     
     @State var showingAssignPopUp = false
     @State var reason = ""
@@ -29,7 +30,7 @@ struct Main_OperationalManager: View{
             Spacer()
             
             
-            onCall(status: $loggedin.status)
+            onCall(status: $status)
             
             
             // Create Emergency button
@@ -52,9 +53,11 @@ struct Main_OperationalManager: View{
             
             BottomMenu
             
-        }.onChange(of: loggedin.status) { __ in
+        }.onChange(of: status) { __ in
+            loggedin.status = status
             vm.updateEmployee(employee: loggedin)
         }
+        .onAppear(perform: {status = loggedin.status})
     }
 }
 

@@ -12,6 +12,7 @@ struct Main_FireFighter: View {
     @StateObject var vm = VM_DB()
     
     @Binding var loggedin: Employee
+    @State var status = false
     
     var body: some View {
         
@@ -21,7 +22,7 @@ struct Main_FireFighter: View {
             
             Spacer()
             
-            onCall(status: $loggedin.status)
+            onCall(status: $status)
             
             // Recent Emergencies
             recentEmergencies
@@ -31,9 +32,11 @@ struct Main_FireFighter: View {
             
             BottomMenu
             
-        }.onChange(of: loggedin.status) { __ in
+        }.onChange(of: status) { __ in
+            loggedin.status = status
             vm.updateEmployee(employee: loggedin)
         }
+        .onAppear(perform: {status = loggedin.status})
     }
 }
 

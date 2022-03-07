@@ -9,24 +9,23 @@
 /* Begin PBXBuildFile section */
 		84044DFF27941C5300292829 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84044DFE27941C5300292829 /* GoogleService-Info.plist */; };
 		84044E0427941D5500292829 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 84044E0327941D5500292829 /* FirebaseFirestore */; };
-		842366972791904400F52344 /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842366962791904400F52344 /* LogIn.swift */; };
-		8483E38F278C6DEB009A9768 /* Recent Emergencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8483E38E278C6DEB009A9768 /* Recent Emergencies.swift */; };
+		845B601C27D64FAF0095B29A /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601427D64FAF0095B29A /* Supervisor.swift */; };
+		845B601D27D64FAF0095B29A /* Operational Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601527D64FAF0095B29A /* Operational Manager.swift */; };
+		845B601E27D64FAF0095B29A /* Firefighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601627D64FAF0095B29A /* Firefighter.swift */; };
+		845B601F27D64FAF0095B29A /* Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601727D64FAF0095B29A /* Team Head.swift */; };
+		845B602027D64FAF0095B29A /* LogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601927D64FAF0095B29A /* LogIn.swift */; };
+		845B602127D64FAF0095B29A /* Accounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601A27D64FAF0095B29A /* Accounts.swift */; };
+		845B602227D64FAF0095B29A /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601B27D64FAF0095B29A /* Account.swift */; };
+		845B602627D6502E0095B29A /* Create Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B602427D6502E0095B29A /* Create Emergency.swift */; };
+		845B602727D6502E0095B29A /* Recent Emergencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B602527D6502E0095B29A /* Recent Emergencies.swift */; };
 		84B0DBFE278818E600D9ED41 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B0DBFD278818E600D9ED41 /* AuthenticationServices.framework */; };
-		84BC6DD62796EB66004FCB17 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC6DD52796EB66004FCB17 /* Account.swift */; };
 		84D6EA0B278466580063CD9C /* EmergencyNotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA0A278466580063CD9C /* EmergencyNotifierApp.swift */; };
 		84D6EA0F278466590063CD9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D6EA0E278466590063CD9C /* Assets.xcassets */; };
-		84D6EA12278466590063CD9C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84D6EA11278466590063CD9C /* Preview Assets.xcassets */; };
 		84D6EA1C278466590063CD9C /* EmergencyNotifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA1B278466590063CD9C /* EmergencyNotifierTests.swift */; };
 		84D6EA262784665A0063CD9C /* EmergencyNotifierUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA252784665A0063CD9C /* EmergencyNotifierUITests.swift */; };
 		84D6EA282784665A0063CD9C /* EmergencyNotifierUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA272784665A0063CD9C /* EmergencyNotifierUITestsLaunchTests.swift */; };
-		84D6EA3C278466AB0063CD9C /* Create Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA36278466AB0063CD9C /* Create Emergency.swift */; };
 		84D6EA422784670D0063CD9C /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA412784670D0063CD9C /* Structs.swift */; };
-		84D6EA492784690B0063CD9C /* Team Head.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA482784690B0063CD9C /* Team Head.swift */; };
-		84D6EA4C278469170063CD9C /* Firefighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4A278469170063CD9C /* Firefighter.swift */; };
-		84D6EA4D278469170063CD9C /* Operational Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4B278469170063CD9C /* Operational Manager.swift */; };
-		84D6EA4F27846F010063CD9C /* Accounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA4E27846F010063CD9C /* Accounts.swift */; };
 		84D6EA51278470F60063CD9C /* Front End Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA50278470F60063CD9C /* Front End Presets.swift */; };
-		84EC4B75278B18A1005A7C93 /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC4B74278B18A1005A7C93 /* Supervisor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,28 +47,27 @@
 
 /* Begin PBXFileReference section */
 		84044DFE27941C5300292829 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		842366962791904400F52344 /* LogIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
-		8483E38E278C6DEB009A9768 /* Recent Emergencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recent Emergencies.swift"; sourceTree = "<group>"; };
+		845B601427D64FAF0095B29A /* Supervisor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
+		845B601527D64FAF0095B29A /* Operational Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift"; sourceTree = "<group>"; };
+		845B601627D64FAF0095B29A /* Firefighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firefighter.swift; sourceTree = "<group>"; };
+		845B601727D64FAF0095B29A /* Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Team Head.swift"; sourceTree = "<group>"; };
+		845B601927D64FAF0095B29A /* LogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogIn.swift; sourceTree = "<group>"; };
+		845B601A27D64FAF0095B29A /* Accounts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accounts.swift; sourceTree = "<group>"; };
+		845B601B27D64FAF0095B29A /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		845B602427D6502E0095B29A /* Create Emergency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Create Emergency.swift"; sourceTree = "<group>"; };
+		845B602527D6502E0095B29A /* Recent Emergencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Recent Emergencies.swift"; sourceTree = "<group>"; };
 		84B0DBFB278818BF00D9ED41 /* EmergencyNotifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmergencyNotifier.entitlements; sourceTree = "<group>"; };
 		84B0DBFD278818E600D9ED41 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
-		84BC6DD52796EB66004FCB17 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		84D6EA07278466580063CD9C /* EmergencyNotifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmergencyNotifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D6EA0A278466580063CD9C /* EmergencyNotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyNotifierApp.swift; sourceTree = "<group>"; };
 		84D6EA0E278466590063CD9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		84D6EA11278466590063CD9C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		84D6EA17278466590063CD9C /* EmergencyNotifierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmergencyNotifierTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D6EA1B278466590063CD9C /* EmergencyNotifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyNotifierTests.swift; sourceTree = "<group>"; };
 		84D6EA212784665A0063CD9C /* EmergencyNotifierUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmergencyNotifierUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D6EA252784665A0063CD9C /* EmergencyNotifierUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyNotifierUITests.swift; sourceTree = "<group>"; };
 		84D6EA272784665A0063CD9C /* EmergencyNotifierUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyNotifierUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		84D6EA36278466AB0063CD9C /* Create Emergency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Create Emergency.swift"; sourceTree = "<group>"; };
 		84D6EA412784670D0063CD9C /* Structs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
-		84D6EA482784690B0063CD9C /* Team Head.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Team Head.swift"; sourceTree = "<group>"; };
-		84D6EA4A278469170063CD9C /* Firefighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firefighter.swift; sourceTree = "<group>"; };
-		84D6EA4B278469170063CD9C /* Operational Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift"; sourceTree = "<group>"; };
-		84D6EA4E27846F010063CD9C /* Accounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accounts.swift; sourceTree = "<group>"; };
 		84D6EA50278470F60063CD9C /* Front End Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Front End Presets.swift"; sourceTree = "<group>"; };
-		84EC4B74278B18A1005A7C93 /* Supervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +97,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		845B601327D64FAF0095B29A /* employees */ = {
+			isa = PBXGroup;
+			children = (
+				845B601427D64FAF0095B29A /* Supervisor.swift */,
+				845B601527D64FAF0095B29A /* Operational Manager.swift */,
+				845B601627D64FAF0095B29A /* Firefighter.swift */,
+				845B601727D64FAF0095B29A /* Team Head.swift */,
+				845B601827D64FAF0095B29A /* logins */,
+			);
+			path = employees;
+			sourceTree = "<group>";
+		};
+		845B601827D64FAF0095B29A /* logins */ = {
+			isa = PBXGroup;
+			children = (
+				845B601927D64FAF0095B29A /* LogIn.swift */,
+				845B601A27D64FAF0095B29A /* Accounts.swift */,
+				845B601B27D64FAF0095B29A /* Account.swift */,
+			);
+			path = logins;
+			sourceTree = "<group>";
+		};
+		845B602327D6502E0095B29A /* emergency miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				845B602427D6502E0095B29A /* Create Emergency.swift */,
+				845B602527D6502E0095B29A /* Recent Emergencies.swift */,
+			);
+			name = "emergency miscellaneous";
+			path = "EmergencyNotifier/FrontEnd/emergency miscellaneous";
+			sourceTree = SOURCE_ROOT;
+		};
+		845B602827D653C30095B29A /* FrontEnd */ = {
+			isa = PBXGroup;
+			children = (
+				84D6EA50278470F60063CD9C /* Front End Presets.swift */,
+				845B601327D64FAF0095B29A /* employees */,
+				845B602327D6502E0095B29A /* emergency miscellaneous */,
+			);
+			path = FrontEnd;
+			sourceTree = "<group>";
+		};
 		84B0DBFC278818E600D9ED41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,22 +174,11 @@
 		84D6EA09278466580063CD9C /* EmergencyNotifier */ = {
 			isa = PBXGroup;
 			children = (
+				845B602827D653C30095B29A /* FrontEnd */,
 				84B0DBFB278818BF00D9ED41 /* EmergencyNotifier.entitlements */,
-				84D6EA342784667B0063CD9C /* Main Pages */,
 				84D6EA44278467B80063CD9C /* BackEnd */,
-				84D6EA43278467AF0063CD9C /* Side Pages */,
-				84D6EA10278466590063CD9C /* Preview Content */,
-				842366962791904400F52344 /* LogIn.swift */,
 			);
 			path = EmergencyNotifier;
-			sourceTree = "<group>";
-		};
-		84D6EA10278466590063CD9C /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				84D6EA11278466590063CD9C /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		84D6EA1A278466590063CD9C /* EmergencyNotifierTests */ = {
@@ -169,33 +198,10 @@
 			path = EmergencyNotifierUITests;
 			sourceTree = "<group>";
 		};
-		84D6EA342784667B0063CD9C /* Main Pages */ = {
-			isa = PBXGroup;
-			children = (
-				84D6EA4A278469170063CD9C /* Firefighter.swift */,
-				84EC4B74278B18A1005A7C93 /* Supervisor.swift */,
-				84D6EA482784690B0063CD9C /* Team Head.swift */,
-				84D6EA4B278469170063CD9C /* Operational Manager.swift */,
-			);
-			name = "Main Pages";
-			sourceTree = "<group>";
-		};
-		84D6EA43278467AF0063CD9C /* Side Pages */ = {
-			isa = PBXGroup;
-			children = (
-				84D6EA36278466AB0063CD9C /* Create Emergency.swift */,
-				84D6EA4E27846F010063CD9C /* Accounts.swift */,
-				8483E38E278C6DEB009A9768 /* Recent Emergencies.swift */,
-				84BC6DD52796EB66004FCB17 /* Account.swift */,
-			);
-			name = "Side Pages";
-			sourceTree = "<group>";
-		};
 		84D6EA44278467B80063CD9C /* BackEnd */ = {
 			isa = PBXGroup;
 			children = (
 				84D6EA412784670D0063CD9C /* Structs.swift */,
-				84D6EA50278470F60063CD9C /* Front End Presets.swift */,
 			);
 			path = BackEnd;
 			sourceTree = "<group>";
@@ -310,7 +316,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84D6EA12278466590063CD9C /* Preview Assets.xcassets in Resources */,
 				84D6EA0F278466590063CD9C /* Assets.xcassets in Resources */,
 				84044DFF27941C5300292829 /* GoogleService-Info.plist in Resources */,
 			);
@@ -337,18 +342,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845B601E27D64FAF0095B29A /* Firefighter.swift in Sources */,
 				84D6EA51278470F60063CD9C /* Front End Presets.swift in Sources */,
-				84D6EA4F27846F010063CD9C /* Accounts.swift in Sources */,
-				842366972791904400F52344 /* LogIn.swift in Sources */,
+				845B601F27D64FAF0095B29A /* Team Head.swift in Sources */,
 				84D6EA422784670D0063CD9C /* Structs.swift in Sources */,
-				84D6EA3C278466AB0063CD9C /* Create Emergency.swift in Sources */,
-				84BC6DD62796EB66004FCB17 /* Account.swift in Sources */,
-				84EC4B75278B18A1005A7C93 /* Supervisor.swift in Sources */,
-				84D6EA4C278469170063CD9C /* Firefighter.swift in Sources */,
-				84D6EA492784690B0063CD9C /* Team Head.swift in Sources */,
-				84D6EA4D278469170063CD9C /* Operational Manager.swift in Sources */,
+				845B602027D64FAF0095B29A /* LogIn.swift in Sources */,
+				845B601C27D64FAF0095B29A /* Supervisor.swift in Sources */,
+				845B601D27D64FAF0095B29A /* Operational Manager.swift in Sources */,
+				845B602727D6502E0095B29A /* Recent Emergencies.swift in Sources */,
+				845B602127D64FAF0095B29A /* Accounts.swift in Sources */,
 				84D6EA0B278466580063CD9C /* EmergencyNotifierApp.swift in Sources */,
-				8483E38F278C6DEB009A9768 /* Recent Emergencies.swift in Sources */,
+				845B602627D6502E0095B29A /* Create Emergency.swift in Sources */,
+				845B602227D64FAF0095B29A /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,7 +514,7 @@
 				CODE_SIGN_ENTITLEMENTS = EmergencyNotifier/EmergencyNotifier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_ASSET_PATHS = "\"EmergencyNotifier/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -541,7 +546,7 @@
 				CODE_SIGN_ENTITLEMENTS = EmergencyNotifier/EmergencyNotifier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_ASSET_PATHS = "\"EmergencyNotifier/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = JJ82Q457Z9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

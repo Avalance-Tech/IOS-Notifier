@@ -17,6 +17,7 @@ struct Main_TeamHead: View{
     
     @State var showingAssignPopUp = false
     @State var reason = ""
+    @State var status = false
     
     @Binding var loggedin: Employee
     
@@ -28,7 +29,7 @@ struct Main_TeamHead: View{
             
             Spacer()
             
-            onCall(status: $loggedin.status)
+            onCall(status: $status)
             
             
             // Create Emergency button
@@ -56,10 +57,12 @@ struct Main_TeamHead: View{
             Spacer()
             
             BottomMenu
-        }.onChange(of: loggedin.status) { __ in
+        }.onChange(of: status) { __ in
+            loggedin.status = status
             vm.updateEmployee(employee: loggedin)
         }
-    }
+        .onAppear(perform: {status = loggedin.status})
+    }    
 }
 
 
