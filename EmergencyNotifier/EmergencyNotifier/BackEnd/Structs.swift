@@ -64,7 +64,7 @@ struct Emergency: Identifiable{  // to be logged later
     let time : Date
     var employeesCalled: Array<Employee>
     var branch: String // = Employee.branch
-    
+    var active: Bool
     
     
     var replied: Dictionary<Bool, Array<Employee.ID>> = [:]
@@ -153,6 +153,9 @@ struct filterModel: Identifiable{
 
 
 class VM_DB: ObservableObject{
+    
+  //  var empl: Employee
+    
     @Published var allEmployees = [Employee]()
     @Published var allEmergencies = [Emergency]()
     
@@ -162,11 +165,12 @@ class VM_DB: ObservableObject{
     @Published var search = ""
     @Published var sort = "Status"
     @Published var filters = [filterModel]()
+    @Published var employee = notLoggedIn
     
     var shownEmployees: [Employee]{
         var emp: [Employee] = []
         
-        emp = doSortFilter(list: allEmployees,  sort: sort, type: typeS, filters: filters)
+        emp = doSortFilter(list: allEmployees,  sort: sort, type: typeS, filters: filters/*, emp: empl*/)
         
         if search != ""{
             return emp.filter({$0.name.lowercased().contains(search.lowercased() )})
@@ -253,6 +257,7 @@ extension VM_DB{
                             let imageURLs = doc["Image URL"] as? [String] ?? []
                             let casualties = doc["Casualties"] as? Int ?? 0
                             let injuries = doc["Injuries"] as? Int ?? 0
+                            let active = doc["Active"] as? Bool ?? false
                             
                             let repliedDict: Dictionary<Bool, [Employee.ID]> = [false: declined, true: accepted]
                             
@@ -268,7 +273,7 @@ extension VM_DB{
                                 return list
                             }
                             
-                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
+                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, active: active, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
                         }
                         
                         self.allEmergencies = newList
@@ -336,7 +341,8 @@ extension VM_DB{
                     //       "Accepted": emergency.replied[true],
                     //    "Arrived": emergency.arrived,
                     "Injuries": emergency.injuries,
-                    "Casualties": emergency.casualties
+                    "Casualties": emergency.casualties,
+                    "Active": emergency.active
                 ])
                 self.getData()
             }
@@ -379,7 +385,8 @@ extension VM_DB{
             "Arrived": [],
             "Image URL": [],
             "Injuries": injuries,
-            "Casualties": casualties
+            "Casualties": casualties,
+            "Active": true
         ]) { error in
             if error == nil{
                 
@@ -399,7 +406,7 @@ extension VM_DB{
     
     
     
-    func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]) -> [Employee]{
+    func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]/*, emp: Employee*/) -> [Employee]{
         
         // if type true then desc else asc
         

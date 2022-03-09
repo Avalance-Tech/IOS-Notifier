@@ -63,6 +63,8 @@ struct EditEmergency: View{
     @State var casualties = 0
     @State var injuries = 0
     
+    @State var activeState = true
+    
     var docID: String
     
     
@@ -112,6 +114,9 @@ struct EditEmergency: View{
                     }
                 }
                 
+                HStack(){
+                    Toggle("Active", isOn: $activeState)
+                }
                 
                 HStack(spacing: 30){
                     
@@ -145,7 +150,7 @@ struct EditEmergency: View{
                 Divider()
                 Button {
                     
-                    vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
+                    vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
                     
                     withAnimation{
                         dragDown = true}
@@ -169,6 +174,8 @@ struct EditEmergency: View{
                 
                 
             }.padding(.horizontal, 5)
+        }.onAppear {
+            activeState = emergency.active
         }
     }
     
