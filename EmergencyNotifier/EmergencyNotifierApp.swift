@@ -14,6 +14,7 @@ struct EmergencyNotifierApp: App {
     init(){ FirebaseApp.configure() }
     
     @State public var loggedin = notLoggedIn
+    @StateObject public var VM = VM_DB()
     
     var body: some Scene{
             
@@ -22,14 +23,14 @@ struct EmergencyNotifierApp: App {
                 
                 switch loggedin.employeeType{
                 case "Operational Manager":
-                    Main_OperationalManager(loggedin: $loggedin).navigationBarHidden(true)
+                    Main_OperationalManager(vm: VM, loggedin: $loggedin).navigationBarHidden(true)
                     
                 case "Team Head":
-                    Main_TeamHead(loggedin: $loggedin).navigationBarHidden(true)
+                    Main_TeamHead(vm: VM, loggedin: $loggedin).navigationBarHidden(true)
                     
                 case "Deputy Team Head", "Supervisor":
-                    Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
-                    
+                    Main_Supervisor(VM: VM, loggedin: $loggedin).navigationBarHidden(true)
+                     
                 case "Assistant Supervisor", "Fire Fighter", "Coordinator":
                     Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
                     

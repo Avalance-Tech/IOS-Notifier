@@ -12,7 +12,7 @@ import SwiftUI
 
 struct Main_OperationalManager: View{
     
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
     
     @Binding var loggedin: Employee
     @State var status = false
@@ -89,7 +89,7 @@ extension Main_OperationalManager{
     var createAccount: some View{
         NavigationLink{
             
-            MainAccountsMenu()
+            MainAccountsMenu(vm: vm)
             
         }label:{
             Text("Create/edit/delete an account")

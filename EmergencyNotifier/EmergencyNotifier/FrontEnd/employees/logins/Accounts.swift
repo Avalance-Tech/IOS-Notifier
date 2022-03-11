@@ -653,6 +653,8 @@ struct DeleteAccounts: View{
 
 struct MainAccountsMenu: View {
     
+    var vm: VM_DB
+    
     var body: some View {
         
         VStack{
@@ -710,11 +712,13 @@ struct MainAccountsMenu: View {
 
 struct AccountsMain: View{
     
+    var VM: VM_DB
+    
     var body: some View{
         
         NavigationView{
             
-            MainAccountsMenu()
+            MainAccountsMenu(vm: VM)
             
         }
     }

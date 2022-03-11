@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Main_Supervisor: View{
     
-    @StateObject var vm = VM_DB()
+    var VM: VM_DB
     
     @Binding var loggedin: Employee
     @State var status = false
@@ -42,7 +42,7 @@ struct Main_Supervisor: View{
             
         }.onChange(of: status) { __ in
             loggedin.status = status
-            vm.updateEmployee(employee: loggedin)
+            VM.updateEmployee(employee: loggedin)
         }
         .onAppear(perform: {status = loggedin.status})
     }
@@ -111,7 +111,7 @@ extension Main_Supervisor{
     var accountsLink: some View{
         NavigationLink{
             
-            MainAccountsMenu()
+            MainAccountsMenu(vm: VM)
             
         }label:{
             

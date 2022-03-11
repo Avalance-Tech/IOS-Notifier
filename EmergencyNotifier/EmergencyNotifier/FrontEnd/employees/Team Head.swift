@@ -13,7 +13,7 @@ import SwiftUI
 
 struct Main_TeamHead: View{
     
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
     
     @State var showingAssignPopUp = false
     @State var reason = ""
@@ -111,7 +111,7 @@ extension Main_TeamHead{
     var accountsLink: some View{
         NavigationLink{
             
-            MainAccountsMenu()
+            MainAccountsMenu(vm: vm)
             
         }label:{
             Text("Create/edit/delete an account")
