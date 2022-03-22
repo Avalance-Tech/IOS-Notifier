@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct Account: View {
-    @Binding var loggedIn: Employee
     
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
+    
+    @Binding var loggedIn: Employee
     
     @State var currentPassword = ""
     @State var newPassword = ""

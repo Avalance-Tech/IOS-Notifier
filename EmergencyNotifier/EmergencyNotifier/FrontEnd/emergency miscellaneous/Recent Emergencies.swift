@@ -49,7 +49,7 @@ struct EditEmergency: View{
     
     var emergency: Emergency
     
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
     
     @State var dragDown = false
     
@@ -185,6 +185,8 @@ struct WhenClicked: View{
     
     @Binding var loggedin: Employee
     
+    var vm: VM_DB
+    
     var emergency: Emergency
     @State var employeePopUp = false
     @State var forwardPopUp = false
@@ -257,7 +259,7 @@ struct WhenClicked: View{
 
 struct GalleryWithEmergencies: View{
     
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
     @Binding var loggedin: Employee
     
     let columns: [GridItem] = [
@@ -280,7 +282,7 @@ struct GalleryWithEmergencies: View{
                         ForEach(vm.allEmergencies){ emergency in
                             NavigationLink{
                                 
-                                WhenClicked(loggedin: $loggedin, emergency: emergency)
+                                WhenClicked(loggedin: $loggedin, vm: vm, emergency: emergency)
                                 
                             } label: {
                                 ZStack{
@@ -314,7 +316,7 @@ struct GalleryWithEmergencies: View{
 
 struct ListWithEmergencies: View{
     
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
     @Binding var loggedin: Employee
     
     
@@ -387,7 +389,7 @@ struct ListWithEmergencies: View{
                         }.frame(width: 105, height: 80, alignment: .center)
                         
                         NavigationLink {
-                            WhenClicked(loggedin: $loggedin, emergency: emergency)
+                            WhenClicked(loggedin: $loggedin, vm: vm, emergency: emergency)
                         } label: {
                             
                             Divider().frame(height:70)
@@ -432,6 +434,8 @@ struct ListWithEmergencies: View{
 struct Recent_Emergencies: View {
     @Binding var loggedin: Employee
     
+    var vm: VM_DB
+    
     @State var search = ""
     @State var viewType = "list"
     
@@ -440,7 +444,7 @@ struct Recent_Emergencies: View {
             HStack{
                 
                 
-                Search_Preset(search: $search)
+                vm.Search
                 
                 Spacer()
                 
@@ -466,10 +470,10 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies(loggedin: $loggedin)
+                ListWithEmergencies(vm: vm, loggedin: $loggedin)
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies(loggedin: $loggedin)
+                GalleryWithEmergencies(vm: vm, loggedin: $loggedin)
             }
         }
     }
@@ -501,7 +505,7 @@ extension WhenClicked{
             
             NavigationLink{
                 
-                EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
+                EditEmergency(emergency: emergency, vm: vm, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
                 //Edit Emergency
             }label: {
                 Text("Edit").frame(width: 40, height: 30, alignment: .trailing)

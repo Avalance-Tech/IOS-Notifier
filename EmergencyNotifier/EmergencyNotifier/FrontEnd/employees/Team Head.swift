@@ -12,9 +12,7 @@ import SwiftUI
 // Home page for team head
 
 struct Main_TeamHead: View{
-    
-    var vm: VM_DB
-    
+
     @State var showingAssignPopUp = false
     @State var reason = ""
     @State var status = false
@@ -25,7 +23,7 @@ struct Main_TeamHead: View{
         
         VStack{
             
-            TopMenu(loggedin: $loggedin)
+            TopMenu(loggedin: $loggedin, vm: vm)
             
             Spacer()
             
@@ -78,7 +76,7 @@ extension Main_TeamHead{
     var createEmergency: some View{
         NavigationLink {
             
-            Create_Emergency()
+            Create_Emergency(vm: vm)
             
         }label:{
             Text("Report an emergency")
@@ -95,7 +93,7 @@ extension Main_TeamHead{
     var recentsEmergency: some View{
         NavigationLink{
             
-            Recent_Emergencies(loggedin: $loggedin)
+            Recent_Emergencies(loggedin: $loggedin, vm: vm)
             
         } label: {
             Text("Previous emergencies")

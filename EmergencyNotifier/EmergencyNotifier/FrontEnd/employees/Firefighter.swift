@@ -18,7 +18,7 @@ struct Main_FireFighter: View {
         
         VStack(spacing: 25 ){
             
-            TopMenu(loggedin: $loggedin)
+            TopMenu(loggedin: $loggedin, vm: vm)
             
             Spacer()
             
@@ -47,7 +47,7 @@ extension Main_FireFighter{
         
         NavigationLink(destination: {
             
-            Create_Emergency()
+            Create_Emergency(vm: vm)
             
         }, label: {
             Text("Report an emergency")
@@ -66,7 +66,7 @@ extension Main_FireFighter{
         
         NavigationLink(destination:{
             
-            Recent_Emergencies(loggedin: $loggedin)
+            Recent_Emergencies(loggedin: $loggedin, vm: vm)
             
         },label: {
             Text("Previous emergencies")

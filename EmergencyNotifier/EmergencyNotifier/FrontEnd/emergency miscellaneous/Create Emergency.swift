@@ -183,7 +183,7 @@ struct Create_Emergency: View {
         return true
     }
     
-    @StateObject var vm = VM_DB()
+    @StateObject var vm: VM_DB
     
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
 
@@ -265,7 +265,7 @@ struct Create_Emergency: View {
                 HStack{
                     
                     
-                    Search_Preset(search: $vm.search)
+                    vm.Search
                         
                     Spacer()
                     
@@ -346,14 +346,6 @@ struct Create_Emergency: View {
 
 
 
-
-struct Create_Emergency_Previews: PreviewProvider {
-    static var previews: some View {
-        Create_Emergency()
-            .preferredColorScheme(.dark)
-            .previewDevice("iPhone SE (2nd generation)")
-    }
-}
 
 
 

@@ -9,16 +9,16 @@ import SwiftUI
 
 struct Main_Supervisor: View{
     
-    var VM: VM_DB
-    
     @Binding var loggedin: Employee
     @State var status = false
-    @State var showPopOver = true
+    @State var showPopOver = false
+    
+    @EnvironmentObject var VM: VM_DB
     
     var body: some View{
         VStack{
             
-            TopMenu(loggedin: $loggedin)
+            TopMenu(loggedin: $loggedin, vm: VM)
             
             Spacer()
             
@@ -62,7 +62,7 @@ extension Main_Supervisor{
         
         NavigationLink{
             
-            Recent_Emergencies(loggedin: $loggedin)
+            Recent_Emergencies(loggedin: $loggedin, vm: VM)
             
         }label:{
             Text("Recent Emergencies")

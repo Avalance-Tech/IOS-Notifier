@@ -23,13 +23,13 @@ struct EmergencyNotifierApp: App {
                 
                 switch loggedin.employeeType{
                 case "Operational Manager":
-                    Main_OperationalManager(vm: VM, loggedin: $loggedin).navigationBarHidden(true)
+                    Main_OperationalManager(loggedin: $loggedin).navigationBarHidden(true)
                     
                 case "Team Head":
-                    Main_TeamHead(vm: VM, loggedin: $loggedin).navigationBarHidden(true)
+                    Main_TeamHead(loggedin: $loggedin).navigationBarHidden(true)
                     
                 case "Deputy Team Head", "Supervisor":
-                    Main_Supervisor(VM: VM, loggedin: $loggedin).navigationBarHidden(true)
+                    Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
                      
                 case "Assistant Supervisor", "Fire Fighter", "Coordinator":
                     Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
@@ -38,7 +38,7 @@ struct EmergencyNotifierApp: App {
                     Main_LogIn(loggedin: $loggedin).navigationBarHidden(true)
                 }
                 
-                }
+                }.environmentObject(VM)
             }
     }
 }

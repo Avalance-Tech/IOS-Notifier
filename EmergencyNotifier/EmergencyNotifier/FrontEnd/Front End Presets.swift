@@ -47,6 +47,8 @@ struct TopMenu: View {
     
     @Binding var loggedin: Employee
     
+    var vm: VM_DB
+    
     var body: some View{
         VStack{
             
@@ -87,7 +89,7 @@ struct TopMenu: View {
                 
                 // profile
                 NavigationLink{
-                    Account(loggedIn: $loggedin).statusBar(hidden: true)
+                    Account(vm: vm, loggedIn: $loggedin).statusBar(hidden: true)
                 }
             label: {
                 Image(systemName: "person.crop.circle" )
@@ -102,29 +104,3 @@ struct TopMenu: View {
         }
     }
 }
-
-
-struct Search_Preset: View{
-    
-    @Binding var search: String
-    
-    var body: some View{
-        
-        Image(systemName: "magnifyingglass")
-            .resizable()
-            .frame(width: 20, height: 20, alignment: .center)
-            .padding(.leading, 10)
-            .offset(x: 12)
-        Divider().frame(width: 1, height: 20, alignment: .center)
-            .offset(x: 8)
-        TextField("Search", text: $search)
-            .frame(width: 160 ,height: 30)
-            .padding(.horizontal, 40)
-            .background(Color.gray.opacity(0.3))
-            .cornerRadius(10).offset(x:-30)
-        
-    }
-}
-
-
-

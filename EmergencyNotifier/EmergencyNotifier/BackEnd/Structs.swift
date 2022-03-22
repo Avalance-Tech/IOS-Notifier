@@ -5,6 +5,7 @@ import simd
 
 /// WITH DATABSE
 
+var vm = VM_DB()
 
 let notLoggedIn = Employee(id: 0, password: "", name: "", number: "", status: false, branch: "", employeeType: "", docID: ".")
 
@@ -162,7 +163,7 @@ class VM_DB: ObservableObject{
     
     
     @Published var typeS = true
-    @Published var search = ""
+    @State var search = ""
     @Published var sort = "Status"
     @Published var filters = [filterModel]()
     @Published var employee = notLoggedIn
@@ -537,7 +538,25 @@ extension VM_DB{
     
     
     
-    
+    var Search: some View{
+
+        HStack{
+        
+        Image(systemName: "magnifyingglass")
+            .resizable()
+            .frame(width: 20, height: 20, alignment: .center)
+            .padding(.leading, 10)
+            .offset(x: 12)
+        Divider().frame(width: 1, height: 20, alignment: .center)
+            .offset(x: 8)
+        TextField("Search", text: $search)
+            .frame(width: 160 ,height: 30)
+            .padding(.horizontal, 40)
+            .background(Color.gray.opacity(0.3))
+            .cornerRadius(10).offset(x:-30)
+        }
+    }
+
     
     
     var filtersView: some View{

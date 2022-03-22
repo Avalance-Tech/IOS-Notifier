@@ -12,8 +12,6 @@ import SwiftUI
 
 struct Main_OperationalManager: View{
     
-    var vm: VM_DB
-    
     @Binding var loggedin: Employee
     @State var status = false
     
@@ -24,7 +22,7 @@ struct Main_OperationalManager: View{
         
         VStack{
             
-            TopMenu(loggedin: $loggedin)
+            TopMenu(loggedin: $loggedin, vm: vm)
             
             
             Spacer()
@@ -73,7 +71,7 @@ extension Main_OperationalManager{
     var createEmergency: some View{
         NavigationLink {
             
-            Create_Emergency()
+            Create_Emergency(vm: vm)
             
         }label:{
             Text("Report an emergency")
@@ -137,7 +135,7 @@ extension Main_OperationalManager{
         
         NavigationLink{
             
-            Recent_Emergencies(loggedin: $loggedin)
+            Recent_Emergencies(loggedin: $loggedin, vm: vm)
             
         }label:{
             Text("Recent Emergencies")

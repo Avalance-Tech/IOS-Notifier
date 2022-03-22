@@ -77,7 +77,7 @@ struct showSelectedDelete: View{
 
 struct CreateAccount: View{
     
-    @State var employees =  VM_DB()
+    var employees:  VM_DB
     
     // New account Properties
     
@@ -232,7 +232,7 @@ struct CreateAccount: View{
 struct EditAccount: View{
     @State var editedEmployee: Employee
      
-    @StateObject var vm = VM_DB()
+    var vm: VM_DB
     
     @State var created = false
     
@@ -416,7 +416,7 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
-    @StateObject var employees =  VM_DB()
+    @StateObject var employees:  VM_DB
     
     
     var shownEmployees: [Employee]{
@@ -456,7 +456,7 @@ struct EditAccountMain: View{
                         Spacer()
                         
                         NavigationLink {
-                            EditAccount(editedEmployee: employee)
+                            EditAccount(editedEmployee: employee, vm: employees)
                         } label: {
                             Text("Edit")
                                 .padding(.horizontal, 10)
@@ -487,7 +487,7 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @StateObject var vm =  VM_DB()
+    @StateObject var vm:  VM_DB
     
     @State var dragDown = false
 
@@ -660,7 +660,7 @@ struct MainAccountsMenu: View {
         VStack{
             NavigationLink {
                 
-                CreateAccount()
+                CreateAccount(employees: vm)
                 
             } label: {
                 Text("Create a new Account")
@@ -673,7 +673,7 @@ struct MainAccountsMenu: View {
             
             NavigationLink {
                 
-                EditAccountMain()
+                EditAccountMain(employees: vm)
                 
             } label: {
                 Text("Edit an Account")
@@ -686,7 +686,7 @@ struct MainAccountsMenu: View {
             
             NavigationLink {
                 
-                DeleteAccounts()
+                DeleteAccounts(vm: vm)
                 
             } label: {
                 Text("Delete accounts")
@@ -723,14 +723,6 @@ struct AccountsMain: View{
         }
     }
 }
-
-
-struct Accounts_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateAccount()
-    }
-}
-
 
 
 // MARK: Functions Create Account
