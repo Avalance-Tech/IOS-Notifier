@@ -5,8 +5,6 @@ import simd
 
 /// WITH DATABSE
 
-var vm = VM_DB()
-
 let notLoggedIn = Employee(id: 0, password: "", name: "", number: "", status: false, branch: "", employeeType: "", docID: ".")
 
 class Employee: Identifiable, Equatable{

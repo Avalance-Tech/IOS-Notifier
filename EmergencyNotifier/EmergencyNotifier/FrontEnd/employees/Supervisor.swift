@@ -18,7 +18,7 @@ struct Main_Supervisor: View{
     var body: some View{
         VStack{
             
-            TopMenu(loggedin: $loggedin, vm: VM)
+            TopMenu(loggedin: $loggedin)
             
             Spacer()
             
@@ -62,7 +62,7 @@ extension Main_Supervisor{
         
         NavigationLink{
             
-            Recent_Emergencies(loggedin: $loggedin, vm: VM)
+            Recent_Emergencies(loggedin: $loggedin)
             
         }label:{
             Text("Recent Emergencies")
@@ -111,7 +111,7 @@ extension Main_Supervisor{
     var accountsLink: some View{
         NavigationLink{
             
-            MainAccountsMenu(vm: VM)
+            MainAccountsMenu()
             
         }label:{
             

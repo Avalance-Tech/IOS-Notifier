@@ -49,7 +49,7 @@ struct EditEmergency: View{
     
     var emergency: Emergency
     
-    var vm: VM_DB
+    @EnvironmentObject var VM: VM_DB
     
     @State var dragDown = false
     
@@ -150,7 +150,7 @@ struct EditEmergency: View{
                 Divider()
                 Button {
                     
-                    vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
+                    VM.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
                     
                     withAnimation{
                         dragDown = true}
@@ -185,7 +185,7 @@ struct WhenClicked: View{
     
     @Binding var loggedin: Employee
     
-    var vm: VM_DB
+    @EnvironmentObject var VM: VM_DB
     
     var emergency: Emergency
     @State var employeePopUp = false
@@ -259,7 +259,7 @@ struct WhenClicked: View{
 
 struct GalleryWithEmergencies: View{
     
-    var vm: VM_DB
+    @EnvironmentObject var VM: VM_DB
     @Binding var loggedin: Employee
     
     let columns: [GridItem] = [
@@ -279,10 +279,10 @@ struct GalleryWithEmergencies: View{
                     
                     LazyVGrid(columns: columns) {
                         
-                        ForEach(vm.allEmergencies){ emergency in
+                        ForEach(VM.allEmergencies){ emergency in
                             NavigationLink{
                                 
-                                WhenClicked(loggedin: $loggedin, vm: vm, emergency: emergency)
+                                WhenClicked(loggedin: $loggedin, emergency: emergency)
                                 
                             } label: {
                                 ZStack{
@@ -307,7 +307,7 @@ struct GalleryWithEmergencies: View{
                     }
                     
                 }.onAppear {
-                    vm.getData()
+                    VM.getData()
                 }
             }
         }
@@ -316,7 +316,7 @@ struct GalleryWithEmergencies: View{
 
 struct ListWithEmergencies: View{
     
-    var vm: VM_DB
+    @EnvironmentObject var VM: VM_DB
     @Binding var loggedin: Employee
     
     
@@ -355,7 +355,7 @@ struct ListWithEmergencies: View{
             
             ScrollView{
                 
-                ForEach(vm.allEmergencies){
+                ForEach(VM.allEmergencies){
                     emergency in
                     
                     
@@ -389,7 +389,7 @@ struct ListWithEmergencies: View{
                         }.frame(width: 105, height: 80, alignment: .center)
                         
                         NavigationLink {
-                            WhenClicked(loggedin: $loggedin, vm: vm, emergency: emergency)
+                            WhenClicked(loggedin: $loggedin, emergency: emergency)
                         } label: {
                             
                             Divider().frame(height:70)
@@ -422,7 +422,7 @@ struct ListWithEmergencies: View{
                     Divider()
                 }
             }.onAppear {
-                vm.getData()
+                VM.getData()
             }
         }
     }
@@ -434,7 +434,7 @@ struct ListWithEmergencies: View{
 struct Recent_Emergencies: View {
     @Binding var loggedin: Employee
     
-    var vm: VM_DB
+    @EnvironmentObject var VM: VM_DB
     
     @State var search = ""
     @State var viewType = "list"
@@ -444,7 +444,7 @@ struct Recent_Emergencies: View {
             HStack{
                 
                 
-                vm.Search
+                VM.Search
                 
                 Spacer()
                 
@@ -470,10 +470,10 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies(vm: vm, loggedin: $loggedin)
+                ListWithEmergencies(loggedin: $loggedin)
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies(vm: vm, loggedin: $loggedin)
+                GalleryWithEmergencies(loggedin: $loggedin)
             }
         }
     }
@@ -505,7 +505,7 @@ extension WhenClicked{
             
             NavigationLink{
                 
-                EditEmergency(emergency: emergency, vm: vm, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
+                EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
                 //Edit Emergency
             }label: {
                 Text("Edit").frame(width: 40, height: 30, alignment: .trailing)

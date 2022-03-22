@@ -18,11 +18,13 @@ struct Main_OperationalManager: View{
     @State var showingAssignPopUp = false
     @State var reason = ""
     	
+    @EnvironmentObject var VM: VM_DB
+    
     var body: some View{
         
         VStack{
             
-            TopMenu(loggedin: $loggedin, vm: vm)
+            TopMenu(loggedin: $loggedin)
             
             
             Spacer()
@@ -53,7 +55,7 @@ struct Main_OperationalManager: View{
             
         }.onChange(of: status) { __ in
             loggedin.status = status
-            vm.updateEmployee(employee: loggedin)
+            VM.updateEmployee(employee: loggedin)
         }
         .onAppear(perform: {status = loggedin.status})
     }
@@ -71,7 +73,7 @@ extension Main_OperationalManager{
     var createEmergency: some View{
         NavigationLink {
             
-            Create_Emergency(vm: vm)
+            Create_Emergency()
             
         }label:{
             Text("Report an emergency")
@@ -87,7 +89,7 @@ extension Main_OperationalManager{
     var createAccount: some View{
         NavigationLink{
             
-            MainAccountsMenu(vm: vm)
+            MainAccountsMenu()
             
         }label:{
             Text("Create/edit/delete an account")
@@ -135,7 +137,7 @@ extension Main_OperationalManager{
         
         NavigationLink{
             
-            Recent_Emergencies(loggedin: $loggedin, vm: vm)
+            Recent_Emergencies(loggedin: $loggedin)
             
         }label:{
             Text("Recent Emergencies")

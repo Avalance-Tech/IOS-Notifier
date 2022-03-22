@@ -19,11 +19,13 @@ struct Main_TeamHead: View{
     
     @Binding var loggedin: Employee
     
+    @EnvironmentObject var VM: VM_DB
+    
     var body: some View{
         
         VStack{
             
-            TopMenu(loggedin: $loggedin, vm: vm)
+            TopMenu(loggedin: $loggedin)
             
             Spacer()
             
@@ -57,7 +59,7 @@ struct Main_TeamHead: View{
             BottomMenu
         }.onChange(of: status) { __ in
             loggedin.status = status
-            vm.updateEmployee(employee: loggedin)
+            VM.updateEmployee(employee: loggedin)
         }
         .onAppear(perform: {status = loggedin.status})
     }    
@@ -76,7 +78,7 @@ extension Main_TeamHead{
     var createEmergency: some View{
         NavigationLink {
             
-            Create_Emergency(vm: vm)
+            Create_Emergency()
             
         }label:{
             Text("Report an emergency")
@@ -93,7 +95,7 @@ extension Main_TeamHead{
     var recentsEmergency: some View{
         NavigationLink{
             
-            Recent_Emergencies(loggedin: $loggedin, vm: vm)
+            Recent_Emergencies(loggedin: $loggedin)
             
         } label: {
             Text("Previous emergencies")
@@ -109,7 +111,7 @@ extension Main_TeamHead{
     var accountsLink: some View{
         NavigationLink{
             
-            MainAccountsMenu(vm: vm)
+            MainAccountsMenu()
             
         }label:{
             Text("Create/edit/delete an account")

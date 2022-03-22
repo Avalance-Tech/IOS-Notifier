@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Account: View {
     
-    var vm: VM_DB
+    @EnvironmentObject var VM: VM_DB
     
     @Binding var loggedIn: Employee
     
@@ -121,7 +121,7 @@ extension Account{
                     else{
                         
                         self.loggedIn.password = newPassword
-                        vm.updateEmployee(employee: loggedIn)
+                        VM.updateEmployee(employee: loggedIn)
                         AlertContent = "Password Changed"
                         
                         
