@@ -218,7 +218,11 @@ struct CreateAccount: View{
         
             
 <<<<<<< HEAD
+<<<<<<< HEAD
         }
+=======
+        }.onAppear { employees.getData() }
+>>>>>>> parent of 1e5b937 (Created environmental object)
 =======
         }.onAppear { employees.getData() }
 >>>>>>> parent of 1e5b937 (Created environmental object)
