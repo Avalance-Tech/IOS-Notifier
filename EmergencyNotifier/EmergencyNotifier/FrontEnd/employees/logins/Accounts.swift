@@ -77,7 +77,7 @@ struct showSelectedDelete: View{
 
 struct CreateAccount: View{
     
-    @EnvironmentObject var VM: VM_DB
+    var employees:  VM_DB
     
     // New account Properties
     
@@ -187,7 +187,7 @@ struct CreateAccount: View{
                 
                 Button(action: {
                     
-                   VM.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
+                   employees.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
 
                     withAnimation{
                         created = true}
@@ -217,7 +217,11 @@ struct CreateAccount: View{
             }
         
             
+<<<<<<< HEAD
         }
+=======
+        }.onAppear { employees.getData() }
+>>>>>>> parent of 1e5b937 (Created environmental object)
         
 
             
@@ -228,7 +232,7 @@ struct CreateAccount: View{
 struct EditAccount: View{
     @State var editedEmployee: Employee
      
-    @EnvironmentObject var VM: VM_DB
+    var vm: VM_DB
     
     @State var created = false
     
@@ -391,7 +395,7 @@ struct EditAccount: View{
                 title: Text("Are you sure"),
                 message: Text("Are you sure you want to edit this user"),
                 primaryButton: .destructive(Text("Confirm"), action: {
-                    VM.updateEmployee(employee: editedEmployee)
+                    vm.updateEmployee(employee: editedEmployee)
                     
                     withAnimation{
                         created = true}
@@ -412,8 +416,16 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
-    @EnvironmentObject var VM: VM_DB
+    @StateObject var employees:  VM_DB
     
+    
+<<<<<<< HEAD
+=======
+    var shownEmployees: [Employee]{
+        employees.allEmployees
+    }
+    
+>>>>>>> parent of 1e5b937 (Created environmental object)
     var body: some View{
         
         VStack{
@@ -447,7 +459,7 @@ struct EditAccountMain: View{
                         Spacer()
                         
                         NavigationLink {
-                            EditAccount(editedEmployee: employee)
+                            EditAccount(editedEmployee: employee, vm: employees)
                         } label: {
                             Text("Edit")
                                 .padding(.horizontal, 10)
@@ -469,7 +481,7 @@ struct EditAccountMain: View{
             }
         }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
             .padding(.vertical, 10)
-            .onAppear { VM.getData() }
+            .onAppear { employees.getData() }
             
         
     }
@@ -478,7 +490,7 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @EnvironmentObject var VM: VM_DB
+    @StateObject var vm:  VM_DB
     
     @State var dragDown = false
 
@@ -489,7 +501,7 @@ struct DeleteAccounts: View{
     var selectedEmployees: [Employee]{
         
         var employees2: [Employee] = []
-        for employee in VM.allEmployees{
+        for employee in vm.allEmployees{
             if selectedEmployeesID.contains(employee.id){
                 employees2.append(employee)
             }
@@ -533,7 +545,7 @@ struct DeleteAccounts: View{
             Spacer()
             
             ScrollView{
-                ForEach(VM.allEmployees){employee in
+                ForEach(vm.allEmployees){employee in
                     
                     showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
                     
@@ -547,7 +559,7 @@ struct DeleteAccounts: View{
                 showingPopUp = true
                 
             }
-            .onAppear { VM.getData() }
+            .onAppear { vm.getData() }
             .disabled(selectedEmployees.count > 0 ? false : true)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 8)
@@ -596,7 +608,7 @@ struct DeleteAccounts: View{
                         Button {
                             // delete accounts
                             for employee in selectedEmployees {
-                                VM.deleteEmployee(employee: employee)
+                                vm.deleteEmployee(employee: employee)
                             }
                             
                             withAnimation{
@@ -637,19 +649,21 @@ struct DeleteAccounts: View{
 
 
         }
-        }.onAppear{ VM.getData() }
+        }.onAppear{ vm.getData() }
         
     }
 }
 
 struct MainAccountsMenu: View {
     
+    var vm: VM_DB
+    
     var body: some View {
         
         VStack{
             NavigationLink {
                 
-                CreateAccount()
+                CreateAccount(employees: vm)
                 
             } label: {
                 Text("Create a new Account")
@@ -662,7 +676,7 @@ struct MainAccountsMenu: View {
             
             NavigationLink {
                 
-                EditAccountMain()
+                EditAccountMain(employees: vm)
                 
             } label: {
                 Text("Edit an Account")
@@ -675,7 +689,7 @@ struct MainAccountsMenu: View {
             
             NavigationLink {
                 
-                DeleteAccounts()
+                DeleteAccounts(vm: vm)
                 
             } label: {
                 Text("Delete accounts")
@@ -699,6 +713,21 @@ struct MainAccountsMenu: View {
     
 }
 
+struct AccountsMain: View{
+    
+    var VM: VM_DB
+    
+    var body: some View{
+        
+        NavigationView{
+            
+            MainAccountsMenu(vm: VM)
+            
+        }
+    }
+}
+
+
 // MARK: Functions Create Account
 
 extension CreateAccount{
@@ -721,7 +750,7 @@ func check() -> Bool{
         return false
         
     }else{
-        for employee in VM.allEmployees{
+        for employee in employees.allEmployees{
             if employee.id == Int(newID){
                 
                 return false

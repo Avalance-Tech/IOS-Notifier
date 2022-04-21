@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Main_FireFighter: View {
     
-    @EnvironmentObject var VM: VM_DB
+    @StateObject var vm = VM_DB()
     
     @Binding var loggedin: Employee
     @State var status = false
@@ -18,7 +18,7 @@ struct Main_FireFighter: View {
         
         VStack(spacing: 25 ){
             
-            TopMenu(loggedin: $loggedin)
+            TopMenu(loggedin: $loggedin, vm: vm)
             
             Spacer()
             
@@ -34,7 +34,7 @@ struct Main_FireFighter: View {
             
         }.onChange(of: status) { __ in
             loggedin.status = status
-            VM.updateEmployee(employee: loggedin)
+            vm.updateEmployee(employee: loggedin)
         }
         .onAppear(perform: {status = loggedin.status})
     }
@@ -47,7 +47,7 @@ extension Main_FireFighter{
         
         NavigationLink(destination: {
             
-            Create_Emergency()
+            Create_Emergency(vm: vm)
             
         }, label: {
             Text("Report an emergency")
@@ -66,7 +66,7 @@ extension Main_FireFighter{
         
         NavigationLink(destination:{
             
-            Recent_Emergencies(loggedin: $loggedin)
+            Recent_Emergencies(loggedin: $loggedin, vm: vm)
             
         },label: {
             Text("Previous emergencies")

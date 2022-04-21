@@ -183,7 +183,7 @@ struct Create_Emergency: View {
         return true
     }
     
-    @EnvironmentObject var VM: VM_DB
+    @StateObject var vm: VM_DB
     
     @State var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
 
@@ -210,7 +210,7 @@ struct Create_Emergency: View {
         
         var employees: [Employee] = []
         
-        for employee in VM.allEmployees {
+        for employee in vm.allEmployees {
             
             if selectedEmployeesID.contains(employee.id){
                 
@@ -242,7 +242,7 @@ struct Create_Emergency: View {
             // to show sorts
             else if showSorts{
                 
-                VM.sortview
+                vm.sortview
                 
             }
             
@@ -251,7 +251,7 @@ struct Create_Emergency: View {
                 
                 
                 
-                VM.filtersView
+                vm.filtersView
                 
             }
             
@@ -265,7 +265,7 @@ struct Create_Emergency: View {
                 HStack{
                     
                     
-                    VM.Search
+                    vm.Search
                         
                     Spacer()
                     
@@ -293,7 +293,7 @@ struct Create_Emergency: View {
                 }.offset(x:-6)
                     .frame(width: UIScreen.main.bounds.width + 10)
                 
-                ForEach(VM.shownEmployees) {Employee in
+                ForEach(vm.shownEmployees) {Employee in
                     
                     showSelectedEmergency(employee: Employee, selectedItems: $selectedEmployeesID)
                     
@@ -307,7 +307,7 @@ struct Create_Emergency: View {
                 Spacer()
                 Button(action: {
                     
-                    VM.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0), injuries: injuries, casualties: casualties)
+                    vm.addEmergency(details: emergencyDetails, called: selectedEmployees, time: emergencyDate, urgency: emergencyUrgency, location: GeoPoint(latitude: 0, longitude: 0), meetingPoint: GeoPoint(latitude: 0, longitude: 0), injuries: injuries, casualties: casualties)
                     
                     
                 }, label:
@@ -326,7 +326,7 @@ struct Create_Emergency: View {
                 
             }.padding(.all, 5)
                 .onAppear {
-                    VM.getData()
+                    vm.getData()
                 }
         }
     }

@@ -47,7 +47,7 @@ struct TopMenu: View {
     
     @Binding var loggedin: Employee
     
-    @EnvironmentObject var VM: VM_DB
+    var vm: VM_DB
     
     var body: some View{
         VStack{
@@ -89,7 +89,7 @@ struct TopMenu: View {
                 
                 // profile
                 NavigationLink{
-                    Account(loggedIn: $loggedin).statusBar(hidden: true)
+                    Account(vm: vm, loggedIn: $loggedin).statusBar(hidden: true)
                 }
             label: {
                 Image(systemName: "person.crop.circle" )
