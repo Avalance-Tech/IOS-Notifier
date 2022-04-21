@@ -2,6 +2,7 @@ import SwiftUI
 import Firebase
 import MapKit
 import simd
+import MailView
 
 /// WITH DATABSE
 
