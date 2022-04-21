@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430AE7B3A399A7D5C097AEB8 /* Pods_EmergencyNotifier_EmergencyNotifierUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F7DF3E306C7ADBDF56E3A7 /* Pods_EmergencyNotifier_EmergencyNotifierUITests.framework */; };
 		84044DFF27941C5300292829 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84044DFE27941C5300292829 /* GoogleService-Info.plist */; };
 		84044E0427941D5500292829 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 84044E0327941D5500292829 /* FirebaseFirestore */; };
 		845B601C27D64FAF0095B29A /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B601427D64FAF0095B29A /* Supervisor.swift */; };
@@ -29,10 +28,13 @@
 		84D6EA51278470F60063CD9C /* Front End Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D6EA50278470F60063CD9C /* Front End Presets.swift */; };
 <<<<<<< HEAD
 		84EC4B75278B18A1005A7C93 /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC4B74278B18A1005A7C93 /* Supervisor.swift */; };
+<<<<<<< HEAD
 		857565DC101D74A7BF9873D7 /* Pods_EmergencyNotifier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D093F7C6053637D34E645F9 /* Pods_EmergencyNotifier.framework */; };
 		A49E406AE2BF701B66AFC159 /* Pods_EmergencyNotifierTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72797200AC049222F1947F7 /* Pods_EmergencyNotifierTests.framework */; };
 =======
 >>>>>>> 1e5b93718722f29e948b3982fd18bbbdd5f610ef
+=======
+>>>>>>> parent of 9974ade (updating)
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,11 +55,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3D093F7C6053637D34E645F9 /* Pods_EmergencyNotifier.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmergencyNotifier.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6D73394768824EB8EA494A5A /* Pods-EmergencyNotifier.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmergencyNotifier.debug.xcconfig"; path = "Target Support Files/Pods-EmergencyNotifier/Pods-EmergencyNotifier.debug.xcconfig"; sourceTree = "<group>"; };
-		7231FE33CC8A2160D6E321C1 /* Pods-EmergencyNotifierTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmergencyNotifierTests.release.xcconfig"; path = "Target Support Files/Pods-EmergencyNotifierTests/Pods-EmergencyNotifierTests.release.xcconfig"; sourceTree = "<group>"; };
-		73F7DF3E306C7ADBDF56E3A7 /* Pods_EmergencyNotifier_EmergencyNotifierUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmergencyNotifier_EmergencyNotifierUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		812D364DAE2B39DE380BB0D8 /* Pods-EmergencyNotifier-EmergencyNotifierUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmergencyNotifier-EmergencyNotifierUITests.debug.xcconfig"; path = "Target Support Files/Pods-EmergencyNotifier-EmergencyNotifierUITests/Pods-EmergencyNotifier-EmergencyNotifierUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		84044DFE27941C5300292829 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		845B601427D64FAF0095B29A /* Supervisor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
 		845B601527D64FAF0095B29A /* Operational Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operational Manager.swift"; sourceTree = "<group>"; };
@@ -82,12 +79,15 @@
 		84D6EA50278470F60063CD9C /* Front End Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Front End Presets.swift"; sourceTree = "<group>"; };
 <<<<<<< HEAD
 		84EC4B74278B18A1005A7C93 /* Supervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		BC98D4D85C4067EF33246D8E /* Pods-EmergencyNotifierTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmergencyNotifierTests.debug.xcconfig"; path = "Target Support Files/Pods-EmergencyNotifierTests/Pods-EmergencyNotifierTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D8DD585C56E6B23879900F72 /* Pods-EmergencyNotifier.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmergencyNotifier.release.xcconfig"; path = "Target Support Files/Pods-EmergencyNotifier/Pods-EmergencyNotifier.release.xcconfig"; sourceTree = "<group>"; };
 		F10C8632DD472388BB9CD4CB /* Pods-EmergencyNotifier-EmergencyNotifierUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmergencyNotifier-EmergencyNotifierUITests.release.xcconfig"; path = "Target Support Files/Pods-EmergencyNotifier-EmergencyNotifierUITests/Pods-EmergencyNotifier-EmergencyNotifierUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F72797200AC049222F1947F7 /* Pods_EmergencyNotifierTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmergencyNotifierTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 =======
 >>>>>>> 1e5b93718722f29e948b3982fd18bbbdd5f610ef
+=======
+>>>>>>> parent of 9974ade (updating)
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +97,6 @@
 			files = (
 				84B0DBFE278818E600D9ED41 /* AuthenticationServices.framework in Frameworks */,
 				84044E0427941D5500292829 /* FirebaseFirestore in Frameworks */,
-				857565DC101D74A7BF9873D7 /* Pods_EmergencyNotifier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +104,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A49E406AE2BF701B66AFC159 /* Pods_EmergencyNotifierTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,13 +111,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430AE7B3A399A7D5C097AEB8 /* Pods_EmergencyNotifier_EmergencyNotifierUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< HEAD
 <<<<<<< HEAD
 		2C40C5CBD7E70C75412EC68E /* Pods */ = {
 			isa = PBXGroup;
@@ -177,13 +175,12 @@
 >>>>>>> 1e5b93718722f29e948b3982fd18bbbdd5f610ef
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> parent of 9974ade (updating)
 		84B0DBFC278818E600D9ED41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				84B0DBFD278818E600D9ED41 /* AuthenticationServices.framework */,
-				3D093F7C6053637D34E645F9 /* Pods_EmergencyNotifier.framework */,
-				73F7DF3E306C7ADBDF56E3A7 /* Pods_EmergencyNotifier_EmergencyNotifierUITests.framework */,
-				F72797200AC049222F1947F7 /* Pods_EmergencyNotifierTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -199,7 +196,6 @@
 				84D6EA242784665A0063CD9C /* EmergencyNotifierUITests */,
 				84D6EA08278466580063CD9C /* Products */,
 				84B0DBFC278818E600D9ED41 /* Frameworks */,
-				2C40C5CBD7E70C75412EC68E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -255,11 +251,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D6EA2B2784665A0063CD9C /* Build configuration list for PBXNativeTarget "EmergencyNotifier" */;
 			buildPhases = (
-				4B753B769E85BD540D3DCB96 /* [CP] Check Pods Manifest.lock */,
 				84D6EA03278466580063CD9C /* Sources */,
 				84D6EA04278466580063CD9C /* Frameworks */,
 				84D6EA05278466580063CD9C /* Resources */,
-				4B91D42421709E8F9C4BEF8E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -277,11 +271,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D6EA2E2784665A0063CD9C /* Build configuration list for PBXNativeTarget "EmergencyNotifierTests" */;
 			buildPhases = (
-				A8E23C5676AAB6428560EED9 /* [CP] Check Pods Manifest.lock */,
 				84D6EA13278466590063CD9C /* Sources */,
 				84D6EA14278466590063CD9C /* Frameworks */,
 				84D6EA15278466590063CD9C /* Resources */,
-				0954BA2A39386EF44B186F6F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -297,11 +289,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84D6EA312784665A0063CD9C /* Build configuration list for PBXNativeTarget "EmergencyNotifierUITests" */;
 			buildPhases = (
-				03AC1A2DEDE981BD3D4107FB /* [CP] Check Pods Manifest.lock */,
 				84D6EA1D2784665A0063CD9C /* Sources */,
 				84D6EA1E2784665A0063CD9C /* Frameworks */,
 				84D6EA1F2784665A0063CD9C /* Resources */,
-				71C6524F777AB5B849E9F004 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -384,126 +374,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		03AC1A2DEDE981BD3D4107FB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EmergencyNotifier-EmergencyNotifierUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0954BA2A39386EF44B186F6F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifierTests/Pods-EmergencyNotifierTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifierTests/Pods-EmergencyNotifierTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifierTests/Pods-EmergencyNotifierTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4B753B769E85BD540D3DCB96 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EmergencyNotifier-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4B91D42421709E8F9C4BEF8E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifier/Pods-EmergencyNotifier-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifier/Pods-EmergencyNotifier-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifier/Pods-EmergencyNotifier-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		71C6524F777AB5B849E9F004 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifier-EmergencyNotifierUITests/Pods-EmergencyNotifier-EmergencyNotifierUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifier-EmergencyNotifierUITests/Pods-EmergencyNotifier-EmergencyNotifierUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EmergencyNotifier-EmergencyNotifierUITests/Pods-EmergencyNotifier-EmergencyNotifierUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A8E23C5676AAB6428560EED9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EmergencyNotifierTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84D6EA03278466580063CD9C /* Sources */ = {
@@ -676,7 +546,6 @@
 		};
 		84D6EA2C2784665A0063CD9C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6D73394768824EB8EA494A5A /* Pods-EmergencyNotifier.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -709,7 +578,6 @@
 		};
 		84D6EA2D2784665A0063CD9C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D8DD585C56E6B23879900F72 /* Pods-EmergencyNotifier.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -742,7 +610,6 @@
 		};
 		84D6EA2F2784665A0063CD9C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BC98D4D85C4067EF33246D8E /* Pods-EmergencyNotifierTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -763,7 +630,6 @@
 		};
 		84D6EA302784665A0063CD9C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7231FE33CC8A2160D6E321C1 /* Pods-EmergencyNotifierTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -784,7 +650,6 @@
 		};
 		84D6EA322784665A0063CD9C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 812D364DAE2B39DE380BB0D8 /* Pods-EmergencyNotifier-EmergencyNotifierUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -803,7 +668,6 @@
 		};
 		84D6EA332784665A0063CD9C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F10C8632DD472388BB9CD4CB /* Pods-EmergencyNotifier-EmergencyNotifierUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
