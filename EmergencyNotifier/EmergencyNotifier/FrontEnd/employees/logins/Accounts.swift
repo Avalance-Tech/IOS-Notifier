@@ -215,8 +215,15 @@ struct CreateAccount: View{
                 ).disabled(check() && !created ? false : true)
                 
             }
+<<<<<<< HEAD
         }.onAppear { employees.getData() }
 
+=======
+        
+            
+        }.onAppear { employees.getData() }
+        
+>>>>>>> parent of 1e5b937 (Created environmental object)
 
             
         }
@@ -412,7 +419,10 @@ struct EditAccountMain: View{
     
     @StateObject var employees:  VM_DB
     
+<<<<<<< HEAD
     
+=======
+>>>>>>> parent of 1e5b937 (Created environmental object)
     
     var shownEmployees: [Employee]{
         employees.allEmployees
