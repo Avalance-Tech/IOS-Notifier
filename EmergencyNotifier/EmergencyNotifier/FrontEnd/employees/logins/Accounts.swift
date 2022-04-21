@@ -215,18 +215,8 @@ struct CreateAccount: View{
                 ).disabled(check() && !created ? false : true)
                 
             }
-        
-            
-<<<<<<< HEAD
-<<<<<<< HEAD
-        }
-=======
         }.onAppear { employees.getData() }
->>>>>>> parent of 1e5b937 (Created environmental object)
-=======
-        }.onAppear { employees.getData() }
->>>>>>> parent of 1e5b937 (Created environmental object)
-        
+
 
             
         }
@@ -423,13 +413,11 @@ struct EditAccountMain: View{
     @StateObject var employees:  VM_DB
     
     
-<<<<<<< HEAD
-=======
+    
     var shownEmployees: [Employee]{
         employees.allEmployees
     }
     
->>>>>>> parent of 1e5b937 (Created environmental object)
     var body: some View{
         
         VStack{
