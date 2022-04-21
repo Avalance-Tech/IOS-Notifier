@@ -152,7 +152,6 @@ struct filterModel: Identifiable{
 
 
 class VM_DB: ObservableObject{
-    
   //  var empl: Employee
     
     @Published var allEmployees = [Employee]()
@@ -161,10 +160,10 @@ class VM_DB: ObservableObject{
     
     
     @Published var typeS = true
-    @State var search = ""
+    @Published var search = ""
     @Published var sort = "Status"
     @Published var filters = [filterModel]()
-    @Published var employee = notLoggedIn
+    @Published var employee = loggedin
     
     var shownEmployees: [Employee]{
         var emp: [Employee] = []
@@ -547,11 +546,11 @@ extension VM_DB{
             .offset(x: 12)
         Divider().frame(width: 1, height: 20, alignment: .center)
             .offset(x: 8)
-        TextField("Search", text: $search)
+            /*    TextField("Search", text: $search)
             .frame(width: 160 ,height: 30)
             .padding(.horizontal, 40)
             .background(Color.gray.opacity(0.3))
-            .cornerRadius(10).offset(x:-30)
+            .cornerRadius(10).offset(x:-30)*/
         }
     }
 

@@ -217,16 +217,12 @@ struct CreateAccount: View{
             }
         
             
-        }.onAppear { VM.getData() }
+        }
         
 
             
         }
     }
-    func createdToggle(){
-        self.created.toggle()
-    }
-    
 }
 
 struct EditAccount: View{
@@ -418,10 +414,6 @@ struct EditAccountMain: View{
     
     @EnvironmentObject var VM: VM_DB
     
-    var shownEmployees: [Employee]{
-        VM.allEmployees
-    }
-    
     var body: some View{
         
         VStack{
@@ -431,7 +423,7 @@ struct EditAccountMain: View{
             
             ScrollView{
                 
-                ForEach(shownEmployees){ employee in
+                ForEach(VM.shownEmployees){ employee in
                     HStack(spacing: 2){
                         
                         Text(String(employee.name).capitalized(with: .current))
