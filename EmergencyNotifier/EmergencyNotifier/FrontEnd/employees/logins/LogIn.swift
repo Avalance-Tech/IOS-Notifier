@@ -11,8 +11,8 @@ import SwiftUI
 
 struct Main_LogIn: View{
     
-    @StateObject var employees =  VM_DB()
-
+    
+    @EnvironmentObject var VM: VM_DB
     
     @Binding var loggedin: Employee
     
@@ -59,7 +59,7 @@ struct Main_LogIn: View{
             Button {
                 //log in
                 
-                for employee in employees.allEmployees{
+                for employee in VM.allEmployees{
             
                     
                     if employee.id == Int(id){

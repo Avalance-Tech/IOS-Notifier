@@ -49,7 +49,7 @@ struct EditEmergency: View{
     
     var emergency: Emergency
     
-    @StateObject var vm = VM_DB()
+    @EnvironmentObject var VM: VM_DB
     
     @State var dragDown = false
     
@@ -62,6 +62,8 @@ struct EditEmergency: View{
     
     @State var casualties = 0
     @State var injuries = 0
+    
+    @State var activeState = true
     
     var docID: String
     
@@ -112,6 +114,9 @@ struct EditEmergency: View{
                     }
                 }
                 
+                HStack(){
+                    Toggle("Active", isOn: $activeState)
+                }
                 
                 HStack(spacing: 30){
                     
@@ -145,7 +150,7 @@ struct EditEmergency: View{
                 Divider()
                 Button {
                     
-                    vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
+                    VM.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
                     
                     withAnimation{
                         dragDown = true}
@@ -169,6 +174,8 @@ struct EditEmergency: View{
                 
                 
             }.padding(.horizontal, 5)
+        }.onAppear {
+            activeState = emergency.active
         }
     }
     
@@ -177,6 +184,8 @@ struct EditEmergency: View{
 struct WhenClicked: View{
     
     @Binding var loggedin: Employee
+    
+    @EnvironmentObject var VM: VM_DB
     
     var emergency: Emergency
     @State var employeePopUp = false
@@ -250,7 +259,7 @@ struct WhenClicked: View{
 
 struct GalleryWithEmergencies: View{
     
-    @StateObject var vm = VM_DB()
+    @EnvironmentObject var VM: VM_DB
     @Binding var loggedin: Employee
     
     let columns: [GridItem] = [
@@ -270,7 +279,7 @@ struct GalleryWithEmergencies: View{
                     
                     LazyVGrid(columns: columns) {
                         
-                        ForEach(vm.allEmergencies){ emergency in
+                        ForEach(VM.allEmergencies){ emergency in
                             NavigationLink{
                                 
                                 WhenClicked(loggedin: $loggedin, emergency: emergency)
@@ -298,7 +307,7 @@ struct GalleryWithEmergencies: View{
                     }
                     
                 }.onAppear {
-                    vm.getData()
+                    VM.getData()
                 }
             }
         }
@@ -307,7 +316,7 @@ struct GalleryWithEmergencies: View{
 
 struct ListWithEmergencies: View{
     
-    @StateObject var vm = VM_DB()
+    @EnvironmentObject var VM: VM_DB
     @Binding var loggedin: Employee
     
     
@@ -346,7 +355,7 @@ struct ListWithEmergencies: View{
             
             ScrollView{
                 
-                ForEach(vm.allEmergencies){
+                ForEach(VM.allEmergencies){
                     emergency in
                     
                     
@@ -413,7 +422,7 @@ struct ListWithEmergencies: View{
                     Divider()
                 }
             }.onAppear {
-                vm.getData()
+                VM.getData()
             }
         }
     }
@@ -425,6 +434,8 @@ struct ListWithEmergencies: View{
 struct Recent_Emergencies: View {
     @Binding var loggedin: Employee
     
+    @EnvironmentObject var VM: VM_DB
+    
     @State var search = ""
     @State var viewType = "list"
     
@@ -433,7 +444,7 @@ struct Recent_Emergencies: View {
             HStack{
                 
                 
-                Search_Preset(search: $search)
+                VM.Search
                 
                 Spacer()
                 

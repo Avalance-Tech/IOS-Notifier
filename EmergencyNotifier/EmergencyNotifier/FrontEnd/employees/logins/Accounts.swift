@@ -77,7 +77,7 @@ struct showSelectedDelete: View{
 
 struct CreateAccount: View{
     
-    @State var employees =  VM_DB()
+    @EnvironmentObject var VM: VM_DB
     
     // New account Properties
     
@@ -187,7 +187,7 @@ struct CreateAccount: View{
                 
                 Button(action: {
                     
-                   employees.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
+                   VM.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? 0, number: newNumber, branch: newBranch, employeeType: newType)
 
                     withAnimation{
                         created = true}
@@ -217,7 +217,7 @@ struct CreateAccount: View{
             }
         
             
-        }.onAppear { employees.getData() }
+        }.onAppear { VM.getData() }
         
 
             
@@ -232,7 +232,7 @@ struct CreateAccount: View{
 struct EditAccount: View{
     @State var editedEmployee: Employee
      
-    @StateObject var vm = VM_DB()
+    @EnvironmentObject var VM: VM_DB
     
     @State var created = false
     
@@ -395,7 +395,7 @@ struct EditAccount: View{
                 title: Text("Are you sure"),
                 message: Text("Are you sure you want to edit this user"),
                 primaryButton: .destructive(Text("Confirm"), action: {
-                    vm.updateEmployee(employee: editedEmployee)
+                    VM.updateEmployee(employee: editedEmployee)
                     
                     withAnimation{
                         created = true}
@@ -416,11 +416,10 @@ struct EditAccount: View{
 
 struct EditAccountMain: View{
     
-    @StateObject var employees =  VM_DB()
-    
+    @EnvironmentObject var VM: VM_DB
     
     var shownEmployees: [Employee]{
-        employees.allEmployees
+        VM.allEmployees
     }
     
     var body: some View{
@@ -478,7 +477,7 @@ struct EditAccountMain: View{
             }
         }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
             .padding(.vertical, 10)
-            .onAppear { employees.getData() }
+            .onAppear { VM.getData() }
             
         
     }
@@ -487,7 +486,7 @@ struct EditAccountMain: View{
 
 struct DeleteAccounts: View{
     
-    @StateObject var vm =  VM_DB()
+    @EnvironmentObject var VM: VM_DB
     
     @State var dragDown = false
 
@@ -498,7 +497,7 @@ struct DeleteAccounts: View{
     var selectedEmployees: [Employee]{
         
         var employees2: [Employee] = []
-        for employee in vm.allEmployees{
+        for employee in VM.allEmployees{
             if selectedEmployeesID.contains(employee.id){
                 employees2.append(employee)
             }
@@ -542,7 +541,7 @@ struct DeleteAccounts: View{
             Spacer()
             
             ScrollView{
-                ForEach(vm.allEmployees){employee in
+                ForEach(VM.allEmployees){employee in
                     
                     showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
                     
@@ -556,7 +555,7 @@ struct DeleteAccounts: View{
                 showingPopUp = true
                 
             }
-            .onAppear { vm.getData() }
+            .onAppear { VM.getData() }
             .disabled(selectedEmployees.count > 0 ? false : true)
             .padding([.top, .horizontal], 10)
             .padding(.bottom, 8)
@@ -605,7 +604,7 @@ struct DeleteAccounts: View{
                         Button {
                             // delete accounts
                             for employee in selectedEmployees {
-                                vm.deleteEmployee(employee: employee)
+                                VM.deleteEmployee(employee: employee)
                             }
                             
                             withAnimation{
@@ -646,7 +645,7 @@ struct DeleteAccounts: View{
 
 
         }
-        }.onAppear{ vm.getData() }
+        }.onAppear{ VM.getData() }
         
     }
 }
@@ -708,27 +707,6 @@ struct MainAccountsMenu: View {
     
 }
 
-struct AccountsMain: View{
-    
-    var body: some View{
-        
-        NavigationView{
-            
-            MainAccountsMenu()
-            
-        }
-    }
-}
-
-
-struct Accounts_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateAccount()
-    }
-}
-
-
-
 // MARK: Functions Create Account
 
 extension CreateAccount{
@@ -751,7 +729,7 @@ func check() -> Bool{
         return false
         
     }else{
-        for employee in employees.allEmployees{
+        for employee in VM.allEmployees{
             if employee.id == Int(newID){
                 
                 return false

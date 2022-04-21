@@ -14,6 +14,7 @@ struct EmergencyNotifierApp: App {
     init(){ FirebaseApp.configure() }
     
     @State public var loggedin = notLoggedIn
+    @StateObject public var VM = VM_DB()
     
     var body: some Scene{
             
@@ -29,7 +30,7 @@ struct EmergencyNotifierApp: App {
                     
                 case "Deputy Team Head", "Supervisor":
                     Main_Supervisor(loggedin: $loggedin).navigationBarHidden(true)
-                    
+                     
                 case "Assistant Supervisor", "Fire Fighter", "Coordinator":
                     Main_FireFighter(loggedin: $loggedin).navigationBarHidden(true)
                     
@@ -37,7 +38,7 @@ struct EmergencyNotifierApp: App {
                     Main_LogIn(loggedin: $loggedin).navigationBarHidden(true)
                 }
                 
-                }
+                }.environmentObject(VM)
             }
     }
 }

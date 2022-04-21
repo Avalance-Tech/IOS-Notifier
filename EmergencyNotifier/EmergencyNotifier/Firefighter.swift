@@ -33,7 +33,6 @@ struct Main_FireFighter: View {
             
         }.onChange(of: loggedin.status) { __ in
             vm.updateEmployee(employee: loggedin)
-            print("works")
         }
     }
 }

@@ -6,7 +6,6 @@ import MailView
 
 /// WITH DATABSE
 
-
 let notLoggedIn = Employee(id: 0, password: "", name: "", number: "", status: false, branch: "", employeeType: "", docID: ".")
 
 class Employee: Identifiable, Equatable{
@@ -65,7 +64,7 @@ struct Emergency: Identifiable{  // to be logged later
     let time : Date
     var employeesCalled: Array<Employee>
     var branch: String // = Employee.branch
-    
+    var active: Bool
     
     
     var replied: Dictionary<Bool, Array<Employee.ID>> = [:]
@@ -154,20 +153,24 @@ struct filterModel: Identifiable{
 
 
 class VM_DB: ObservableObject{
+    
+  //  var empl: Employee
+    
     @Published var allEmployees = [Employee]()
     @Published var allEmergencies = [Emergency]()
     
     
     
     @Published var typeS = true
-    @Published var search = ""
+    @State var search = ""
     @Published var sort = "Status"
     @Published var filters = [filterModel]()
+    @Published var employee = notLoggedIn
     
     var shownEmployees: [Employee]{
         var emp: [Employee] = []
         
-        emp = doSortFilter(list: allEmployees,  sort: sort, type: typeS, filters: filters)
+        emp = doSortFilter(list: allEmployees,  sort: sort, type: typeS, filters: filters/*, emp: empl*/)
         
         if search != ""{
             return emp.filter({$0.name.lowercased().contains(search.lowercased() )})
@@ -254,6 +257,7 @@ extension VM_DB{
                             let imageURLs = doc["Image URL"] as? [String] ?? []
                             let casualties = doc["Casualties"] as? Int ?? 0
                             let injuries = doc["Injuries"] as? Int ?? 0
+                            let active = doc["Active"] as? Bool ?? false
                             
                             let repliedDict: Dictionary<Bool, [Employee.ID]> = [false: declined, true: accepted]
                             
@@ -269,7 +273,7 @@ extension VM_DB{
                                 return list
                             }
                             
-                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
+                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, active: active, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
                         }
                         
                         self.allEmergencies = newList
@@ -304,22 +308,18 @@ extension VM_DB{
     
     func updateEmployee(employee: Employee){
         
-        DispatchQueue.main.async {
+        let updated = db.collection("Employees").document(employee.docID ?? "")
+        
+        updated.getDocument { (document, err) in
             
-            
-            let updated = self.db.collection("Employees").document(employee.docID ?? "")
-            
-            updated.getDocument { (document, err) in
-                
-                if let err = err {
-                    print(err)
-                }
-                else {
-                    document?.reference.updateData(["E ID": employee.id,  "Name": employee.name, "Number": employee.number, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
-                    self.getData()
-                }
-                
+            if let err = err {
+                print(err)
             }
+            else {
+                document?.reference.updateData(["E ID": employee.id,  "Name": employee.name, "Number": employee.number, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
+                self.getData()
+            }
+            
         }
         
     }
@@ -341,7 +341,8 @@ extension VM_DB{
                     //       "Accepted": emergency.replied[true],
                     //    "Arrived": emergency.arrived,
                     "Injuries": emergency.injuries,
-                    "Casualties": emergency.casualties
+                    "Casualties": emergency.casualties,
+                    "Active": emergency.active
                 ])
                 self.getData()
             }
@@ -384,7 +385,8 @@ extension VM_DB{
             "Arrived": [],
             "Image URL": [],
             "Injuries": injuries,
-            "Casualties": casualties
+            "Casualties": casualties,
+            "Active": true
         ]) { error in
             if error == nil{
                 
@@ -404,7 +406,7 @@ extension VM_DB{
     
     
     
-    func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]) -> [Employee]{
+    func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]/*, emp: Employee*/) -> [Employee]{
         
         // if type true then desc else asc
         
@@ -535,7 +537,25 @@ extension VM_DB{
     
     
     
-    
+    var Search: some View{
+
+        HStack{
+        
+        Image(systemName: "magnifyingglass")
+            .resizable()
+            .frame(width: 20, height: 20, alignment: .center)
+            .padding(.leading, 10)
+            .offset(x: 12)
+        Divider().frame(width: 1, height: 20, alignment: .center)
+            .offset(x: 8)
+        TextField("Search", text: $search)
+            .frame(width: 160 ,height: 30)
+            .padding(.horizontal, 40)
+            .background(Color.gray.opacity(0.3))
+            .cornerRadius(10).offset(x:-30)
+        }
+    }
+
     
     
     var filtersView: some View{
@@ -626,7 +646,7 @@ extension VM_DB{
                             Button { self.filters.append(filterModel(type: "Employee Type", filter: "Team Head")) } label: { Text("Team Head") }}
                         
                     }.frame(width: 180, height: 30, alignment: .center)
-                    
+                                                            
                     Spacer()
                     
                 }

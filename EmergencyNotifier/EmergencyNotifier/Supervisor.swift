@@ -12,8 +12,7 @@ struct Main_Supervisor: View{
     @StateObject var vm = VM_DB()
     
     @Binding var loggedin: Employee
-    @State var showPopOver = false
-    @State var status = false
+    @State var showPopOver = true
     
     var body: some View{
         VStack{
@@ -22,7 +21,7 @@ struct Main_Supervisor: View{
             
             Spacer()
             
-            onCall(status: $status)
+            onCall(status: $loggedin.status)
             
             // Create account Button
             accountsLink
@@ -40,13 +39,8 @@ struct Main_Supervisor: View{
             
             BottomMenu
             
-        }.onChange(of: status) { __ in
-            
-            self.loggedin.status = status
-            
+        }.onChange(of: loggedin.status) { __ in
             vm.updateEmployee(employee: loggedin)
-            
-            
         }
     }
 }
