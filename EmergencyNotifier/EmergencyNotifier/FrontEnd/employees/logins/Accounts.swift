@@ -421,7 +421,10 @@ struct EditAccountMain: View{
     
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+>>>>>>> parent of 1e5b937 (Created environmental object)
 =======
 >>>>>>> parent of 1e5b937 (Created environmental object)
 =======
