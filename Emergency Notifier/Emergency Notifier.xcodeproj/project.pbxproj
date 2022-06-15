@@ -95,7 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */,
-				84E828392859C61000B7CB69 /* ContentView.swift */,
+				84E828622859D0AB00B7CB69 /* Back-End */,
+				84E828612859D0A000B7CB69 /* Front-End */,
 				84E8283B2859C61300B7CB69 /* Assets.xcassets */,
 				84E8283D2859C61300B7CB69 /* Preview Content */,
 			);
@@ -125,6 +126,21 @@
 				84E828542859C61300B7CB69 /* Emergency_NotifierUITestsLaunchTests.swift */,
 			);
 			path = "Emergency NotifierUITests";
+			sourceTree = "<group>";
+		};
+		84E828612859D0A000B7CB69 /* Front-End */ = {
+			isa = PBXGroup;
+			children = (
+				84E828392859C61000B7CB69 /* ContentView.swift */,
+			);
+			path = "Front-End";
+			sourceTree = "<group>";
+		};
+		84E828622859D0AB00B7CB69 /* Back-End */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Back-End";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
