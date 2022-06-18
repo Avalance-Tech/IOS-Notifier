@@ -68,116 +68,149 @@ func typeInitial(type: String) -> {
 
 extension dataViewModel // Functions used for Model View ViewModel
 {
-    func getData(){
-        self.getEmployees()
-        self.getEmergencies()
+    func getData(){  // Fetches data from the database
+	
+    	self.getEmployees()
+    	self.getEmergencies()
+    
     }
+
+	func filterEmployees(){  // Ensures the user only sees the right employees
+// TODO:
+	}
     
-    
-    func getEmployees(){
-        var newList = [Employee]()
-        db.collection("Employees").getDocuments { snapshot, error in
-            if error == nil {
-                if let snapshot = snapshot{
-                    
-                    for doc in snapshot.documents{
-                        
-                        let eID = doc["E ID"] as? Int ?? 0
-                        let pwd = doc["Password"] as? String ?? ""
-                        let name = doc["Name"] as? String ?? ""
-                        let sts = doc["Status"] as? Bool ?? false
-                        let brc = doc["Branch"] as? String ?? ""
-                        let etype = doc["Type"] as? String ?? ""
-                        
-                        newList.append(Employee(id: eID, password: pwd, name: name, number: num, status: sts, branch: brc, employeeType: etype, docID: doc.documentID))
-                        
-                        
-                        
-                        
-                    }
-                    
-                    self.allEmployees = newList
-                    
-                }
-                
-            }else{
-                // error handle
-            }
-        }
-    }
-    
-    
-    func getEmergencies(){
-        var newList = [Emergency]()
-        db.collection("Emergencies").getDocuments { snapshot, error in
-            if error == nil {
-                if let snapshot = snapshot{
-                    DispatchQueue.main.async {
-                        
-                        for doc in snapshot.documents{
-                            let details = doc["Details"] as? String ?? ""
-                            let location = doc["Location"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
-                            let meetingPoint = doc["Meeting Point"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
-                            let calledID = doc["Employees Called"] as? [Int] ?? []
-                            let declined = doc["Rejected"] as? [Employee.ID] ?? []
-                            let accepted = doc["Accepted"] as? [Employee.ID] ?? []
-                            let arrived = doc["Arrived"] as? [Employee.ID] ?? []
-                            let branch = doc["Branch"] as? String ?? ""
-                            let urgency = doc["Urgency"] as? Int ?? 0
-                            let timestamp = doc["Time"] as? Timestamp ?? Timestamp()
-                            let time = timestamp.dateValue()
-                            let imageURLs = doc["Image URL"] as? [String] ?? []
-                            let casualties = doc["Casualties"] as? Int ?? 0
-                            let injuries = doc["Injuries"] as? Int ?? 0
-                            let active = doc["Active"] as? Bool ?? false
-                            
-                            let repliedDict: Dictionary<Bool, [Employee.ID]> = [false: declined, true: accepted]
-                            
-                            var called: [Employee]{
-                                var list: [Employee] = []
-                                for id in calledID{
-                                    for employee in self.allEmployees{
-                                        if employee.id == id{
-                                            list.append(employee)
-                                        }
-                                    }
-                                }
-                                return list
-                            }
-                            
-                            newList.append(Emergency(id: doc.documentID, details: details, location: location, meetingPoint: meetingPoint, urgency: urgency, time: time, employeesCalled: called, branch: branch, active: active, replied: repliedDict, arrived: arrived, imageURLs: imageURLs, injuries: injuries, casualties: casualties))
-                        }
-                        
-                        self.allEmergencies = newList
-                    }
-                }
-                
-            }
-            
-            else{
-                // error handle
-            }
-        }
-    }
+
+    func getEmployees() throws {
+		var employeeList: [Employee] = []
+		db.collection("Employees").getDocuments { snapshot, error in
+			if error != nil{
+			
+				throw Error("Error fetching data | \(error)")
+				
+				}
+			if let snapshot = snapshot{
+				DispatchQueue.main.async{
+					for emp in snapshot.documents{
+						
+						let eID = emp["Employee ID"] as? Int ?? -1
+						let password = emp["Password"] as? String ?? ""
+						let name = emp["Name"] as? String ?? ""
+						let status = emp["Status"] as? Bool ?? false
+						let branch = emp["Branch"] as? String ?? ""
+						let employeeType = emp["Type"] as? String ?? ""
+
+						employee = Employee(id: eID, password: password, name: name.title(), status: status, branch: branch, employeeType: employeeType, docID: emp.documentID)
+
+						employeeList.append(employee)
+
+						} 
+					}
+				}	
+
+			self.allEmployees = employeeList
+
+			}
+	}
+
+    func getEmergencies() throws {
+			var emergencyList: [Emergency] = []
+			db.collect("Emergencies").getDocuments { snapshot, error in
+				if error != nil {
+
+					throw Error("Error fetching data \(error)")
+
+				}
+				if let snapshot = snapshot {
+					DispatchQueue.main.async{
+
+						for emergencyDoc in snapshot.documents{ // loops through the documents and creates an emergencyDoc instance for it
+
+							let title = emergencyDoc["Title"] as? String ?? ""
+							let details = emergencyDoc["Details"] as? String ?? ""
+
+							let location = emergencyDoc["Location"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
+							let meetingPoint = emergencyDoc["Meeting Point"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
+
+							let calledID = emergencyDoc["Employees Called"] as? [Int] ?? []
+							let declined = emergencyDoc["Declined"] as? [Employee.ID] ?? []
+							let accepted = emergencyDoc["Accepted"] as? [Emplyoee.ID] ?? []
+							
+							let arrived = emergencyDoc["Arrived"] as? [Employee.ID] ?? []
+
+							let branch = emergencyDoc["Branch"] as? String ?? ""
+
+							let urgency = emergencyDoc["Urgency"] as? Int ?? 0
+
+							let timestamp = emergencyDoc["Time"] as? Timestamp ?? timestamp()
+							let time = timestamp.dateValue()
+
+							//let imageURLs = emergencyDoc["Image URL"] as? [String] ?? [] FIXME:
+
+							let casualties = emergencyDoc["Casualties"] as? [String] ?? 0
+							let injuries = emergencyDoc["Injuries"] as? Int ?? 0
+							
+							let active = emergencyDoc["Active"] as? Bool ?? false
+
+							let asnwered = Array(set(accepted + declined + arrived))
+							let called = Array(set(answered + calledID))
+
+
+
+							var repliedDict: Dictionary<Employee: (String, Date)>{ // Checks to see who has replied
+								for employeeID in employeesCalled:
+									if let employee = allEmployees.contains(where: $0.id = employeeID){
+										if !answered.contains(where: {$0.id == employee.id}){
+											replies[employee] = ("No Reply", 0)
+										}
+										elif declined.contains(where: {$0.id == employee.id}){
+											replies[employee] = ("Declined", -1)
+										}
+										elif accepted.contains(where: {$0.id == employee.id}){
+											replies[employee] = ("Accepted", 1)
+										}
+									}
+								}
+							emergency = Emergency(
+							id: emergencyDoc.documentID, 
+                            title: title,
+							details: details, 
+							location: location,
+							meetingPoint: meetingPoint, 
+							urgency: urgency, 
+							time: time,
+							branch: branch, 
+							active: active, 
+							replies: repliedDict, 
+							arrived: arrived, 
+							//imageURLs: imageURLs,  FIXME:
+							injuries: injuries, 
+							casualties: casualties)
+
+							emergencyList.append(emergency)
+
+							}
+						}
+					}
+				}
+			self.allEmergencies = emergencyList
+	}
     
     
     func addEmployee(name: String, id: Int, number: String?, branch: String, employeeType: String){
         
         
-        db.collection("Employees").addDocument(data: ["E ID": id,  "Name": name, "Number": number == nil ? "" : number!, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
+        db.collection("Employees").addDocument(data: ["Employee ID": id,  "Name": name, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
             if error == nil{
                 
                 self.getData()
                 
             }
             else{
-                //
+                throw Error(error)
             }
         }
-        
     }
-    
-    
+
     func updateEmployee(employee: Employee){
         
         let updated = db.collection("Employees").document(employee.docID ?? "")
@@ -188,7 +221,7 @@ extension dataViewModel // Functions used for Model View ViewModel
                 print(err)
             }
             else {
-                document?.reference.updateData(["E ID": employee.id,  "Name": employee.name, "Number": employee.number, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
+                document?.reference.updateData(["Employee ID": employee.id,  "Name": employee.name, "Branch": employee.branch, "Type": employee.employeeType, "Password": employee.password, "Status": employee.status])
                 self.getData()
             }
             
@@ -196,33 +229,95 @@ extension dataViewModel // Functions used for Model View ViewModel
         
     }
     
-    func updateEmergency(emergency: Emergency){
+    func addEmergency(title: String, details: String, called: [Employee], time: Date, urgency: Int, location: GeoPoint, meetingPoint: GeoPoint, injuries: Int, casualties: Int, branch: String){
+        
+        var calledID: [Int]{
+            var ids: [Int] = []
+            for emp in called{
+                ids.append(emp.id)
+            }
+            return ids
+        }
+        
+        db.collection("Emergencies").addDocument(data: [
+            "Titles": title,
+            "Details": details,
+
+            "Location": location,
+            "Meeting Point": meetingPoint,
+
+            "Time": time,
+            "Urgency": urgency,
+
+            "Employees Called": calledID,
+            "Accepted": [],
+            "Arrived": [],
+            "Declined": [],
+
+            "Branch": branch,
+
+           // "Image URL": [], FIXME:
+            "Injuries": injuries,
+            "Casualties": casualties,
+            "Active": true
+        ]) { error in
+            if error == nil{
+                
+                self.getData()
+                
+            }
+            else{
+                throw error
+            }
+        }  
+    }
+
+    func updateEmergency(emergencyDoc: Emergency){
         let updated = db.collection("Emergencies").document(emergency.id ?? "")
         
         updated.getDocument { (document, err) in
             
             if let err = err {
                 print(err)
-            }
+              }   
             else{
                 document?.reference.updateData([
+
+                    "Title": emergency.title,
                     "Details": emergency.details,
+
                     "Location": emergency.location,
                     "Meeting Point": emergency.meetingPoint,
+
+                    "Accepted": Array((emergency.repliedDict.filter({ $0.value.0 == "Accepted"})).keys.map{ $0.id }),
+                    "Arrived": emergency.arrived,
+                    "Declined": Array((emergency.repliedDict.filter({ $0.value.0 == "Declined"})).keys.map{ $0.id }),
+
                     "Urgency": emergency.urgency,
-                    //       "Accepted": emergency.replied[true],
-                    //    "Arrived": emergency.arrived,
+                    
                     "Injuries": emergency.injuries,
                     "Casualties": emergency.casualties,
-                    "Active": emergency.active
-                ])
-                self.getData()
+
+                    "Active": emergency.active,
+                    
+                  //  "Image URL": emergency.imageURLs FIXME:
+                                
+                ]) 
+                { error in
+                if error == nil{
+                    
+                    self.getData()
+                    
+                    }
+                else{
+                    throw error
+                    }
+                }
             }
-            
         }
-        
     }
     
+
     func deleteEmployee(employee: Employee){
         db.collection("Employees").document(employee.docID ?? "").delete(){
             err in
@@ -235,50 +330,11 @@ extension dataViewModel // Functions used for Model View ViewModel
         }
     }
     
-    
-    func addEmergency(details: String, called: [Employee], time: Date, urgency: Int, location: GeoPoint, meetingPoint: GeoPoint, injuries: Int, casualties: Int){
-        
-        var calledID: [Int]{
-            var x: [Int] = []
-            for emp in called{
-                x.append(emp.id)
-            }
-            return x
-        }
-        
-        db.collection("Emergencies").addDocument(data: [
-            "Details": details,
-            "Employees Called": calledID,
-            "Time": time,
-            "Location": location,
-            "Meeting Point": meetingPoint,
-            "Urgency": urgency,
-            "Accepted": [],
-            "Arrived": [],
-            "Image URL": [],
-            "Injuries": injuries,
-            "Casualties": casualties,
-            "Active": true
-        ]) { error in
-            if error == nil{
-                
-                self.getData()
-                
-            }
-            else{
-                //
-            }
-        }
-        
-        
-        
-        
-        
+    func deleteEmergency(emergency: Emergency){
+        // TODO:
     }
-    
-    
-    
-    func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]/*, emp: Employee*/) -> [Employee]{
+
+  /*  func doSortFilter(list: Array<Employee>, sort: String, type: Bool, filters: [filterModel]/*, emp: Employee*/) -> [Employee]{
         
         // if type true then desc else asc
         
@@ -398,6 +454,6 @@ extension dataViewModel // Functions used for Model View ViewModel
         }
         
         
-        return newList}
+        return newList}*/
     
 }

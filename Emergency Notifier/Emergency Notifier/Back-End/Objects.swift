@@ -17,7 +17,7 @@ class Employee: Identifiable, Equatable{
     }
     
     let id: Int
-    var password: String = "password"  // Encrypt later
+    var password: String = "password"  // TODO:  Encrypt later
     var name: String
     var status: Bool
     var branch: String
@@ -78,6 +78,8 @@ struct Emergency: Identifiable{
 	
 
 	/*
+
+
     var imageURLs: [String] = [] // URLS
     
 
@@ -88,7 +90,7 @@ struct Emergency: Identifiable{
         }
         return list
     }
-    */ // Add images for gallery
+    */ // TODO: Add images for gallery
 }
 
 
@@ -129,7 +131,7 @@ class dataViewModel: ObservableObject{
 	init(account: Employee)
 	{
 		self.account = account
-		self.filterEmployees()
+		filterEmployees()
 		getData()
 	}
 
