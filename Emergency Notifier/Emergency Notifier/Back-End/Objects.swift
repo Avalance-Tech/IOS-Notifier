@@ -1,6 +1,7 @@
+import Foundation
+import Firebase
 
-
-class Employee: Identifiable, Equatable{   
+class Employee: Identifiable, Equatable, Hashable{
 	/* 
 	Employee
 	Employee Id, Password Hash, Name, Phone Number, Status (bool), Branch, EmployeeType, docID (firebase)
@@ -16,7 +17,7 @@ class Employee: Identifiable, Equatable{
         self.docID = docID
     }
     
-    let id: Int
+    var id: Int
     var password: String = "password"  // TODO:  Encrypt later
     var name: String
     var status: Bool
@@ -30,6 +31,11 @@ class Employee: Identifiable, Equatable{
 	
     func statusToggle(){
         self.status.toggle()
+    }
+    
+    func hash(into hasher: inout Hasher){
+        hasher.combine(id)
+        hasher.combine(docID)
     }
 }
 
@@ -49,13 +55,15 @@ struct Emergency: Identifiable{
 	ID, Details, Location, MeetingPoint, Urgency (1 - 5), Time, Employees called [employee], branch, active (bool), replied (dict(employee.id, (bool, eta, time))), arrived (list of employees), images, injuries, casualties
 	*/
 	
-	var docID: String? // for database
-
+	var id: String? // for database
+    
 
 	//Details about the emergency
 	var title: String
 	var details: String
 
+    var branch: String
+    
     var injuries: Int
     var casualties: Int
 
@@ -73,10 +81,11 @@ struct Emergency: Identifiable{
 	
 	
 	// Called employees
-	var replies: Dictionary<Employee: (String /* Replied */, Date/* ETA */)>
+	var replies: Dictionary<Employee, (String /* Replied */, Date/* ETA */)>
 	var arrived: Array<Employee> = []
 	
-
+    var active: Bool = true
+    
 	/*
 
 
@@ -125,8 +134,9 @@ class dataViewModel: ObservableObject{
 	@Published var filters = [filterModel]()
     
     let db = Firestore.firestore()
-
-	shownEmployees: [Employee] = []
+    
+    var account: Employee
+	var shownEmployees: [Employee] = []
 
 	init(account: Employee)
 	{
@@ -136,16 +146,16 @@ class dataViewModel: ObservableObject{
 	}
 
 
-    var shownEmployees: [Employee]{
+  /*  var shownEmployees: [Employee]{
         var emp: [Employee] = []
         
-        emp = doSortFilter(list: allEmployees,  sort: sort, type: typeS, filters: filters/*, emp: empl*/)
+        emp = doSortFilter(list: allEmployees,  sort: sort, Asc: Ascending, filters: filters/*, emp: empl*/)
         
         if search != ""{
             return emp.filter({$0.name.lowercased().contains(search.lowercased() )})
         }
         
         return emp
-    }
+    }*/
     
 }
