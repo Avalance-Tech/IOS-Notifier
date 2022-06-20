@@ -18,7 +18,7 @@ struct Emergency_NotifierApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Create_Emergency()
         }
     }
 }

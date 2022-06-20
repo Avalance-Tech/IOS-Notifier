@@ -105,8 +105,8 @@ struct Emergency: Identifiable{
 
 struct filterModel: Identifiable{
 	var id = UUID()
-	var type: String
-	var filter: String
+	var type: String /* Branch, Name, Status etc. */
+	var filterRules: String
 }
 
 
@@ -126,7 +126,7 @@ class dataViewModel: ObservableObject{
     @Published var allEmployees = [Employee]()
     @Published var allEmergencies = [Emergency]()
     
-    @Published var Ascending = true
+    @Published var ascending = true
 
     @Published var search = ""
     @Published var sort = "Status"
@@ -136,7 +136,6 @@ class dataViewModel: ObservableObject{
     let db = Firestore.firestore()
     
     var account: Employee
-	var shownEmployees: [Employee] = []
 
 	init(account: Employee)
 	{
@@ -146,16 +145,21 @@ class dataViewModel: ObservableObject{
 	}
 
 
-  /*  var shownEmployees: [Employee]{
+    var shownEmployees: [Employee]{
+
         var emp: [Employee] = []
         
-        emp = doSortFilter(list: allEmployees,  sort: sort, Asc: Ascending, filters: filters/*, emp: empl*/)
-        
+        emp = doFilter(list: allEmployees, filters: filters, employee: account)
+        emp = doSort(list: emp, Asc: ascending, sort: sort)
+
+
         if search != ""{
-            return emp.filter({$0.name.lowercased().contains(search.lowercased() )})
+
+            return emp.filter({$0.name.lowercased().contains(search.lowercased())})
+
         }
         
         return emp
-    }*/
+    }
     
 }

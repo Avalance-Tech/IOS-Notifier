@@ -136,7 +136,7 @@ extension dataViewModel { // Functions used for Model View ViewModel
                         let location = emergencyDoc["Location"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
                         let meetingPoint = emergencyDoc["Meeting Point"] as? GeoPoint ?? GeoPoint(latitude: 0, longitude: 0)
                         
-                        let employeesCalled = emergencyDoc["Employees Called"] as? [Int] ?? []
+                        let employeesCalled = emergencyDoc["Employees Called"] as? [Employee.ID] ?? []
                         let declined = emergencyDoc["Declined"] as? [Employee.ID] ?? []
                         let accepted = emergencyDoc["Accepted"] as? [Employee.ID] ?? []
                         
@@ -362,7 +362,6 @@ extension dataViewModel { // Functions used for Model View ViewModel
     }
     
     func deleteEmergency(emergency: Emergency){
-        // TODO:
         db.collection("Emergency").document(emergency.id ?? "").delete(){
             err in
             if let err = err {
@@ -374,126 +373,81 @@ extension dataViewModel { // Functions used for Model View ViewModel
         }
     }
     
-  /*  func doSortFilter(list: Array<Employee>, sort: String, Asc: Bool, filters: [filterModel]/*, emp: Employee*/) -> [Employee]{
+    func doFilter(list: Array<Employee>, filters: Array<filterModel>, employee: Employee) -> [Employee]{
+    
+        var filteredList: [Employee] = []
         
-        // if type true then desc else asc
-        
-        var BranchEmps: [Employee] = []
-        var EmpTypes: [Employee] = []
-        var EmpStatus: [Employee] = []
-        
-        var newList: [Employee] = []
-        
-        if !filters.isEmpty{
-            
-            for fil in filters{
-                switch fil.type{
-                    
+        for filter in filters{
+            var filterArray: [Employee] = []
+            switch filter.type{
+
                 case "Branch":
-                    
-                    BranchEmps.append(contentsOf: list.filter({ Employee in
-                        Employee.branch == fil.filter
+                    filterArray.append(contentsOf: list.filter({ Employee in
+                        Employee.branch == filter.filterRules
                     }))
-                    
-                    
-                    
+                
                 case "Employee Type":
-                    
-                    EmpTypes.append(contentsOf: list.filter({ Employee in
-                        Employee.employeeType == fil.filter
+                    filterArray.append(contentsOf: list.filter({ Employee in 
+                        Employee.employeeType == filter.filterRules
                     }))
-                    
-                    
-                    
+
                 case "Status":
-                    switch fil.filter{
-                        
-                    case "Available":
-                        
-                        EmpStatus.append(contentsOf: list.filter({Employee in
-                            Employee.status == true
-                        }))
-                        
-                    default:
-                        
-                        EmpStatus.append(contentsOf: list.filter({Employee in
-                            Employee.status == false
-                        }))
-                        
+
+                    switch filter.filterRules{
+
+                        case "Available":
+                            filterArray.append(contentsOf: list.filter({ Employee in
+                                Employee.status == true
+                            }))
+
+                        default:
+                            filterArray.append(contentsOf: list.filter({ Employee in
+                                Employee.status == false
+                            }))
+
                     }
-                    
-                default: break
-                    
-                }
-                
+                default:
+                    break
+
             }
+            filteredList.append(contentsOf: filterArray)
         }
+
+        return Array(Set(filteredList))
+
+    }
+
+
+    func doSort(list: Array<Employee>, Asc: Bool, sort: String) -> [Employee]{
+
+        var returnedList: [Employee] = []
         
-        if EmpTypes.isEmpty{
-            EmpTypes = list
-        }
-        
-        if EmpStatus.isEmpty{
-            EmpStatus = list
-        }
-        if BranchEmps.isEmpty{
-            BranchEmps = list
-        }
-        
-        newList = BranchEmps.filter({ Employee in
-            EmpStatus.contains(Employee) && EmpTypes.contains(Employee)
-        })
-        
-        if filters.isEmpty{
-            newList = list
-        }
-        
-        if sort == "Name"{
-            if type{
-                newList = newList.sorted(by: {$0.name < $1.name})
-            }
-            else{
-                
-                newList = newList.sorted(by: {$0.name > $1.name})
-            }
+        switch sort{
+            case "Name":
+                returnedList = list.sorted(by: Asc ? {$0.name > $1.name} : {$0.name < $1.name})
             
-        }else if sort == "Id"{
-            if type{
-                newList = newList.sorted(by: {$0.id < $1.id})
-            }
-            else{
-                newList = newList.sorted(by: {$0.id > $1.id})
-            }
-        }else if sort == "Status"{
-            if type{
-                newList = newList.sorted(by: { user1, user2 in
-                    return user1.status
-                })
-            }
-            else{
-                newList = newList.sorted(by: {user1, user2 in
+            case "Id":
+                returnedList = list.sorted(by: Asc ? {$0.id > $1.id} : {$0.id < $1.id})
+            
+            case "Status":
+                returnedList = list.sorted(by: Asc ? {user1, user2 in
+                        return user1.status
+                    } : {user1, user2 in
                     return !user1.status
-                })
+                    })
+
+            case "Branch": 
+                returnedList = list.sorted(by: Asc ? {$0.branch > $1.branch} : {$0.branch < $1.branch})
+
+            case "Role":
+                returnedList = list.sorted(by: Asc ? {$0.employeeType > $1.employeeType} : {$0.employeeType < $1.employeeType})
+            
+            default:
+                return list
             }
-        }else if sort == "Branch"{
-            if type{
-                newList = newList.sorted(by: {  $0.branch < $1.branch  })
-            }
-            else{
-                newList = newList.sorted(by: { $0.branch > $1.branch
-                })
-            }
-        }else if sort == "Role"{
-            if type{
-                newList = newList.sorted(by: {  $0.employeeType < $1.employeeType  })
-            }
-            else{
-                newList = newList.sorted(by: { $0.employeeType > $1.employeeType
-                })
-            }
-        }
         
-        
-        return newList}
-    */
+        return returnedList
+
+    }
+
 }
