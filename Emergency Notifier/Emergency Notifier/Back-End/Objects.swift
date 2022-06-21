@@ -122,25 +122,26 @@ class dataViewModel: ObservableObject{
 	Used for data and infromation stored on the database
 	*/
 	
+    @Published var failed = false
+    @Published var loggingIn = false
 
     @Published var allEmployees = [Employee]()
     @Published var allEmergencies = [Emergency]()
     
     @Published var ascending = true
 
-    @Published var search = ""
+    var search = ""
     @Published var sort = "Status"
     
 	@Published var filters = [filterModel]()
     
     let db = Firestore.firestore()
     
-    var account: Employee
+    var account: Employee =  Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
 
-	init(account: Employee)
+	init()
 	{
-		self.account = account
-		filterEmployees()
+        filterEmployees()
 		getData()
 	}
 

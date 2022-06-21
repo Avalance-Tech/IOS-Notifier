@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		840593B62861111B00B40B42 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840593B52861111A00B40B42 /* test.swift */; };
+		840593BE286265DD00B40B42 /* Acc_Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840593B9286265DD00B40B42 /* Acc_Management.swift */; };
+		840593BF286265DD00B40B42 /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840593BA286265DD00B40B42 /* Emergency.swift */; };
+		840593C0286265DD00B40B42 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840593BB286265DD00B40B42 /* Account.swift */; };
+		840593C1286265DD00B40B42 /* Login_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840593BC286265DD00B40B42 /* Login_Page.swift */; };
 		844D5CC7285FA23D006C7780 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D5CC5285FA23D006C7780 /* Functions.swift */; };
 		844D5CC8285FA23D006C7780 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D5CC6285FA23D006C7780 /* Objects.swift */; };
 		844D5CCD285FA5B2006C7780 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844D5CCC285FA5B2006C7780 /* MapKit.framework */; };
@@ -15,7 +18,6 @@
 		844D5CD1285FA700006C7780 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 844D5CD0285FA700006C7780 /* GoogleService-Info.plist */; };
 		844D5CDF285FB51E006C7780 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 844D5CDE285FB51E006C7780 /* FirebaseFirestore */; };
 		84E828382859C61000B7CB69 /* Emergency_NotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */; };
-		84E8283A2859C61000B7CB69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E828392859C61000B7CB69 /* ContentView.swift */; };
 		84E8283C2859C61300B7CB69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8283B2859C61300B7CB69 /* Assets.xcassets */; };
 		84E8283F2859C61300B7CB69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8283E2859C61300B7CB69 /* Preview Assets.xcassets */; };
 		84E828492859C61300B7CB69 /* Emergency_NotifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E828482859C61300B7CB69 /* Emergency_NotifierTests.swift */; };
@@ -41,7 +43,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		840593B52861111A00B40B42 /* test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		840593B9286265DD00B40B42 /* Acc_Management.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Acc_Management.swift; sourceTree = "<group>"; };
+		840593BA286265DD00B40B42 /* Emergency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
+		840593BB286265DD00B40B42 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		840593BC286265DD00B40B42 /* Login_Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login_Page.swift; sourceTree = "<group>"; };
 		844D5CC5285FA23D006C7780 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		844D5CC6285FA23D006C7780 /* Objects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		844D5CC9285FA5A9006C7780 /* Emergency Notifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Emergency Notifier.entitlements"; sourceTree = "<group>"; };
@@ -51,7 +56,6 @@
 		844D5CD0285FA700006C7780 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84E828342859C61000B7CB69 /* Emergency Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Emergency Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierApp.swift; sourceTree = "<group>"; };
-		84E828392859C61000B7CB69 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		84E8283B2859C61300B7CB69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84E8283E2859C61300B7CB69 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		84E828442859C61300B7CB69 /* Emergency NotifierTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Emergency NotifierTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +93,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840593B7286265DD00B40B42 /* Front-End */ = {
+			isa = PBXGroup;
+			children = (
+				840593B8286265DD00B40B42 /* MVVM Pages */,
+				840593BD286265DD00B40B42 /* Pages */,
+			);
+			path = "Front-End";
+			sourceTree = "<group>";
+		};
+		840593B8286265DD00B40B42 /* MVVM Pages */ = {
+			isa = PBXGroup;
+			children = (
+				840593B9286265DD00B40B42 /* Acc_Management.swift */,
+				840593BA286265DD00B40B42 /* Emergency.swift */,
+				840593BB286265DD00B40B42 /* Account.swift */,
+				840593BC286265DD00B40B42 /* Login_Page.swift */,
+			);
+			path = "MVVM Pages";
+			sourceTree = "<group>";
+		};
+		840593BD286265DD00B40B42 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
 		844D5CCB285FA5B2006C7780 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +158,7 @@
 				844D5CC9285FA5A9006C7780 /* Emergency Notifier.entitlements */,
 				84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */,
 				84E828622859D0AB00B7CB69 /* Back-End */,
-				84E828612859D0A000B7CB69 /* Front-End */,
+				840593B7286265DD00B40B42 /* Front-End */,
 				84E8283B2859C61300B7CB69 /* Assets.xcassets */,
 				84E8283D2859C61300B7CB69 /* Preview Content */,
 			);
@@ -157,15 +188,6 @@
 				84E828542859C61300B7CB69 /* Emergency_NotifierUITestsLaunchTests.swift */,
 			);
 			path = "Emergency NotifierUITests";
-			sourceTree = "<group>";
-		};
-		84E828612859D0A000B7CB69 /* Front-End */ = {
-			isa = PBXGroup;
-			children = (
-				840593B52861111A00B40B42 /* test.swift */,
-				84E828392859C61000B7CB69 /* ContentView.swift */,
-			);
-			path = "Front-End";
 			sourceTree = "<group>";
 		};
 		84E828622859D0AB00B7CB69 /* Back-End */ = {
@@ -314,10 +336,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84E8283A2859C61000B7CB69 /* ContentView.swift in Sources */,
+				840593BE286265DD00B40B42 /* Acc_Management.swift in Sources */,
+				840593C1286265DD00B40B42 /* Login_Page.swift in Sources */,
 				84E828382859C61000B7CB69 /* Emergency_NotifierApp.swift in Sources */,
 				844D5CC8285FA23D006C7780 /* Objects.swift in Sources */,
-				840593B62861111B00B40B42 /* test.swift in Sources */,
+				840593BF286265DD00B40B42 /* Emergency.swift in Sources */,
+				840593C0286265DD00B40B42 /* Account.swift in Sources */,
 				844D5CC7285FA23D006C7780 /* Functions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

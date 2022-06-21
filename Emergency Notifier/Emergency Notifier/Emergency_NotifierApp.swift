@@ -16,9 +16,25 @@ struct Emergency_NotifierApp: App {
         FirebaseApp.configure()
     }
     
+    @StateObject var vm = dataViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            Create_Emergency()
+            switch vm.account.employeeType{
+                case "Operational Manager":
+                    
+                case "Team Head":
+                    
+                case "Deputy Team Head", "Supervisor":
+                
+                case "Assistant Supervisor", "Fire Fighter", "Coordinator":
+
+                default:
+                    login_page(vm: vm).body.navigationBarHidden(true)
+                }
+                
+                }.environmentObject(VM)
+            }
         }
     }
 }
