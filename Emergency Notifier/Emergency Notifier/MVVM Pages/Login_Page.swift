@@ -1,8 +1,10 @@
 import SwiftUI
 
-struct login_page{
+struct login_page: View{
     
-    @StateObject var vm: dataViewModel
+    @EnvironmentObject var vm: dataViewModel
+    @State var login_id = ""
+    @State var login_password = ""
 
 	var body: some View{
         ZStack{
@@ -14,13 +16,13 @@ struct login_page{
                 .padding(.all, 20)
                 .padding(.top, 50)
                 
-                TextField("Employee ID", text: self.$vm.login_id)
+                TextField("Employee ID", text: self.$login_id)
                     .padding()
                     .background(Color(red: 239/255, green: 243/255, blue:244/255))
                     .cornerRadius(10)
                     .padding(.bottom, 20)
             
-                SecureField("Password", text:   self.$vm.login_password)
+                SecureField("Password", text:   self.$login_password)
                     .padding()
                     .background(Color(red: 239/255, green: 243/255, blue:244/255))
                     .cornerRadius(10)
@@ -35,7 +37,7 @@ struct login_page{
             Button {
                 //log in
 
-                loggingIn, failed = vm.login(ID: login_id, Password: login_password)
+                vm.login(ID: Int(self.login_id)!, Password: self.login_password)
             
                 
             } label: {
@@ -45,7 +47,7 @@ struct login_page{
                     .background(Color.blue.opacity(0.99))
                     .cornerRadius(10)
                     
-            }
+            }.disabled(login_id == "" || login_password == "")
 
             
             NavigationLink {

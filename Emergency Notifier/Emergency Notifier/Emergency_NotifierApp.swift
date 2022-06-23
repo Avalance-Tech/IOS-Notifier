@@ -31,12 +31,13 @@ struct Emergency_NotifierApp: App {
                 case "Deputy Team Head", "Supervisor":
          */
                 case "Assistant Supervisor", "Fire Fighter", "Coordinator":
-                    Main_FireFighter(vm: vm).navigationBarHidden(true)
+                Main_FireFighter()
                 default:
-                    login_page(vm: vm).body.navigationBarHidden(true)
+                login_page()
                 }
                 
-                }.environmentObject(vm)
+                }.navigationBarHidden(true)
+                .environmentObject(vm)
         }
     }
 }

@@ -451,15 +451,14 @@ extension dataViewModel { // Functions used for Model View ViewModel
 
     }
 
-    func login(ID: Int, Password: String) -> Bool{
-        guard let employee = self.allEmployees.filter({ employee in
-            employee.id == ID && employee.password = Password
-        })else{
-            return false, true
+    func login(ID: Int, Password: String){
+        let employee = self.allEmployees.filter({ Employee in
+            Employee.id == ID && Employee.password == Password
+        })
+        if employee == []{
+            return
         }
-
-        self.account = employee
-        return true, false
+        self.account = employee[0]
     }
 
 }

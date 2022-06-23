@@ -2,7 +2,7 @@ import SwiftUI
 
 struct Main_FireFighter: View {
     
-    @StateObject var vm: dataViewModel
+    @EnvironmentObject var vm: dataViewModel
 	
     
     var body: some View {
