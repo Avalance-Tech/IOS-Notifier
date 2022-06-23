@@ -9,6 +9,8 @@ import SwiftUI
 import Firebase
 
 
+
+
 @main
 struct Emergency_NotifierApp: App {
     
@@ -20,21 +22,21 @@ struct Emergency_NotifierApp: App {
     
     var body: some Scene {
         WindowGroup {
+            NavigationView{
             switch vm.account.employeeType{
-                case "Operational Manager":
+       /*         case "Operational Manager":
                     
                 case "Team Head":
                     
                 case "Deputy Team Head", "Supervisor":
-                
+         */
                 case "Assistant Supervisor", "Fire Fighter", "Coordinator":
-
+                    Main_FireFighter(vm: vm).navigationBarHidden(true)
                 default:
                     login_page(vm: vm).body.navigationBarHidden(true)
                 }
                 
-                }.environmentObject(VM)
-            }
+                }.environmentObject(vm)
         }
     }
 }

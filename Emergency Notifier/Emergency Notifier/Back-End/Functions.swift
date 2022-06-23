@@ -70,6 +70,7 @@ func typeInitial(type: String) -> String {
 }
 
 extension dataViewModel { // Functions used for Model View ViewModel
+    
     func getData(){  // Fetches data from the database
         do{
             try self.getEmployees()
@@ -109,11 +110,10 @@ extension dataViewModel { // Functions used for Model View ViewModel
                         employeeList.append(employee)
                         
                     }
+                    
+                    self.allEmployees = employeeList
                 }
             }
-            
-            self.allEmployees = employeeList
-            
         }
     }
     
@@ -220,14 +220,15 @@ extension dataViewModel { // Functions used for Model View ViewModel
                         emergencyList.append(emergency)
                         
                     }
+                    
+                    self.allEmergencies = emergencyList
                 }
             }
         }
-        self.allEmergencies = emergencyList
     }
     
     
-    func addEmployee(name: String, id: Int, number: String?, branch: String, employeeType: String){
+    func addEmployee(name: String, id: Int, branch: String, employeeType: String){
         
         
         db.collection("Employees").addDocument(data: ["Employee ID": id,  "Name": name, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
@@ -448,6 +449,17 @@ extension dataViewModel { // Functions used for Model View ViewModel
         
         return returnedList
 
+    }
+
+    func login(ID: Int, Password: String) -> Bool{
+        guard let employee = self.allEmployees.filter({ employee in
+            employee.id == ID && employee.password = Password
+        })else{
+            return false, true
+        }
+
+        self.account = employee
+        return true, false
     }
 
 }

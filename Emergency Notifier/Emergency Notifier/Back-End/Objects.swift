@@ -23,7 +23,7 @@ class Employee: Identifiable, Equatable, Hashable{
     var status: Bool
     var branch: String
     var employeeType: String
-    var docID: String?
+    var docID: String? 
     
     static func == (lhs: Employee, rhs: Employee) -> Bool{   // function to make it equatable
         return lhs.id == rhs.id
@@ -121,6 +121,8 @@ class dataViewModel: ObservableObject{
 
 	Used for data and infromation stored on the database
 	*/
+    @Published var login_id = "9999"
+    @Published var login_password = "password"
 	
     @Published var failed = false
     @Published var loggingIn = false
@@ -137,12 +139,13 @@ class dataViewModel: ObservableObject{
     
     let db = Firestore.firestore()
     
-    var account: Employee =  Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
+    @Published var account: Employee =  Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
 
 	init()
 	{
         filterEmployees()
 		getData()
+        print("\(allEmployees) lolx")
 	}
 
 
