@@ -10,31 +10,37 @@ import SwiftUI
 		- Account Page
 */
 
-extension dataViewModel{
-    var Search: some View{
+struct SearchBar: View{
+    
+    @EnvironmentObject var vm: dataViewModel
+
+    var body: some View{ // FIXME:
         HStack{
 
         Image(systemName: "magnifyingglass")
             .resizable()
             .frame(width: 20, height: 20, alignment: .center)
             .padding(.leading, 10)
-            .offset(x: 12)
+            .offset(x: 10)
 
 
         Divider().frame(width: 1, height: 20, alignment: .center)
-            .offset(x: 8)
+            .offset(x: 5)
 
 
-            /*      TextField("Search", text: $search)
-            .frame(width: 160 ,height: 30)
-            .padding(.horizontal, 40)
+            TextField("Search", text: $vm.search)
+            .frame(width: 120 ,height: 30)
+            .padding(.horizontal, 30)
             .background(Color.gray.opacity(0.3))
-            .cornerRadius(10).offset(x:-30)*/
+            .cornerRadius(10).offset(x:-30)
         }}
+}
+
+extension dataViewModel{  
     
 	var filterView: some View{
 
-		ZStack{
+		VStack(){
 		HStack{
 			
 		Spacer()
@@ -115,7 +121,9 @@ extension dataViewModel{
 		Spacer()
 				
 		}
-
+        
+            Divider()
+            
 		ScrollView(.horizontal){
 			if filters.isEmpty{
 				VStack(alignment: .center){
@@ -127,12 +135,12 @@ extension dataViewModel{
 					ForEach(filters) { filter in
 										
 				Text(filter.filterRules)
-							.padding(.trailing, 25)
+							.padding(.trailing, 30)
 							.padding([.leading, .top, .bottom], 10)
 							.background(Color.gray.opacity(0.3))
 							.cornerRadius(30)
 				Image(systemName: "xmark")
-							.offset(x: -20)
+							.offset(x: -25)
 							.onTapGesture {
 								self.filters.removeAll { filterModel in
 									filterModel.filterRules == filter.filterRules
@@ -146,7 +154,7 @@ extension dataViewModel{
     
 
 	var sortView: some View{
-        VStack{
+        VStack(spacing: 10){
             
 			Button {
                 self.sort = "Name"
@@ -246,7 +254,7 @@ extension Account{
          
             Button {showPop = true} label: {Text("Change Password").underline()}.padding()
             
-            Button {DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {vm.account = Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "Logged Out")}} label: {Text("Log Out").underline()}.padding()
+            Button {DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {vm.logout()}} label: {Text("Log Out").underline()}.padding()
         }.popover(isPresented: $showPop) {changePassword}}
 
 	var changePassword: some View{

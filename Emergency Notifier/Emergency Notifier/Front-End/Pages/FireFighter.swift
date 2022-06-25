@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Main_FireFighter: View {
+struct FireFighter: View {
     
     @EnvironmentObject var vm: dataViewModel
 	

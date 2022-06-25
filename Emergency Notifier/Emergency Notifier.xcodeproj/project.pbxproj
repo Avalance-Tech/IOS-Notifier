@@ -7,18 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		842069702863B2340045A93E /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842069682863B2340045A93E /* Presets.swift */; };
-		842069752863B2340045A93E /* FireFighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8420696F2863B2340045A93E /* FireFighter.swift */; };
 		844D5CC7285FA23D006C7780 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D5CC5285FA23D006C7780 /* Functions.swift */; };
 		844D5CC8285FA23D006C7780 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D5CC6285FA23D006C7780 /* Objects.swift */; };
 		844D5CCD285FA5B2006C7780 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844D5CCC285FA5B2006C7780 /* MapKit.framework */; };
 		844D5CCF285FA5C5006C7780 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844D5CCE285FA5C5006C7780 /* AuthenticationServices.framework */; };
 		844D5CD1285FA700006C7780 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 844D5CD0285FA700006C7780 /* GoogleService-Info.plist */; };
 		844D5CDF285FB51E006C7780 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 844D5CDE285FB51E006C7780 /* FirebaseFirestore */; };
-		8491BF522864EC6F00FBCFEA /* Login_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8491BF512864EC6F00FBCFEA /* Login_Page.swift */; };
-		8491BF572864EC7F00FBCFEA /* Acc_Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8491BF542864EC7F00FBCFEA /* Acc_Management.swift */; };
-		8491BF582864EC7F00FBCFEA /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8491BF552864EC7F00FBCFEA /* Emergency.swift */; };
-		8491BF592864EC7F00FBCFEA /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8491BF562864EC7F00FBCFEA /* Account.swift */; };
+		84AD608D28651F6F007EC254 /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608228651F6F007EC254 /* Presets.swift */; };
+		84AD608E28651F6F007EC254 /* Acc_Management.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608428651F6F007EC254 /* Acc_Management.swift */; };
+		84AD608F28651F6F007EC254 /* Emergency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608528651F6F007EC254 /* Emergency.swift */; };
+		84AD609028651F6F007EC254 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608628651F6F007EC254 /* Account.swift */; };
+		84AD609128651F6F007EC254 /* Supervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608828651F6F007EC254 /* Supervisor.swift */; };
+		84AD609228651F6F007EC254 /* FireFighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608928651F6F007EC254 /* FireFighter.swift */; };
+		84AD609328651F6F007EC254 /* OperatingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608A28651F6F007EC254 /* OperatingManager.swift */; };
+		84AD609428651F6F007EC254 /* TeamHead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608B28651F6F007EC254 /* TeamHead.swift */; };
+		84AD609528651F6F007EC254 /* Login_Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD608C28651F6F007EC254 /* Login_Page.swift */; };
 		84E828382859C61000B7CB69 /* Emergency_NotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */; };
 		84E8283C2859C61300B7CB69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8283B2859C61300B7CB69 /* Assets.xcassets */; };
 		84E8283F2859C61300B7CB69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E8283E2859C61300B7CB69 /* Preview Assets.xcassets */; };
@@ -45,8 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		842069682863B2340045A93E /* Presets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
-		8420696F2863B2340045A93E /* FireFighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireFighter.swift; sourceTree = "<group>"; };
 		844D5CC5285FA23D006C7780 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		844D5CC6285FA23D006C7780 /* Objects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		844D5CC9285FA5A9006C7780 /* Emergency Notifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Emergency Notifier.entitlements"; sourceTree = "<group>"; };
@@ -54,10 +55,15 @@
 		844D5CCC285FA5B2006C7780 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		844D5CCE285FA5C5006C7780 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		844D5CD0285FA700006C7780 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8491BF512864EC6F00FBCFEA /* Login_Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login_Page.swift; sourceTree = "<group>"; };
-		8491BF542864EC7F00FBCFEA /* Acc_Management.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Acc_Management.swift; sourceTree = "<group>"; };
-		8491BF552864EC7F00FBCFEA /* Emergency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
-		8491BF562864EC7F00FBCFEA /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		84AD608228651F6F007EC254 /* Presets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
+		84AD608428651F6F007EC254 /* Acc_Management.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Acc_Management.swift; sourceTree = "<group>"; };
+		84AD608528651F6F007EC254 /* Emergency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emergency.swift; sourceTree = "<group>"; };
+		84AD608628651F6F007EC254 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		84AD608828651F6F007EC254 /* Supervisor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supervisor.swift; sourceTree = "<group>"; };
+		84AD608928651F6F007EC254 /* FireFighter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireFighter.swift; sourceTree = "<group>"; };
+		84AD608A28651F6F007EC254 /* OperatingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperatingManager.swift; sourceTree = "<group>"; };
+		84AD608B28651F6F007EC254 /* TeamHead.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamHead.swift; sourceTree = "<group>"; };
+		84AD608C28651F6F007EC254 /* Login_Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login_Page.swift; sourceTree = "<group>"; };
 		84E828342859C61000B7CB69 /* Emergency Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Emergency Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emergency_NotifierApp.swift; sourceTree = "<group>"; };
 		84E8283B2859C61300B7CB69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,25 +103,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		842069672863B2340045A93E /* Front-End */ = {
-			isa = PBXGroup;
-			children = (
-				8491BF532864EC7F00FBCFEA /* MVVM Pages */,
-				842069682863B2340045A93E /* Presets.swift */,
-				8420696E2863B2340045A93E /* Pages */,
-			);
-			path = "Front-End";
-			sourceTree = "<group>";
-		};
-		8420696E2863B2340045A93E /* Pages */ = {
-			isa = PBXGroup;
-			children = (
-				8491BF512864EC6F00FBCFEA /* Login_Page.swift */,
-				8420696F2863B2340045A93E /* FireFighter.swift */,
-			);
-			path = Pages;
-			sourceTree = "<group>";
-		};
 		844D5CCB285FA5B2006C7780 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,14 +112,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8491BF532864EC7F00FBCFEA /* MVVM Pages */ = {
+		84AD608128651F6F007EC254 /* Front-End */ = {
 			isa = PBXGroup;
 			children = (
-				8491BF542864EC7F00FBCFEA /* Acc_Management.swift */,
-				8491BF552864EC7F00FBCFEA /* Emergency.swift */,
-				8491BF562864EC7F00FBCFEA /* Account.swift */,
+				84AD608228651F6F007EC254 /* Presets.swift */,
+				84AD608328651F6F007EC254 /* MVVM Pages */,
+				84AD608728651F6F007EC254 /* Pages */,
+				84AD608C28651F6F007EC254 /* Login_Page.swift */,
+			);
+			path = "Front-End";
+			sourceTree = "<group>";
+		};
+		84AD608328651F6F007EC254 /* MVVM Pages */ = {
+			isa = PBXGroup;
+			children = (
+				84AD608428651F6F007EC254 /* Acc_Management.swift */,
+				84AD608528651F6F007EC254 /* Emergency.swift */,
+				84AD608628651F6F007EC254 /* Account.swift */,
 			);
 			path = "MVVM Pages";
+			sourceTree = "<group>";
+		};
+		84AD608728651F6F007EC254 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				84AD608828651F6F007EC254 /* Supervisor.swift */,
+				84AD608928651F6F007EC254 /* FireFighter.swift */,
+				84AD608A28651F6F007EC254 /* OperatingManager.swift */,
+				84AD608B28651F6F007EC254 /* TeamHead.swift */,
+			);
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		84E8282B2859C61000B7CB69 = {
@@ -159,12 +168,12 @@
 		84E828362859C61000B7CB69 /* Emergency Notifier */ = {
 			isa = PBXGroup;
 			children = (
+				84AD608128651F6F007EC254 /* Front-End */,
 				844D5CD0285FA700006C7780 /* GoogleService-Info.plist */,
 				844D5CCA285FA5B2006C7780 /* Emergency-Notifier-Info.plist */,
 				844D5CC9285FA5A9006C7780 /* Emergency Notifier.entitlements */,
 				84E828372859C61000B7CB69 /* Emergency_NotifierApp.swift */,
 				84E828622859D0AB00B7CB69 /* Back-End */,
-				842069672863B2340045A93E /* Front-End */,
 				84E8283B2859C61300B7CB69 /* Assets.xcassets */,
 				84E8283D2859C61300B7CB69 /* Preview Content */,
 			);
@@ -342,15 +351,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8491BF592864EC7F00FBCFEA /* Account.swift in Sources */,
-				8491BF582864EC7F00FBCFEA /* Emergency.swift in Sources */,
 				84E828382859C61000B7CB69 /* Emergency_NotifierApp.swift in Sources */,
+				84AD608F28651F6F007EC254 /* Emergency.swift in Sources */,
+				84AD608E28651F6F007EC254 /* Acc_Management.swift in Sources */,
+				84AD609328651F6F007EC254 /* OperatingManager.swift in Sources */,
+				84AD609528651F6F007EC254 /* Login_Page.swift in Sources */,
 				844D5CC8285FA23D006C7780 /* Objects.swift in Sources */,
-				842069752863B2340045A93E /* FireFighter.swift in Sources */,
-				842069702863B2340045A93E /* Presets.swift in Sources */,
-				8491BF522864EC6F00FBCFEA /* Login_Page.swift in Sources */,
-				8491BF572864EC7F00FBCFEA /* Acc_Management.swift in Sources */,
+				84AD608D28651F6F007EC254 /* Presets.swift in Sources */,
+				84AD609128651F6F007EC254 /* Supervisor.swift in Sources */,
 				844D5CC7285FA23D006C7780 /* Functions.swift in Sources */,
+				84AD609228651F6F007EC254 /* FireFighter.swift in Sources */,
+				84AD609428651F6F007EC254 /* TeamHead.swift in Sources */,
+				84AD609028651F6F007EC254 /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

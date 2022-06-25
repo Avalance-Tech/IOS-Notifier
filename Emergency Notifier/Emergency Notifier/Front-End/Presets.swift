@@ -16,6 +16,21 @@ var BottomMenu: some View{
 }
 
 
+var reportEmergency: some View{
+    
+    NavigationLink(destination: {
+        EmergencyPage()
+    }, label: {
+        Text("Report an emergency")
+            .underline()
+            .padding(.vertical, 15)
+            .padding(.horizontal, 10)
+            .foregroundColor(Color.blue)
+            .font(.system(size: 20, design: .rounded))
+        
+    })
+    }
+
 struct onCall: View{
         @StateObject var vm: dataViewModel
     
@@ -94,22 +109,7 @@ extension dataViewModel{
 
 
 
-    var reportEmergency: some View{
-        
-        NavigationLink(destination: {
-            
-           // createEmergency
-            
-        }, label: {
-            Text("Report an emergency")
-                .underline()
-                .padding(.vertical, 15)
-                .padding(.horizontal, 10)
-                .foregroundColor(Color.blue)
-                .font(.system(size: 20, design: .rounded))
-            
-        })
-        }
+
     var recentEmergencies: some View{
         
         NavigationLink(destination:{
@@ -124,6 +124,8 @@ extension dataViewModel{
                 .font(.system(size: 20, design: .rounded))
             
         })}
+
+
 	var accountManagement: some View{
         NavigationLink{
             
@@ -139,6 +141,8 @@ extension dataViewModel{
                 .font(.system(size: 20, design: .rounded))
             
         }}
+
+    // TODO: Assign Acting
 	
 }
 

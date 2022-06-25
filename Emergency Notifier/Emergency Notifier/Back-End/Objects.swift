@@ -1,5 +1,6 @@
 import Foundation
 import Firebase
+import SwiftUI
 
 class Employee: Identifiable, Equatable, Hashable{
 	/* 
@@ -18,7 +19,7 @@ class Employee: Identifiable, Equatable, Hashable{
     }
     
     var id: Int
-    var password: String = "password"  // TODO:  Encrypt later
+    var password: String = "password"  // TODO:  Encrypt password
     var name: String
     var status: Bool
     var branch: String
@@ -99,7 +100,7 @@ struct Emergency: Identifiable{
         }
         return list
     }
-    */ // TODO: Add images for gallery
+    */ // TODO: Add images for gallery (emergency)
 }
 
 
@@ -121,8 +122,13 @@ class dataViewModel: ObservableObject{
 
 	Used for data and infromation stored on the database
 	*/
-    @Published var login_id = "9999"
-    @Published var login_password = "password"
+
+    
+    @AppStorage("ID") var currentUserID: Int?
+    @AppStorage("Password") var currentUserPassword: String?
+
+    @Published var login_id = ""
+    @Published var login_password = ""
 	
     @Published var failed = false
     @Published var loggingIn = false
@@ -143,10 +149,11 @@ class dataViewModel: ObservableObject{
 
 	init()
 	{
-        filterEmployees()
 		getData()
-        print("\(allEmployees) lolx")
+        filterEmployees()
 	}
+    
+
 
 
     var shownEmployees: [Employee]{
