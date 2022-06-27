@@ -1,5 +1,6 @@
 import Foundation
 import Firebase
+import SwiftUI
 
 class Employee: Identifiable, Equatable, Hashable{
 	/* 
@@ -18,12 +19,12 @@ class Employee: Identifiable, Equatable, Hashable{
     }
     
     var id: Int
-    var password: String = "password"  // TODO:  Encrypt later
+    var password: String = "password"  // TODO:  Encrypt password
     var name: String
     var status: Bool
     var branch: String
     var employeeType: String
-    var docID: String?
+    var docID: String? 
     
     static func == (lhs: Employee, rhs: Employee) -> Bool{   // function to make it equatable
         return lhs.id == rhs.id
@@ -99,7 +100,7 @@ struct Emergency: Identifiable{
         }
         return list
     }
-    */ // TODO: Add images for gallery
+    */ // TODO: Add images for gallery (emergency)
 }
 
 
@@ -121,28 +122,37 @@ class dataViewModel: ObservableObject{
 
 	Used for data and infromation stored on the database
 	*/
+
+    @AppStorage("ID") var currentUserID: Int?
+    @AppStorage("Password") var currentUserPassword: String?
+
+    @Published var login_id = "9999"
+    @Published var login_password = "password"
 	
+    @Published var failed = false
+    @Published var loggingIn = false
 
     @Published var allEmployees = [Employee]()
     @Published var allEmergencies = [Emergency]()
     
     @Published var ascending = true
 
-    @Published var search = ""
+    var search = ""
     @Published var sort = "Status"
     
 	@Published var filters = [filterModel]()
     
     let db = Firestore.firestore()
     
-    var account: Employee
+    @Published var account: Employee =  Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
 
-	init(account: Employee)
+	init()
 	{
-		self.account = account
-		filterEmployees()
 		getData()
+        filterEmployees()
 	}
+    
+
 
 
     var shownEmployees: [Employee]{

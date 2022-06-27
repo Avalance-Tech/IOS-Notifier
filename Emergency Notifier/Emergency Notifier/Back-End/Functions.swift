@@ -2,7 +2,11 @@
 
 import Foundation
 import Firebase
+import UIKit
 
+func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+}
 
 func branchInitials(branch: String) -> String {
     
@@ -70,10 +74,11 @@ func typeInitial(type: String) -> String {
 }
 
 extension dataViewModel { // Functions used for Model View ViewModel
+    
     func getData(){  // Fetches data from the database
-        do{
-            try self.getEmployees()
-            try self.getEmergencies()
+                do{
+                    try self.getEmployees()
+                    try self.getEmergencies()
         } catch {
             print(error)
         }
@@ -81,20 +86,20 @@ extension dataViewModel { // Functions used for Model View ViewModel
     }
     
     func filterEmployees(){  // Ensures the user only sees the right employees
-        // TODO:
+        // TODO: Ensure only the correct employees are displayed
     }
     
     
     func getEmployees() throws {
         var employeeList: [Employee] = []
-        db.collection("Employees").getDocuments { snapshot, error in
+        db.collection("Employees").getDocuments { [self] snapshot, error in
             if error != nil{
                 
                 print("Error fetching data | \(String(describing: error))")
                 
             }
             if let snapshot = snapshot{
-                DispatchQueue.main.async{
+               
                     for emp in snapshot.documents{
                         
                         let eID = emp["Employee ID"] as? Int ?? -1
@@ -107,13 +112,12 @@ extension dataViewModel { // Functions used for Model View ViewModel
                         let employee = Employee(id: eID, password: password, name: name, status: status, branch: branch, employeeType: employeeType, docID: emp.documentID)
                         
                         employeeList.append(employee)
-                        
                     }
-                }
+                    
+                    self.allEmployees = employeeList
+                    self.autologin()
+                
             }
-            
-            self.allEmployees = employeeList
-            
         }
     }
     
@@ -126,7 +130,7 @@ extension dataViewModel { // Functions used for Model View ViewModel
                 
             }
             if let snapshot = snapshot {
-                DispatchQueue.main.async{ [self] in
+                DispatchQueue.global().async{ [self] in
                     
                     for emergencyDoc in snapshot.documents{ // loops through the documents and creates an emergencyDoc instance for it
                         
@@ -217,17 +221,20 @@ extension dataViewModel { // Functions used for Model View ViewModel
                             active: active)
                         //imageURLs: imageURLs,  FIXME:
                         
-                        emergencyList.append(emergency)
+                            emergencyList.append(emergency)
+
+
                         
                     }
-                }
+                    DispatchQueue.main.async {
+                    self.allEmergencies = emergencyList
+                    }}
             }
         }
-        self.allEmergencies = emergencyList
     }
     
     
-    func addEmployee(name: String, id: Int, number: String?, branch: String, employeeType: String){
+    func addEmployee(name: String, id: Int, branch: String, employeeType: String){
         
         
         db.collection("Employees").addDocument(data: ["Employee ID": id,  "Name": name, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
@@ -271,7 +278,7 @@ extension dataViewModel { // Functions used for Model View ViewModel
         }
         
         db.collection("Emergencies").addDocument(data: [
-            "Titles": title,
+            "Title": title,
             "Details": details,
             
             "Location": location,
@@ -447,6 +454,48 @@ extension dataViewModel { // Functions used for Model View ViewModel
             }
         
         return returnedList
+
+    }
+
+    func logout(){
+        currentUserID = nil
+        currentUserPassword = nil
+
+        self.account = Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
+    }
+
+    func autologin(){
+        if self.currentUserPassword != nil && self.currentUserPassword != ""{
+            self.account = login(ID: self.currentUserID!, Password: self.currentUserPassword!)
+            }
+    }
+
+    func login(ID: Int, Password: String) -> Employee{
+
+        
+        if Password == ""{
+            return Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "not logged in")
+        }
+        
+        
+        
+        let employee = self.allEmployees.filter({ Employee in
+                Employee.id == ID && Employee.password == Password})
+        
+        if employee == []{
+            failed = true
+            loggingIn = false
+            return Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "not logged in")
+        }
+        
+        loggingIn = true
+        failed = false
+        
+        self.currentUserID = ID
+        self.currentUserPassword = Password
+        
+
+        return employee[0]
 
     }
 
