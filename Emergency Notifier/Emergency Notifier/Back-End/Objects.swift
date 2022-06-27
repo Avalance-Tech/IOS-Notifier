@@ -123,12 +123,11 @@ class dataViewModel: ObservableObject{
 	Used for data and infromation stored on the database
 	*/
 
-    
     @AppStorage("ID") var currentUserID: Int?
     @AppStorage("Password") var currentUserPassword: String?
 
-    @Published var login_id = ""
-    @Published var login_password = ""
+    @Published var login_id = "9999"
+    @Published var login_password = "password"
 	
     @Published var failed = false
     @Published var loggingIn = false

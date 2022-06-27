@@ -77,11 +77,8 @@ extension dataViewModel { // Functions used for Model View ViewModel
     
     func getData(){  // Fetches data from the database
                 do{
-                try self.getEmployees()
-                
-            
-            
-            try self.getEmergencies()
+                    try self.getEmployees()
+                    try self.getEmergencies()
         } catch {
             print(error)
         }
@@ -118,7 +115,6 @@ extension dataViewModel { // Functions used for Model View ViewModel
                     }
                     
                     self.allEmployees = employeeList
-
                     self.autologin()
                 
             }
@@ -471,7 +467,7 @@ extension dataViewModel { // Functions used for Model View ViewModel
     func autologin(){
         if self.currentUserPassword != nil && self.currentUserPassword != ""{
             self.account = login(ID: self.currentUserID!, Password: self.currentUserPassword!)
-        }
+            }
     }
 
     func login(ID: Int, Password: String) -> Employee{
