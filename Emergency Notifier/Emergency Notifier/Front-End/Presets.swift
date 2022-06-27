@@ -16,6 +16,43 @@ var BottomMenu: some View{
 }
 
 
+var recentEmergencies: some View{
+        
+        NavigationLink{
+            
+            Recent_Emergencies()
+            
+        }label:{
+            Text("Recent Emergencies")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+        
+    }
+
+var accountManagement: some View{
+        NavigationLink{
+            
+            MainAccountsMenu()
+            
+        }label:{
+            Text("Create/edit/delete an account")
+            
+                .underline()
+                .padding(.vertical, 15)
+                .padding(.horizontal, 10)
+                .foregroundColor(Color.blue)
+                .font(.system(size: 20, design: .rounded))
+            
+        }
+    }
+
+
 var reportEmergency: some View{
     
     NavigationLink(destination: {
@@ -32,7 +69,7 @@ var reportEmergency: some View{
     }
 
 struct onCall: View{
-        @StateObject var vm: dataViewModel
+        @EnvironmentObject var vm: dataViewModel
     
         var body: some View{
             HStack{

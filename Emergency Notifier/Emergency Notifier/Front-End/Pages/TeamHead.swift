@@ -5,17 +5,25 @@ struct TeamHead: View{
 
 	var body: some View{
 
-VStack{
+VStack(spacing:10){
 	vm.TopMenu
 
 	Spacer()
 
-	onCall(vm: vm)
+	onCall()
     
     reportEmergency
+
+	accountManagement
+
+	// TODO: acting
+
+	recentEmergencies
 	
 	Spacer()
     Spacer()
+	
+	BottomMenu
 
 }
 
