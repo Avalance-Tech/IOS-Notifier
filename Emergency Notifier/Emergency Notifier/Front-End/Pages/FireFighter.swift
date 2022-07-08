@@ -13,7 +13,7 @@ struct FireFighter: View {
             
             Spacer()
             
-            onCall(vm: vm)
+            onCall()
             
             // Recent Emergencies
             vm.recentEmergencies

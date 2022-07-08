@@ -76,21 +76,40 @@ func typeInitial(type: String) -> String {
 extension dataViewModel { // Functions used for Model View ViewModel
     
     func getData(){  // Fetches data from the database
-                do{
-                    try self.getEmployees()
-                    try self.getEmergencies()
-        } catch {
-            print(error)
-        }
         
+        self.getEmployees()
+        self.getEmergencies()
     }
     
-    func filterEmployees(){  // Ensures the user only sees the right employees
+    func filterEmployees() -> [Employee]{  // Ensures the user only sees the right employees
+        
+        switch account.employeeType{
+            
+        case "Fire Fighter":
+            return []
+            
+        case "Supervisor", "Acting Team Head":
+            return self.allEmployees.filter({
+                $0.branch == account.branch && ["Supervisor", "Assistant Supervisor", "Fire Fighter"].contains($0.employeeType)
+            })
+            
+        case "Team Head":
+            return self.allEmployees.filter({
+                $0.branch == self.account.branch || $0.employeeType == "Operational Manager"
+            })
+            
+        case "Operational Manager":
+            return self.allEmployees
+            
+        default:
+            return []
+            
+        }
         // TODO: Ensure only the correct employees are displayed
     }
     
     
-    func getEmployees() throws {
+    func getEmployees(){
         var employeeList: [Employee] = []
         db.collection("Employees").getDocuments { [self] snapshot, error in
             if error != nil{
@@ -98,8 +117,9 @@ extension dataViewModel { // Functions used for Model View ViewModel
                 print("Error fetching data | \(String(describing: error))")
                 
             }
-            if let snapshot = snapshot{
-               
+            DispatchQueue.global().async{ [self] in
+                if let snapshot = snapshot{
+                    
                     for emp in snapshot.documents{
                         
                         let eID = emp["Employee ID"] as? Int ?? -1
@@ -113,15 +133,17 @@ extension dataViewModel { // Functions used for Model View ViewModel
                         
                         employeeList.append(employee)
                     }
-                    
+                }
+                
+                DispatchQueue.main.async{
                     self.allEmployees = employeeList
                     self.autologin()
-                
+                }
             }
         }
     }
     
-    func getEmergencies() throws {
+    func getEmergencies(){
         var emergencyList: [Emergency] = []
         db.collection("Emergencies").getDocuments { snapshot, error in
             if error != nil {
@@ -162,7 +184,7 @@ extension dataViewModel { // Functions used for Model View ViewModel
                         
                         let answered = Array(Set(accepted + declined + arrived))
                         
-                    
+                        
                         
                         var repliedDict: Dictionary<Employee, (String, Date)>{ // Checks to see who has replied
                             var replies: [Employee: (String, Date)] = [:]
@@ -173,31 +195,31 @@ extension dataViewModel { // Functions used for Model View ViewModel
                                     if !(answered.contains(where: {$0 == employee.id})){
                                         
                                         replies[employee] = ("No Reply", Date())
-                                    
+                                        
                                     }
-                                
+                                    
                                     else if (declined.contains(where: {$0 == employee.id})){
-                                    
+                                        
                                         replies[employee] = ("Declined", Date())
-                                    
+                                        
                                     }
                                     
                                     else if (accepted.contains(where: {$0 == employee.id})){
-
+                                        
                                         replies[employee] = ("Accepted", Date())
-                                    
+                                        
                                     }
                                 }
                             }
                             return replies
-
+                            
                         }
                         
                         var arrivedList: [Employee] {
                             var list: [Employee] = []
                             for employeeID in arrived{
-                                        if let emp = self.allEmployees.first(where: {$0.id == employeeID }){
-                                list.append(emp)
+                                if let emp = self.allEmployees.first(where: {$0.id == employeeID }){
+                                    list.append(emp)
                                 }
                             }
                             return list
@@ -221,13 +243,14 @@ extension dataViewModel { // Functions used for Model View ViewModel
                             active: active)
                         //imageURLs: imageURLs,  FIXME:
                         
-                            emergencyList.append(emergency)
-
-
+                        emergencyList.append(emergency)
+                        
+                        
                         
                     }
+                    
                     DispatchQueue.main.async {
-                    self.allEmergencies = emergencyList
+                        self.allEmergencies = emergencyList
                     }}
             }
         }
@@ -238,15 +261,14 @@ extension dataViewModel { // Functions used for Model View ViewModel
         
         
         db.collection("Employees").addDocument(data: ["Employee ID": id,  "Name": name, "Branch": branch, "Type": employeeType, "Password": "password", "Status": false]) { error in
-            if error == nil{
-                
-                self.getData()
-                
-            }
-            else{
+            if error != nil{
                 print(error as Any)
             }
+            else{
+                self.getData()
+            }
         }
+        
     }
     
     func updateEmployee(employee: Employee){
@@ -362,9 +384,6 @@ extension dataViewModel { // Functions used for Model View ViewModel
             if let err = err {
                 print("Error removing document \(err)")
             }
-            else{
-                self.getData()
-            }
         }
     }
     
@@ -381,97 +400,101 @@ extension dataViewModel { // Functions used for Model View ViewModel
     }
     
     func doFilter(list: Array<Employee>, filters: Array<filterModel>, employee: Employee) -> [Employee]{
-    
+        
         var filteredList: [Employee] = []
         
         for filter in filters{
             var filterArray: [Employee] = []
             switch filter.type{
-
-                case "Branch":
-                    filterArray.append(contentsOf: list.filter({ Employee in
-                        Employee.branch == filter.filterRules
-                    }))
                 
-                case "Employee Type":
-                    filterArray.append(contentsOf: list.filter({ Employee in 
-                        Employee.employeeType == filter.filterRules
+            case "Branch":
+                filterArray.append(contentsOf: list.filter({ Employee in
+                    Employee.branch == filter.filterRules
+                }))
+                
+            case "Employee Type":
+                filterArray.append(contentsOf: list.filter({ Employee in
+                    Employee.employeeType == filter.filterRules
+                }))
+                
+            case "Status":
+                
+                switch filter.filterRules{
+                    
+                case "Available":
+                    filterArray.append(contentsOf: list.filter({ Employee in
+                        Employee.status == true
                     }))
-
-                case "Status":
-
-                    switch filter.filterRules{
-
-                        case "Available":
-                            filterArray.append(contentsOf: list.filter({ Employee in
-                                Employee.status == true
-                            }))
-
-                        default:
-                            filterArray.append(contentsOf: list.filter({ Employee in
-                                Employee.status == false
-                            }))
-
-                    }
+                    
                 default:
-                    break
-
+                    filterArray.append(contentsOf: list.filter({ Employee in
+                        Employee.status == false
+                    }))
+                    
+                }
+            default:
+                break
+                
             }
             filteredList.append(contentsOf: filterArray)
         }
-
+        
+        if filters.isEmpty{
+            filteredList = list
+        }
+        
         return Array(Set(filteredList))
-
+        
     }
-
-
+    
+    
     func doSort(list: Array<Employee>, Asc: Bool, sort: String) -> [Employee]{
-
+        
         var returnedList: [Employee] = []
         
         switch sort{
-            case "Name":
-                returnedList = list.sorted(by: Asc ? {$0.name > $1.name} : {$0.name < $1.name})
+        case "Name":
+            returnedList = list.sorted(by: Asc ? {$0.name > $1.name} : {$0.name < $1.name})
             
-            case "Id":
-                returnedList = list.sorted(by: Asc ? {$0.id > $1.id} : {$0.id < $1.id})
+        case "Id":
+            returnedList = list.sorted(by: Asc ? {$0.id > $1.id} : {$0.id < $1.id})
             
-            case "Status":
-                returnedList = list.sorted(by: Asc ? {user1, user2 in
-                        return user1.status
-                    } : {user1, user2 in
-                    return !user1.status
-                    })
-
-            case "Branch": 
-                returnedList = list.sorted(by: Asc ? {$0.branch > $1.branch} : {$0.branch < $1.branch})
-
-            case "Role":
-                returnedList = list.sorted(by: Asc ? {$0.employeeType > $1.employeeType} : {$0.employeeType < $1.employeeType})
+        case "Status":
+            returnedList = list.sorted(by: Asc ? {user1, user2 in
+                return user1.status
+            } : {user1, user2 in
+                return !user1.status
+            })
             
-            default:
-                return list
-            }
+        case "Branch":
+            returnedList = list.sorted(by: Asc ? { $0.branch > $1.branch } : {$0.branch < $1.branch})
+            
+        case "Role":
+            returnedList = list.sorted(by: Asc ? { $0.employeeType > $1.employeeType } : {$0.employeeType < $1.employeeType })
+            
+        default:
+            return list
+        }
         
         return returnedList
-
+        
     }
-
+    
     func logout(){
         currentUserID = nil
         currentUserPassword = nil
-
+        
         self.account = Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
     }
-
+    
     func autologin(){
         if self.currentUserPassword != nil && self.currentUserPassword != ""{
             self.account = login(ID: self.currentUserID!, Password: self.currentUserPassword!)
-            }
+        }
     }
-
+    
     func login(ID: Int, Password: String) -> Employee{
-
+        
         
         if Password == ""{
             return Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "not logged in")
@@ -480,7 +503,7 @@ extension dataViewModel { // Functions used for Model View ViewModel
         
         
         let employee = self.allEmployees.filter({ Employee in
-                Employee.id == ID && Employee.password == Password})
+            Employee.id == ID && Employee.password == Password })
         
         if employee == []{
             failed = true
@@ -494,9 +517,9 @@ extension dataViewModel { // Functions used for Model View ViewModel
         self.currentUserID = ID
         self.currentUserPassword = Password
         
-
+        
         return employee[0]
-
+        
     }
-
+    
 }

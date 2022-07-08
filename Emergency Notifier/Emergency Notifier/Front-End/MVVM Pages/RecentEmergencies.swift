@@ -2,6 +2,7 @@ import SwiftUI
 import Firebase
 import MapKit
 
+
 struct WhenClickedEmployee: View{
     
     var employee: Employee
@@ -44,6 +45,8 @@ struct EditEmergency: View{ // TODO:
     var emergency: Emergency
     
     @EnvironmentObject var vm: dataViewModel
+    
+    @State var nETitle: String = ""
     
     @State var dragDown = false
     
@@ -89,6 +92,9 @@ struct EditEmergency: View{ // TODO:
                 
                 Spacer()
                 
+                HStack{
+                    TextEditor(text: $nETitle)
+                }
                 
                 HStack(spacing: 10){
                     
@@ -142,9 +148,8 @@ struct EditEmergency: View{ // TODO:
                 Spacer()
                 Spacer()
                 Divider()
-                Button {
                     
-                    vm.updateEmergency(emergency: Emergency(id: docID, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replied: emergency.replied, arrived: emergency.arrived, imageURLs: [], injuries: injuries, casualties: casualties))
+            /*      vm.updateEmergency(emergency: Emergency(id: docID, title: nETitle, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replies: emergency.replies, arrived: emergency.arrived,/* imageURLs: []*/ injuries: injuries, casualties: casualties))
                     
                     withAnimation{
                         dragDown = true}
@@ -156,15 +161,8 @@ struct EditEmergency: View{ // TODO:
                         }
                     }
                     // Edit Emergency
-                } label: {
-                    Text("Edit Emergency")
-                        .bold()
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.black)
-                        .background(RoundedRectangle(cornerRadius: 5))
-                    
-                }.disabled(nEDetails != "" ? false : true)
+               */
+
                 
                 
             }.padding(.horizontal, 5)
@@ -177,8 +175,6 @@ struct EditEmergency: View{ // TODO:
 
 struct WhenClicked: View{
     
-    @Binding var loggedin: Employee
-    
     @EnvironmentObject var vm: dataViewModel
     
     var emergency: Emergency
@@ -190,7 +186,7 @@ struct WhenClicked: View{
         VStack{
             
             
-            if loggedin.employeeType == "Team Head" || loggedin.employeeType == "Acting Team Head" || loggedin.employeeType == "Operational Manager"{
+            if vm.account.employeeType == "Team Head" || vm.account.employeeType == "Acting Team Head" || vm.account.employeeType == "Operational Manager"{
                 topBar
             }
             
@@ -210,8 +206,9 @@ struct WhenClicked: View{
             Text("Time:   \(emergency.time)")
             
             HStack{
+                
                 ScrollView{
-                    ForEach(emergency.employeesCalled){ employee in
+                    ForEach(Array(emergency.replies.keys)){ employee in
                         
                         NavigationLink {
                             WhenClickedEmployee(employee: employee, replied: checkReply(employee: employee))
@@ -221,7 +218,7 @@ struct WhenClicked: View{
                             HStack{
                                 Text(employee.name).frame(width: 140, height: 30, alignment: .leading)
                                 Text(String(employee.id)).frame(width: 50, height: 30, alignment: .center)
-                                Text(typeInitial(emptype: employee.employeeType)).frame(width: 40, height: 30, alignment: .center)
+                                Text(typeInitial(type: employee.employeeType)).frame(width: 40, height: 30, alignment: .center)
                                 Text(checkReply(employee: employee)).frame(width: 90, height: 30, alignment: .leading)
                                 
                             }
@@ -238,15 +235,10 @@ struct WhenClicked: View{
     
     
     func checkReply(employee: Employee) -> String{
-        if emergency.arrived.contains(employee.id){
+        if emergency.arrived.contains(employee){
             return "arrived"
-        }else
-        if emergency.replied[true]!.contains(employee.id){
-            return "accepted"
-        } else if emergency.replied[false]!.contains(employee.id){
-            return "rejected"
         }
-        return "not replied"
+        return emergency.replies[employee]?.0 ?? "Error"
     }
     
 }
@@ -276,7 +268,7 @@ struct GalleryWithEmergencies: View{
                         ForEach(vm.allEmergencies){ emergency in
                             NavigationLink{
                                 
-                                WhenClicked(loggedin: $loggedin, vm: vm, emergency: emergency)
+                                WhenClicked(emergency: emergency)
                                 
                             } label: {
                                 ZStack{
@@ -383,7 +375,7 @@ struct ListWithEmergencies: View{
                         }.frame(width: 105, height: 80, alignment: .center)
                         
                         NavigationLink {
-                            WhenClicked(loggedin: $loggedin, vm: vm, emergency: emergency)
+                            WhenClicked(emergency: emergency)
                         } label: {
                             
                             Divider().frame(height:70)
@@ -397,11 +389,11 @@ struct ListWithEmergencies: View{
                             
                             VStack(alignment: .leading){
                                 
-                                Text(String(emergency.employeesCalled.count)).frame(width: 100,height: 5)
+                                Text(String(emergency.replies.count)).frame(width: 100,height: 5)
                                 
                                 Divider().frame(width: 100, height:1)
                                 
-                                Text(String(emergency.replied[true]!.count)).frame(width:100, height: 5)
+                        //        Text(String(emergency.replies[true]!.count)).frame(width:100, height: 5)
                                 
                                 Divider().frame(width: 100, height: 1)
                                 
@@ -426,8 +418,6 @@ struct ListWithEmergencies: View{
 
 
 struct Recent_Emergencies: View {
-    @Binding var loggedin: Employee
-    
     @EnvironmentObject var vm: dataViewModel
     
     @State var search = ""
@@ -436,9 +426,6 @@ struct Recent_Emergencies: View {
     var body: some View {
         VStack{
             HStack{
-                
-                
-                vm.Search
                 
                 Spacer()
                 
@@ -464,10 +451,10 @@ struct Recent_Emergencies: View {
                     .disabled(viewType == "list" ? true : false)
             }
             if viewType == "list"{
-                ListWithEmergencies(vm: vm, loggedin: $loggedin)
+                ListWithEmergencies(loggedin: $vm.account)
             }
             else if viewType == "photo"{
-                GalleryWithEmergencies(vm: vm, loggedin: $loggedin)
+                GalleryWithEmergencies(loggedin: $vm.account)
             }
         }
     }
@@ -499,7 +486,7 @@ extension WhenClicked{
             
             NavigationLink{
                 
-                EditEmergency(emergency: emergency, vm: vm, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
+                EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
                 //Edit Emergency
             }label: {
                 Text("Edit").frame(width: 40, height: 30, alignment: .trailing)

@@ -41,7 +41,7 @@ struct Emergency_NotifierApp: App {
 
                 }
                 
-                }
+            }
             .environmentObject(vm)
         }
     }

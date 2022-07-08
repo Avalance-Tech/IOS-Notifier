@@ -89,7 +89,7 @@ struct Emergency: Identifiable{
     
 	/*
 
-
+´
     var imageURLs: [String] = [] // URLS
     
 
@@ -149,17 +149,17 @@ class dataViewModel: ObservableObject{
 	init()
 	{
 		getData()
-        filterEmployees()
 	}
     
 
 
 
     var shownEmployees: [Employee]{
-
+        
+        
         var emp: [Employee] = []
         
-        emp = doFilter(list: allEmployees, filters: filters, employee: account)
+        emp = doFilter(list: self.filterEmployees(), filters: filters, employee: account)
         emp = doSort(list: emp, Asc: ascending, sort: sort)
 
 

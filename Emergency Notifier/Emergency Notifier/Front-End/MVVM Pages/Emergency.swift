@@ -311,7 +311,7 @@ struct EmergencyPage: View{
  	       if(!showDetails){
                         
 					// Employee List
-						ForEach(vm.allEmployees) {Employee in
+						ForEach(vm.shownEmployees) {Employee in
                             EmergencyPage.showSelectedEmployee(employee: Employee, selectedItems: $selectedEmployeeIDs)
                         }
 						}	
@@ -347,7 +347,6 @@ struct EmergencyPage: View{
             }
 				.onAppear{
 					vm.getData()
-					vm.filterEmployees()
 					}
 				.popover(isPresented: $locationShowPU){locationPopUp}
 				.popover(isPresented: $MPShowPU){MPPopUp}
