@@ -54,8 +54,7 @@ struct EmergencyPage: View{
 					return false
 				}
 				return true}
-    // TODO: Fix up the details tab
-
+    
 		// Emergency Details Tab
 			var emergencyDetail: some View{
                 VStack(spacing:20){
@@ -75,26 +74,18 @@ struct EmergencyPage: View{
 				}.padding(.horizontal, 30)
                     
                     
-                    HStack(){
-
-                    Text("Details")
-                    TextEditor(text: $emergencyDetails)
-                        /*.padding(2)
-                        .cornerRadius(10)
-                        .border(Color.gray)
-                        .frame(maxHeight:200)
-                        .padding(.top, 10)*/
-                        .focused($focusedField, equals: .emergencyDetails)
-                        
-                    
-                        }
-                    
-                .frame(height: 200)
-				.padding(.horizontal, 20)
+                    ScrollView {
+                        VStack{
+                            TextEditor(text: $emergencyDetails)
+                                .focused($focusedField, equals: .emergencyDetails)
+                                .frame(minHeight: 200)                        }
+                    }.frame(height: 200)
+                    .cornerRadius(30)
+                    .padding(5)
+                    .padding(.horizontal, 10)
                     
                     if focusedField != nil{
                     Button {
-                        print("Hi")
                         focusedField = nil
                     } label: {
                         Image(systemName: "chevron.up")
@@ -109,7 +100,7 @@ struct EmergencyPage: View{
 					
 					Button {
 						
-						// TODO: open location tab
+						
 						self.MPShowPU = false
 						self.locationShowPU.toggle()
 
@@ -121,7 +112,7 @@ struct EmergencyPage: View{
 
 					Button {
 
-						// TODO: open Meeting location tab
+						
 						self.locationShowPU = false
 						self.MPShowPU.toggle()
 
@@ -239,7 +230,7 @@ struct EmergencyPage: View{
                 ZStack{
 				VStack(){
 					// Shows correct top part
-						if(showSorts){
+                    if(showSorts){
 							vm.sortView
                             
                         }
@@ -252,9 +243,7 @@ struct EmergencyPage: View{
 							emergencyDetail
                         }
 
-						Divider().onTapGesture {
-						// TODO: scroll to the top
-                        }
+						Divider()
                     
 
 					ScrollView{
@@ -311,8 +300,8 @@ struct EmergencyPage: View{
  	       if(!showDetails){
                         
 					// Employee List
-						ForEach(vm.allEmployees) {Employee in
-                            EmergencyPage.showSelectedEmployee(employee: Employee, selectedItems: $selectedEmployeeIDs)
+						ForEach(vm.shownEmployees()) {Employee in
+                            showSelectedEmployee(employee: Employee, selectedItems: $selectedEmployeeIDs)
                         }
 						}	
 					// Submit Button
@@ -346,8 +335,7 @@ struct EmergencyPage: View{
                 }
             }
 				.onAppear{
-					vm.getData()
-					vm.filterEmployees()
+					vm.getEmployees()
 					}
 				.popover(isPresented: $locationShowPU){locationPopUp}
 				.popover(isPresented: $MPShowPU){MPPopUp}

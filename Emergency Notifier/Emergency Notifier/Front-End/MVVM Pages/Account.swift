@@ -14,7 +14,7 @@ struct SearchBar: View{
     
     @EnvironmentObject var vm: dataViewModel
 
-    var body: some View{ // FIXME:
+    var body: some View{
         HStack{
 
         Image(systemName: "magnifyingglass")
@@ -249,7 +249,7 @@ extension Account{
             
             HStack{
                 Text(vm.account.name)
-            Image(systemName: "pencil") // TODO: edit name (MAYBE)
+            Image(systemName: "pencil")
             }
          
             Button {showPop = true} label: {Text("Change Password").underline()}.padding()
