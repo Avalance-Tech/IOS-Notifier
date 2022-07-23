@@ -50,7 +50,11 @@ struct ImageType: Identifiable{
 
 
 
-struct Emergency: Identifiable{ 
+struct Emergency: Identifiable, Equatable{
+    static func == (lhs: Emergency, rhs: Emergency) -> Bool {
+        lhs.id == rhs.id
+    }
+
 	
 	/* Emergency struct
 	ID, Details, Location, MeetingPoint, Urgency (1 - 5), Time, Employees called [employee], branch, active (bool), replied (dict(employee.id, (bool, eta, time))), arrived (list of employees), images, injuries, casualties
@@ -89,7 +93,7 @@ struct Emergency: Identifiable{
     
 	/*
 
-
+´
     var imageURLs: [String] = [] // URLS
     
 
@@ -126,8 +130,8 @@ class dataViewModel: ObservableObject{
     @AppStorage("ID") var currentUserID: Int?
     @AppStorage("Password") var currentUserPassword: String?
 
-    @Published var login_id = "9999"
-    @Published var login_password = "password"
+    @Published var login_id = ""
+    @Published var login_password = ""
 	
     @Published var failed = false
     @Published var loggingIn = false
@@ -137,29 +141,29 @@ class dataViewModel: ObservableObject{
     
     @Published var ascending = true
 
-    var search = ""
+    @Published var search = ""
     @Published var sort = "Status"
     
 	@Published var filters = [filterModel]()
     
     let db = Firestore.firestore()
     
-    @Published var account: Employee =  Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "", docID: "")
+    @Published var account: Employee =  Employee(id: -1, password: "", name: "", status: false, branch: "", employeeType: "Loading", docID: "")
 
 	init()
 	{
 		getData()
-        filterEmployees()
 	}
     
 
 
 
-    var shownEmployees: [Employee]{
+    func shownEmployees() -> [Employee]
+    {
 
-        var emp: [Employee] = []
+        var emp: [Employee] = self.filterEmployees()
         
-        emp = doFilter(list: allEmployees, filters: filters, employee: account)
+        emp = doFilter(list: emp, filters: filters, employee: account)
         emp = doSort(list: emp, Asc: ascending, sort: sort)
 
 
