@@ -40,7 +40,7 @@ struct WhenClickedEmployee: View{
 }
 
 
-struct EditEmergency: View{ // TODO:
+struct EditEmergency: View{ 
     
     var emergency: Emergency
     
@@ -62,7 +62,11 @@ struct EditEmergency: View{ // TODO:
     
     @State var activeState = true
     
-    var docID: String
+    private enum Field: Int, CaseIterable {
+        case emergencyTitle, emergencyDetails
+    }
+    
+    @FocusState private var focusedField: Field?
     
     
     var body: some View{
@@ -87,38 +91,59 @@ struct EditEmergency: View{ // TODO:
                 .transition(AnyTransition.move(edge: .top))
                 .ignoresSafeArea()
             }
-            
-            VStack{
+            VStack(spacing: 10){
                 
-                Spacer()
                 
-                HStack{
-                    TextEditor(text: $nETitle)
-                }
+                TextField("Emergency Details", text: $nETitle)
+                    .foregroundColor(Color.white)
+                    .padding(.all, 8)
+                    .background(Color.gray.opacity(6))
+                    .cornerRadius(10)
                 
-                HStack(spacing: 10){
-                    
-                    Stepper("Casualties\n\(casualties)", value: $casualties).multilineTextAlignment(.center)
-                    
-                    Stepper("Injuries\n\(injuries)", value: $injuries).multilineTextAlignment(.center)
-                    
-                }
-                .onChange(of: casualties) { newValue in
-                    if casualties < 0{
-                        casualties = 0
+                
+                ScrollView {
+                    VStack{
+                        TextEditor(text: $nEDetails)
+                            .focused($focusedField, equals: .emergencyDetails)
+                            .cornerRadius(10)
+                            .frame(minHeight: 100
+                            )
                     }
-                }
-                .onChange(of: injuries) { newValue in
-                    if injuries < 0{
-                        injuries = 0
+                }.frame(height: 100)
+                    .cornerRadius(10)
+                    .border(.black)
+                    
+                
+                if focusedField != nil{
+                    Button{
+                        focusedField = nil
+                    } label:{
+                        Image(systemName: "chevron.up")
+                            .resizable()
+                            .frame(width: 30, height: 15, alignment: .center)
+                        
+                    }}
+                
+                
+                Stepper("Casualties: \(casualties)", value: $casualties).multilineTextAlignment(.center)
+                    .onChange(of: casualties) { newValue in
+                        if casualties < 0{
+                            casualties = 0
+                        }
                     }
-                }
                 
-                HStack(){
-                    Toggle("Active", isOn: $activeState)
-                }
+                Stepper("Injuries: \(injuries)", value: $injuries).multilineTextAlignment(.center)
+                    .onChange(of: injuries) { newValue in
+                        if injuries < 0{
+                            injuries = 0
+                        }
+                    }
                 
-                HStack(spacing: 30){
+                
+                Toggle("Active", isOn: $activeState)
+                
+                
+                HStack(spacing: 40){
                     
                     Button {
                         // open location tab
@@ -140,94 +165,191 @@ struct EditEmergency: View{ // TODO:
                 
                 Stepper("Urgency: \(nEUrgency)", value: $nEUrgency)
                 
-                TextField("Emergency Details", text: $nEDetails)
-                    .foregroundColor(Color.white)
-                    .padding(.all, 8)
-                    .background(Color.gray.opacity(6))
-                    .cornerRadius(10)
+                
                 Spacer()
-                Spacer()
-                Divider()
-                    
-            /*      vm.updateEmergency(emergency: Emergency(id: docID, title: nETitle, details: nEDetails, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time:emergency.time, employeesCalled: emergency.employeesCalled, branch: emergency.branch, active: true, replies: emergency.replies, arrived: emergency.arrived,/* imageURLs: []*/ injuries: injuries, casualties: casualties))
-                    
-                    withAnimation{
-                        dragDown = true}
-                    
-                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                Text("Edit")
+                    .bold()
+                    .foregroundColor(Color.blue)
+                    .onTapGesture {
                         
-                        withAnimation {
-                            dragDown = false
+                        vm.updateEmergency(emergency: Emergency(id: emergency.id, title: nETitle, details: nEDetails, branch: emergency.branch, injuries: injuries, casualties: casualties, location: nELocation, meetingPoint: nEMP, urgency: nEUrgency, time: emergency.time, replies: emergency.replies, arrived: emergency.arrived, active: activeState))
+                        
+                        withAnimation{
+                            dragDown = true}
+                        
+                        Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
+                            
+                            withAnimation {
+                                dragDown = false
+                            }
                         }
                     }
-                    // Edit Emergency
-               */
-
+                
+                
+                // Edit Emergency
+                
+                
                 
                 
             }.padding(.horizontal, 5)
         }.onAppear {
+            nEUrgency = emergency.urgency
+            nETitle = emergency.title
+            nEDetails = emergency.details
+            casualties = emergency.casualties
+            injuries = emergency.injuries
             activeState = emergency.active
         }
     }
     
 }
 
-struct WhenClicked: View{
+struct WhenClicked: View{ 
     
     @EnvironmentObject var vm: dataViewModel
     
+    @State var selectedEmployeeIDs = Set<Int>()
+
+    @Environment(\.dismiss) private var dismiss
+    
+    var selectedEmployees: [Employee]{
+        var employees: [Employee] = []
+        for employee in vm.allEmployees {
+            if selectedEmployeeIDs.contains(employee.id){
+                employees.append(employee)
+            }
+        }
+        return employees}
+
     var emergency: Emergency
     @State var employeePopUp = false
     @State var forwardPopUp = false
     
-    var body: some View{
+    struct showSelectedEmployee: View{
+
+        let employee: Employee
         
-        VStack{
+        @Binding var selectedItems: Set<Int>
+        
+        var isSelected: Bool{
             
+            selectedItems.contains(employee.id)
             
-            if vm.account.employeeType == "Team Head" || vm.account.employeeType == "Acting Team Head" || vm.account.employeeType == "Operational Manager"{
-                topBar
-            }
+        }
+        
+        
+        
+        var body: some View{
             
-            
-            
-            
-            Text("Details:   \(emergency.details)").multilineTextAlignment(.center)
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width, alignment: .center)
-            
-            Text("\(emergency.location)")
-            Text("\(emergency.meetingPoint)")
-            Text("\(emergency.urgency)")
-            Text("\(emergency.branch)")
-            //  Text("\(emergency.imageURL)")
-            
-            
-            Text("Time:   \(emergency.time)")
-            
-            HStack{
+            HStack(spacing: 7){
                 
-                ScrollView{
-                    ForEach(Array(emergency.replies.keys)){ employee in
-                        
-                        NavigationLink {
-                            WhenClickedEmployee(employee: employee, replied: checkReply(employee: employee))
-                            
-                        } label: {
-                            
-                            HStack{
-                                Text(employee.name).frame(width: 140, height: 30, alignment: .leading)
-                                Text(String(employee.id)).frame(width: 50, height: 30, alignment: .center)
-                                Text(typeInitial(type: employee.employeeType)).frame(width: 40, height: 30, alignment: .center)
-                                Text(checkReply(employee: employee)).frame(width: 90, height: 30, alignment: .leading)
-                                
-                            }
-                        }
-                        
-                        
-                    }
+                Text(String(employee.id))
+                    .frame(width: 45, height: 30, alignment: .leading)
+                    .padding(.leading, 3)
+                
+                Divider()
+                
+                Text(String(employee.name).capitalized(with: .current))
+                    .frame(width:140, height: 30, alignment: .leading)
+                
+                
+                Image(employee.status ? "checkmark.circle.fill" : "circle.slash")
+                    .frame(width:23, height: 30, alignment: .leading)
+                
+                Divider()
+                
+                Text(branchInitials(branch: employee.branch))
+                    .frame(width:40, height: 30, alignment: .leading)
+                
+                Divider()
+                
+                Text(typeInitial(type: employee.employeeType))
+                    .font(.system(size: 15,weight: .light))
+                    .frame(width: 32, height: 30)
+                
+                Divider()
+                
+                if self.isSelected{
+                    Image(systemName:"checkmark")
+                        .foregroundColor(Color.blue)
+                        .frame(width: 20, height: 30)
+                }else{
+                    Text("").frame(width: 20, height: 30)
                 }
                 
+                
+            }
+            .onTapGesture {
+                if self.isSelected{
+                    self.selectedItems.remove(self.employee.id)
+                } else{
+                    self.selectedItems.insert(self.employee.id)
+                }
+            }
+            .frame(width: UIScreen.main.bounds.width, height: 70, alignment: .leading)
+            .border(Color.gray.opacity(self.isSelected ? 1 : 0.3))
+            .shadow(color: Color.black.opacity(self.isSelected ? 0.4 : 0), radius: 2, x: 2, y: 2)
+
+        }
+    }
+    
+    var body: some View{
+        ZStack{
+            VStack(spacing: 10){
+                if vm.account.employeeType == "Team Head" || vm.account.employeeType == "Acting Team Head" || vm.account.employeeType == "Operational Manager" || vm.account.employeeType == "Acting Operational Manager"{
+                    topBar
+                }
+                
+                HStack(alignment: .center, spacing: 10){Text("Title:"); Text("\(emergency.title)")
+                    .font(Font.headline)}
+                
+                
+                HStack(){
+                    Text("Details:\n\(emergency.details)")
+                        .multilineTextAlignment(.leading)
+                        .frame(width: UIScreen.main.bounds.width)
+                        .frame(maxHeight: 200)
+                        .padding(.horizontal, 10)
+                }.padding(.horizontal, 20)
+                
+                
+                Divider()
+                
+                HStack(spacing: 30){
+                    Text("location")
+                    Text("meeting point")
+                }
+                
+                HStack(spacing: 30){
+                    Text("Urgency: \(emergency.urgency)")
+                    Text("Branch: \(emergency.branch)")}
+                //  Text("\(emergency.imageURL)")
+                
+                
+                Text("Time:  \(emergency.time)")
+                
+                HStack{
+                    ScrollView{
+                        ForEach(Array(emergency.replies.keys)){ employee in
+                            
+                            NavigationLink {
+                                WhenClickedEmployee(employee: employee, replied: checkReply(employee: employee))
+                                
+                            } label: {
+                                
+                                HStack{
+                                    Text(employee.name).frame(width: 140, height: 30, alignment: .leading)
+                                    Text(String(employee.id)).frame(width: 50, height: 30, alignment: .center)
+                                    Text(typeInitial(type: employee.employeeType)).frame(width: 40, height: 30, alignment: .center)
+                                    Text(checkReply(employee: employee)).frame(width: 90, height: 30, alignment: .leading)
+                                    
+                                }
+                            }
+                            
+                            
+                        }
+                    }
+                }
                 
             }
         }
@@ -292,8 +414,6 @@ struct GalleryWithEmergencies: View{
                         }
                     }
                     
-                }.onAppear {
-                    vm.getData()
                 }
             }
         }
@@ -393,7 +513,7 @@ struct ListWithEmergencies: View{
                                 
                                 Divider().frame(width: 100, height:1)
                                 
-                        //        Text(String(emergency.replies[true]!.count)).frame(width:100, height: 5)
+                                //        Text(String(emergency.replies[true]!.count)).frame(width:100, height: 5)
                                 
                                 Divider().frame(width: 100, height: 1)
                                 
@@ -407,8 +527,6 @@ struct ListWithEmergencies: View{
                     }
                     Divider()
                 }
-            }.onAppear {
-                vm.getData()
             }
         }
     }
@@ -456,7 +574,7 @@ struct Recent_Emergencies: View {
             else if viewType == "photo"{
                 GalleryWithEmergencies(loggedin: $vm.account)
             }
-        }
+        }.onAppear{ vm.getData() }
     }
 }
 
@@ -466,6 +584,7 @@ struct Recent_Emergencies: View {
 
 //MARK: When Clicked Aspects
 extension WhenClicked{
+    
     
     var topBar: some View{
         
@@ -486,7 +605,7 @@ extension WhenClicked{
             
             NavigationLink{
                 
-                EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries, docID: emergency.id ?? "")
+                EditEmergency(emergency: emergency, nEDetails: emergency.details, nELocation: emergency.location, nEMP: emergency.meetingPoint, nEUrgency: emergency.urgency, casualties: emergency.casualties, injuries: emergency.injuries)
                 //Edit Emergency
             }label: {
                 Text("Edit").frame(width: 40, height: 30, alignment: .trailing)
@@ -495,11 +614,40 @@ extension WhenClicked{
                     .padding()
             }
         }.popover(isPresented: $forwardPopUp) {
-            Text("Show Employees")
+            VStack{
             
-            // add a list of all employees so you can select
+            Text("Forward To")
+                
+                ScrollView{
+                    ForEach(vm.shownEmployees().filter({ Employee in
+                        !emergency.replies.keys.contains(Employee)
+                    })
+                    ) { emp in
+                        showSelectedEmployee(employee: emp, selectedItems: $selectedEmployeeIDs)
+                    }
+                }
+                
+                Button {
+                    var newReplies = emergency.replies
+                    
+                    for employee in selectedEmployees{
+                        newReplies[employee] = ("No Reply", Date())
+                    }
+
+                    let nEm = Emergency(id: emergency.id, title: emergency.title, details: emergency.details, branch: emergency.branch, injuries: emergency.injuries, casualties: emergency.casualties, location: emergency.location, meetingPoint: emergency.meetingPoint, urgency: emergency.urgency, time: emergency.time, replies: newReplies, arrived: emergency.arrived, active: emergency.active)
+
+                    
+                    vm.updateEmergency(emergency: nEm)
+                    
+                    forwardPopUp = false
+                    
+                    dismiss()
+                    dismiss()
+                } label: {
+                    Text("Forward")
+                }
             
-            
+            }
         }
         
     }

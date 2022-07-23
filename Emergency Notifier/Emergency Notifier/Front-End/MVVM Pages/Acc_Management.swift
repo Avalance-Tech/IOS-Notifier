@@ -31,12 +31,12 @@ struct showSelectedDelete: View{
             
             Divider()
             
-            Text(branchInitials(branch: vm.account.branch))
+            Text(branchInitials(branch: employee.branch))
                 .frame(width:40, height: 30, alignment: .leading)
             
             Divider()
             
-            Text(typeInitial(type: vm.account.employeeType))
+            Text(typeInitial(type: employee.employeeType))
                 .font(.system(size: 15,weight: .light))
                 .frame(width: 32, height: 30)
             
@@ -74,26 +74,34 @@ struct CreateAccount: View{
     @EnvironmentObject var employees: dataViewModel
     
     // New account Properties
+    @Environment(\.dismiss) private var dismiss
     
     @State var newName: String = ""
     @State var newType: String = ""
     @State var newID: String = ""
     @State var newBranch: String = ""
     
-    @State var created = false
-    
     var check: Bool{
         if employees.allEmployees.contains(where: { Employee in
             Employee.id == Int(newID)
-        }){return false}
-        else if newName == "" || newType == "" || newID == ""{
-            return false
-        }
-        else if newType == "Deputy Team Head"{
+        })
+        {return false}
+        
+        else if newName == "" || newType == "" || newID == "" || newBranch == ""
+        {return false}
+        
+        else if newType == "Deputy Team Head"{ // Checks if no DTH exist in the branch
+            
             if employees.allEmployees.contains(where: { Employee in
-                Employee.branch == self.employees.account.branch && Employee.employeeType == newType
-            }){ return false }
-        }
+                Employee.branch == newBranch && (Employee.employeeType == "Acting Team Head" || Employee.employeeType == "Deputy Team Head")
+            })
+            {return false}}
+        
+        else if newType == "Team Head"{  // Checks if no team heads exist in the branch
+            if employees.allEmployees.contains(where: { Employee in
+                Employee.branch == newBranch && Employee.employeeType == "Team Head" || Employee.employeeType == "Acting Operational Manager"
+            })
+            {return false}}
         return true
     }
     
@@ -101,30 +109,7 @@ struct CreateAccount: View{
     
     var body: some View{
         ZStack{
-            
-            
-            // Drop down for account created
-            if created{
-                VStack{
-                    Text("Account Created")
-                        .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
-                        .padding(.bottom, 35)
-                        .background(Color.green.opacity(1))
-                        .cornerRadius(20)
-                        .foregroundColor(Color.white)
-                        .animation(Animation.easeInOut, value: !created)
-                        .transition(AnyTransition.move(edge: .top))
-                    
-                    
-                    Spacer()
-                }
-                .animation(Animation.easeInOut, value: !created)
-                .transition(AnyTransition.move(edge: .top))
-                .ignoresSafeArea()
-            }
-            
-            
-            
+                
             // Main Page
             VStack{
                 // New Account Name
@@ -150,26 +135,26 @@ struct CreateAccount: View{
                 //  New Account Type
                 Menu(newType == "" ? "Select Type":newType) {
                     
-                    if employees.account.employeeType == "Operational Manager"{
+                    if employees.account.employeeType == "Operational Manager" || employees.account.employeeType == "Acting Operational Manager"{
                         Button { newType = "Team Head" } label: { Text("Team Head") }}
                     
-                    if ["Operational Manager", "Team Head"].contains(employees.account.employeeType){
+                    if ["Operational Manager", "Team Head", "Acting Operational Manager", "Acting Team Head"].contains(employees.account.employeeType){
                         Button { newType = "Deputy Team Head" } label: { Text("Deputy Team Head") }}
                     
-                    if ["Operational Manager", "Team Head"].contains(employees.account.employeeType){
+                    if ["Operational Manager", "Team Head", "Acting Operational Manager", "Acting Team Head"].contains(employees.account.employeeType){
                         Button { newType = "Supervisor" } label: { Text("Supervisor") }}
                     
-                    if ["Operational Manager", "Team Head", "Supervisor"].contains(employees.account.employeeType){
+                    if ["Operational Manager", "Team Head", "Supervisor", "Acting Operational Manager", "Acting Team Head", "Acting Supervisor"].contains(employees.account.employeeType){
                         Button { newType = "Assistant Supervisor" } label: { Text("Assistant Supervisor") }}
                     
-                    if ["Operational Manager", "Team Head", "Deputy Team Head", "Supervisor"].contains(employees.account.employeeType){
+                    if ["Operational Manager", "Team Head", "Deputy Team Head", "Supervisor", "Acting Operational Manager", "Acting Team Head", "Acting Supervisor"].contains(employees.account.employeeType){
                         Button { newType = "Fire Fighter" } label: { Text("Fire Fighter") }}
                     
                 }
                 
                 // New branch
                 
-                if employees.account.employeeType == "Operational Manager"{
+                if employees.account.employeeType == "Operational Manager" || employees.account.employeeType == "Acting Operational Manager"{
                     
                     Menu(newBranch == "" ? "Select Branch" : newBranch) {
                         
@@ -197,30 +182,9 @@ struct CreateAccount: View{
                     
                     Button {
                         
-                        if newBranch == ""{
-                            newBranch = employees.account.branch
-                        }
-                        
                         employees.addEmployee(name: newName.capitalized(with: .current), id: Int(newID) ?? -1, branch: newBranch, employeeType: newType)
                         
-                        
-                        withAnimation{
-                            created = true}
-                        
-                        Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
-                            
-                            withAnimation {
-                                created = false
-                            }
-                        }
-                        
-                        newID = ""
-                        newType = ""
-                        newName = ""
-                        
-                        
-                        
-                        
+                            dismiss()
                     } label: {
                         Text("Create Account")
                             .padding(.horizontal, 20)
@@ -229,6 +193,10 @@ struct CreateAccount: View{
                             .background(RoundedRectangle(cornerRadius: 5))
                     }.disabled(!check)
                 }
+            }
+        }.onAppear{
+            if self.employees.account.employeeType != "Operational Manager" || self.employees.account.employeeType != "Acting Operational Manager"{
+                newBranch = employees.account.branch
             }
         }
     }
@@ -239,34 +207,13 @@ struct EditAccount: View{
     
     @EnvironmentObject var vm: dataViewModel
     
-    @State var created = false
-    
     @State var shownAlert = false
     
+    @State var change = false
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View{
         ZStack{
-            
-            if created{
-                
-                VStack{
-                    Text("Account Edited")
-                        .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
-                        .padding(.bottom, 35)
-                        .background(
-                            Color.orange
-                        )
-                        .cornerRadius(20)
-                        .foregroundColor(Color.white)
-                        .animation(Animation.easeInOut, value: !created)
-                        .transition(AnyTransition.move(edge: .top))
-                    
-                    
-                    Spacer()
-                }
-                .animation(Animation.easeInOut, value: !created)
-                .transition(AnyTransition.move(edge: .top))
-                .ignoresSafeArea()
-            }
             
             VStack{
                 
@@ -282,90 +229,48 @@ struct EditAccount: View{
                 }
                 
                 
-                HStack{
-                    // New Type
-                    Menu(editedEmployee.employeeType) { // TODO: set up roles
-                        
-                        Button {
-                            editedEmployee.employeeType = "Team Head"
-                        } label: {
-                            Text("Team Head")
-                        }
-                        
-                        Button {
-                            editedEmployee.employeeType = "Deputy Team Head"
-                        } label: {
-                            Text("Deputy Team Head")
-                        }
-                        
-                        Button {
-                            editedEmployee.employeeType = "Supervisor"
-                        } label: {
-                            Text("Supervisor")
-                        }
-                        
-                        Button {
-                            editedEmployee.employeeType = "Assistant Supervisor"
-                        } label: {
-                            Text("Assistant Supervisor")
-                        }
-                        
-                        
-                        Button {
-                            editedEmployee.employeeType = "Fire Fighter"
-                        } label: {
-                            Text("Fire Fighter")
-                        }
-                    }
+                
+                //  New Account Type
+                Menu(editedEmployee.employeeType) {
+                    
+                    if vm.account.employeeType == "Operational Manager" || vm.account.employeeType == "Acting Operational Manager"{
+                        Button { editedEmployee.employeeType = "Team Head" } label: { Text("Team Head") }}
+                    
+                    if ["Operational Manager", "Team Head", "Acting Operational Manager", "Acting Team Head"].contains(vm.account.employeeType){
+                        Button { editedEmployee.employeeType = "Deputy Team Head" } label: { Text("Deputy Team Head") }}
+                    
+                    if ["Operational Manager", "Team Head", "Acting Operational Manager", "Acting Team Head"].contains(vm.account.employeeType){
+                        Button { editedEmployee.employeeType = "Supervisor" } label: { Text("Supervisor") }}
+                    
+                    if ["Operational Manager", "Team Head", "Supervisor", "Acting Operational Manager", "Acting Team Head", "Acting Supervisor"].contains(vm.account.employeeType){
+                        Button { editedEmployee.employeeType = "Assistant Supervisor" } label: { Text("Assistant Supervisor") }}
+                    
+                    if ["Operational Manager", "Team Head", "Deputy Team Head", "Supervisor", "Acting Operational Manager", "Acting Team Head", "Acting Supervisor"].contains(vm.account.employeeType){
+                        Button { editedEmployee.employeeType = "Fire Fighter" } label: { Text("Fire Fighter") }}
                     
                 }
-                HStack{
+                
+                // New branch
+                
+                if vm.account.employeeType == "Operational Manager" || vm.account.employeeType == "Acting Operational Manager"{
                     
-                    
-                    // New branch
                     Menu(editedEmployee.branch) {
-                        Button {
-                            editedEmployee.branch = "Ajman"
-                        } label: {
-                            Text("Ajman")
-                        }
                         
-                        Button {
-                            editedEmployee.branch = "Sharjah"
-                        } label: {
-                            Text("Sharjah")
-                        }
+                        Button { editedEmployee.branch = "Ajman" } label: { Text("Ajman") }
                         
-                        Button {
-                            editedEmployee.branch = "Ras Al Khaimah"
-                        } label: {
-                            Text("Ras Al Khaimah")
-                        }
+                        Button { editedEmployee.branch = "Sharjah" } label: { Text("Sharjah") }
                         
-                        Button {
-                            editedEmployee.branch = "Umm al-Quwain "
-                        } label: {
-                            Text("Umm Al-Quwain")
-                        }
+                        Button { editedEmployee.branch = "Ras Al Khaimah" } label: { Text("Ras Al Khaimah") }
                         
-                        Button {
-                            editedEmployee.branch = "Abu Dhabi"
-                        } label: {
-                            Text("Abu Dhabi")
-                        }
+                        Button { editedEmployee.branch = "Umm Al-Quwain" } label: { Text("Umm Al-Quwain") }
                         
-                        Button {
-                            editedEmployee.branch = "Dubai"
-                        } label: {
-                            Text("Dubai")
-                        }
+                        Button { editedEmployee.branch = "Fujairah" } label: { Text("Fujairah") }
                         
-                        Button {
-                            editedEmployee.branch = "Fujairah"
-                        } label: {
-                            Text("Fujairah")
-                        }
+                        Button { editedEmployee.branch = "Abu Dhabi" } label: { Text("Abu Dhabi") }
+                        
+                        Button { editedEmployee.branch = "Dubai" } label: { Text("Dubai") }
                     }
+                    
                 }
                 
                 
@@ -391,16 +296,9 @@ struct EditAccount: View{
                 message: Text("Are you sure you want to edit this user"),
                 primaryButton: .destructive(Text("Confirm"), action: {
                     vm.updateEmployee(employee: editedEmployee)
+                
+                        dismiss()
                     
-                    withAnimation{
-                        created = true}
-                    
-                    Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
-                        
-                        withAnimation {
-                            created = false
-                        }
-                    }
                 }),
                 secondaryButton: .cancel())
         }
@@ -413,60 +311,73 @@ struct EditAccountMain: View{
     @EnvironmentObject var employees:  dataViewModel
     
     var body: some View{
-        
-        VStack{
-            
-            Text("Edit an account").font(.title)
-            Divider()
-            
-            ScrollView{
+        ZStack{
+            VStack{
                 
-                ForEach(employees.shownEmployees){ employee in
-                    HStack(spacing: 2){
-                        
-                        Text(String(employee.name).capitalized(with: .current))
-                            .frame(width: 135, height: 40, alignment: .leading)
-                        
-                        Divider()
-                        
-                        Text(typeInitial(type: employee.employeeType))
-                            .frame(width: 38, height: 40, alignment: .center)
-                        
-                        Divider()
-                        
-                        Text(String(employee.id))
-                            .frame(width: 46, height: 40, alignment: .center)
-                        
-                        Divider()
-                        
-                        Text(branchInitials(branch: employee.branch))
-                            .frame(width: 39, height: 40, alignment: .center)
-                        
-                        Spacer()
-                        
-                        NavigationLink {
-                            EditAccount(editedEmployee: employee)
-                        } label: {
-                            Text("Edit")
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 10)
-                                .foregroundColor(.white)
-                                .background(RoundedRectangle(cornerRadius: 10))
-                            
-                        }
-                        
-                        
-                    }.padding(.horizontal, 5)
+                Text("Edit an account").font(.title)
+                Divider()
+                
+                ScrollView{
                     
-                    Divider().padding(.all, 0)
+                    ForEach(employees.shownEmployees().filter({ emp in
+                        switch employees.account.employeeType{
+                        case "Operational Manager", "Acting Operational Manager":
+                            return emp.employeeType != "Operational Manager"
+                        case "Team Head", "Acting Team Head":
+                            return emp.employeeType != "Operational Manager" && emp.employeeType != "Acting Operational Manager"
+                        case "Acting Supervisor", "Supervisor", "Deputy Team Head":
+                            return emp.employeeType != "Team Head" && emp.employeeType != "Acting Team Head" && emp.employeeType != "Deputy Team Head"
+                        default:
+                            return emp.id == -1
+                        }
+                    })){ employee in
+                        HStack(spacing: 2){
+                            
+                            Text(String(employee.name).capitalized(with: .current))
+                                .frame(width: 135, height: 40, alignment: .leading)
+                            
+                            Divider()
+                            
+                            Text(typeInitial(type: employee.employeeType))
+                                .frame(width: 38, height: 40, alignment: .center)
+                            
+                            Divider()
+                            
+                            Text(String(employee.id))
+                                .frame(width: 46, height: 40, alignment: .center)
+                            
+                            Divider()
+                            
+                            Text(branchInitials(branch: employee.branch))
+                                .frame(width: 39, height: 40, alignment: .center)
+                            
+                            Spacer()
+                            
+                            NavigationLink {
+                                EditAccount(editedEmployee: employee)
+                            } label: {
+                                Text("Edit")
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 10)
+                                    .foregroundColor(.white)
+                                    .background(RoundedRectangle(cornerRadius: 10))
+                                
+                            }
+                            
+                            
+                        }.padding(.horizontal, 5)
+                        
+                        Divider().padding(.all, 0)
+                        
+                    }
+                    
+                    
                     
                 }
-                
-                
-                
-            }
-        }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
-            .padding(.vertical, 10)
+            }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/1.12, alignment: .leading)
+                .padding(.vertical, 10)
+        }
+        
     }
     
 }
@@ -475,8 +386,7 @@ struct DeleteAccounts: View{
     
     @EnvironmentObject var vm:  dataViewModel
     
-    @State var dragDown = false
-    
+    @Environment(\.dismiss) private var dismiss
     
     @State private var showingPopUp = false
     
@@ -494,28 +404,9 @@ struct DeleteAccounts: View{
     
     var body: some View{
         ZStack{
-            
-            if dragDown{
-                
-                VStack{
-                    Text("Accounts Deleted")
-                        .frame(width: UIScreen.main.bounds.width, height: 100, alignment: .bottom)
-                        .padding(.bottom, 35)
-                        .background(Color.red.opacity(1))
-                        .cornerRadius(20)
-                        .foregroundColor(Color.white)
-                        .animation(Animation.easeInOut, value: !dragDown)
-                        .transition(AnyTransition.move(edge: .top))
-                    
-                    
-                    Spacer()
-                }
-                .animation(Animation.easeInOut, value: !dragDown)
-                .transition(AnyTransition.move(edge: .top))
-                .ignoresSafeArea()
-            }
-            
             VStack{
+                SearchBar()
+                
                 HStack(spacing:10){
                     Text("Delete Accounts").font(.title).padding(.leading, UIScreen.main.bounds.width/3)
                         .multilineTextAlignment(.center)
@@ -528,7 +419,21 @@ struct DeleteAccounts: View{
                 Spacer()
                 
                 ScrollView{
-                    ForEach(vm.shownEmployees){employee in
+                    ForEach(
+                        vm.shownEmployees().filter({ emp in
+                            switch vm.account.employeeType{
+                            case "Operational Manager", "Acting Operational Manager":
+                                return emp.employeeType != "Operational Manager"
+                            case "Team Head", "Acting Team Head":
+                                return emp.employeeType != "Operational Manager" && emp.employeeType != "Acting Operational Manager"
+                            case "Acting Supervisor", "Supervisor", "Deputy Team Head":
+                                return emp.employeeType != "Team Head" && emp.employeeType != "Acting Team Head" && emp.employeeType != "Deputy Team Head"
+                            default:
+                                return emp.id == -1
+                            }
+                        })
+                        
+                            .sorted(by: { e1, e2 in e1.id < e2.id})){employee in
                         
                         showSelectedDelete(employee: employee, selectedItems: $selectedEmployeesID)
                         
@@ -540,6 +445,7 @@ struct DeleteAccounts: View{
                 
                 Button("Delete \(selectedEmployees.count)"){
                     showingPopUp = true
+                    
                     
                 }
                 .disabled(selectedEmployees.count > 0 ? false : true)
@@ -592,17 +498,11 @@ struct DeleteAccounts: View{
                                 for employee in selectedEmployees {
                                     vm.deleteEmployee(employee: employee)
                                 }
-                                
-                                withAnimation{
-                                    dragDown = true}
-                                
-                                Timer.scheduledTimer(withTimeInterval: 2.3, repeats: false) { _ in
-                                    
-                                    withAnimation {
-                                        dragDown = false
-                                    }
-                                }
-                                showingPopUp = false
+ 
+                                    showingPopUp = false
+                                    dismiss()
+                    
+                        
                                 
                             } label: {
                                 Text("Yes")
@@ -628,11 +528,8 @@ struct DeleteAccounts: View{
                         Spacer()
                     }.padding(.vertical, 30)
                 }
-                
-                
             }
         }
-        
     }
 }
 
@@ -687,6 +584,9 @@ struct MainAccountsMenu: View {
             BottomMenu
             
         }.padding(.top, 90)
+            .onAppear{
+                vm.getEmployees()
+            }
         
     }
     
